@@ -5,7 +5,6 @@ import { AuthProvider } from '../../providers/auth/auth';
 
 // pages
 import { LoginPage } from '../login/login';
-import { FaqPage } from '../datos-utiles/faq/faq';
 import { DeviceProvider } from '../../providers/auth/device';
 import { ErrorReporterProvider } from '../../providers/errorReporter';
 
@@ -57,7 +56,4 @@ export class HomePage {
         }
     }
 
-    faq() {
-        this.navCtrl.push(FaqPage);
-    }
 }

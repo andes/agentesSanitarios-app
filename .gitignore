@@ -52,11 +52,12 @@ plugins/android.json
 plugins/ios.json
 www/
 $RECYCLE.BIN/
-
+*.js
+*.js.map
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
-
+environments/*
 .sourcemaps/
 src/environments/*
 !src/environments/environment.ts.example

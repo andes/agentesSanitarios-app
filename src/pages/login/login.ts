@@ -14,7 +14,6 @@ import { InformacionValidacionPage } from '../registro/informacion-validacion/in
 import { RecuperarPasswordPage } from '../registro/recuperar-password/recuperar-password';
 import { HomePage } from '../home/home';
 import { RegistroUserDataPage } from '../registro/user-data/user-data';
-import { Principal } from '../gestion/principal';
 
 @Component({
     selector: 'page-login',
@@ -114,12 +113,7 @@ export class LoginPage {
                     esGestion: resultado.user.esGestion ? resultado.user.esGestion : false,
                     mantenerSesion: resultado.user.mantenerSesion ? resultado.user.mantenerSesion : true
                 };
-                if (resultado.user && resultado.user.esGestion) {
-                    // this.navCtrl.setRoot(NuevaPage, '1');
-                    this.navCtrl.setRoot(Principal, params);
-                } else {
-                    this.navCtrl.setRoot(OrganizacionesPage);
-                }
+                this.navCtrl.setRoot(OrganizacionesPage);
             }).catch(() => {
                 this.inProgress = false;
                 this.toastCtrl.danger('Credenciales incorrectas');

@@ -14,14 +14,10 @@ import { DatosGestionProvider } from '../providers/datos-gestion/datos-gestion.p
 // Pages
 import { HomePage } from '../pages/home/home';
 import { ProfileAccountPage } from '../pages/profile/account/profile-account';
-import { FaqPage } from '../pages/datos-utiles/faq/faq';
 
 import { ENV } from '@app/env';
 import { LoginPage } from '../pages/login/login';
 import { TabViewProfilePage } from '../pages/profile/paciente/tab-view-profile';
-import { FeedNoticiasPage } from '../pages/datos-utiles/feed-noticias/feed-noticias';
-import { PuntoSaludablePage } from '../pages/datos-utiles/punto-saludable/punto-saludable';
-import { Principal } from '../pages/gestion/principal';
 import { SQLite } from '@ionic-native/sqlite';
 
 import { ProfileProfesionalComponents } from '../pages/profesional/profile/profile-profesional';
@@ -39,26 +35,16 @@ export class MyApp {
     pacienteMenu = [
         { title: 'Datos personales', component: TabViewProfilePage },
         { title: 'Configurar cuenta', component: ProfileAccountPage },
-        { title: 'Punto saludable', component: PuntoSaludablePage },
-        { title: 'NotiSalud', component: FeedNoticiasPage },
-        { title: 'Preguntas frecuentes', component: FaqPage },
         { title: 'Cerrar sesión', action: 'logout', color: 'danger' },
     ];
 
     profesionalMenu = [
         { title: 'Datos personales', component: ProfileProfesionalComponents },
-        { title: 'Punto saludable', component: PuntoSaludablePage },
-        { title: 'NotiSalud', component: FeedNoticiasPage },
-        { title: 'Preguntas frecuentes', component: FaqPage },
         { title: 'Cerrar sesión', action: 'logout', color: 'danger' },
-
     ];
 
     anonymousMenu = [
         { title: 'Ingresar en ANDES', component: LoginPage, color: 'primary' },
-        { title: 'Punto saludable', component: PuntoSaludablePage },
-        { title: 'NotiSalud', component: FeedNoticiasPage },
-        { title: 'Preguntas frecuentes', component: FaqPage },
     ];
 
 
@@ -72,8 +58,7 @@ export class MyApp {
         public connectivity: ConnectivityProvider,
         private alertCtrl: AlertController,
         public storage: Storage,
-        public sqlite: SQLite,
-        public datosGestion: DatosGestionProvider) {
+        public sqlite: SQLite) {
 
         this.initializeApp();
 
@@ -95,21 +80,12 @@ export class MyApp {
             let gestion = await this.authProvider.checkGestion();
             let sesion = await this.authProvider.checkSession();
             if (sesion) {
-                if (gestion) {
-                    this.authProvider.checkAuth().then((user: any) => {
-                        this.network.setToken(this.authProvider.token);
-                        this.deviceProvider.update().then(() => true, () => true);
-                        this.rootPage = Principal;
-                    }).catch(() => {
-                    });
-                } else {
-                    this.authProvider.checkAuth().then((user: any) => {
-                        this.network.setToken(this.authProvider.token);
-                        this.deviceProvider.update().then(() => true, () => true);
-                        this.rootPage = HomePage;
-                    }).catch(() => {
-                    });
-                }
+                this.authProvider.checkAuth().then((user: any) => {
+                    this.network.setToken(this.authProvider.token);
+                    this.deviceProvider.update().then(() => true, () => true);
+                    this.rootPage = HomePage;
+                }).catch(() => {
+                });
             }
             // else {
             //     this.rootPage = HomePage;
@@ -237,7 +213,7 @@ export class MyApp {
             location: 'default' // the location field is required
         })
             .then((db) => {
-                return this.datosGestion.setDatabase(db);
+                return; // this.datosGestion.setDatabase(db);
             }).catch(error => {
                 return (error);
             });
