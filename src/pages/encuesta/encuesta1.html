@@ -104,24 +104,25 @@
         <ion-radio value="urbana"></ion-radio>
     </ion-item>
       
+    
     <ion-item>
         <ion-label>Piso</ion-label>
         <ion-select multiple="false">
-            <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
+            <ion-option *ngFor="let loc of materialesPiso" [value]="loc">{{loc}}</ion-option>
         </ion-select>
     </ion-item>
 
     <ion-item>
         <ion-label>Pared</ion-label>
         <ion-select multiple="false">
-            <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
+            <ion-option *ngFor="let loc of materialesPared" [value]="loc">{{loc}}</ion-option>
         </ion-select>
     </ion-item>
 
     <ion-item>
         <ion-label>Techo</ion-label>
         <ion-select multiple="false">
-            <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
+            <ion-option *ngFor="let loc of materialesTecho" [value]="loc">{{loc}}</ion-option>
         </ion-select>
     </ion-item>
 
@@ -143,21 +144,14 @@
     <ion-item>
         <ion-label>Tipo de casa</ion-label>
         <ion-select multiple="false" >
-            <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
+            <ion-option *ngFor="let loc of tiposCasa" [value]="loc">{{loc}}</ion-option>
         </ion-select>
     </ion-item>
 
     <ion-item>
         <ion-label>Baño</ion-label>
         <ion-select multiple="false">
-            <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
-        </ion-select>
-    </ion-item>
-
-    <ion-item>
-        <ion-label>Baño</ion-label>
-        <ion-select multiple="false">
-            <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
+            <ion-option *ngFor="let loc of tiposBano" [value]="loc">{{loc}}</ion-option>
         </ion-select>
     </ion-item>
 

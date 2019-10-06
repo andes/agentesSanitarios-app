@@ -8,7 +8,7 @@
     <ion-item>
         <ion-label>Tipo Documento</ion-label>
         <ion-select multiple="false">
-            <ion-option *ngFor="let prov of provincias" [value]="prov">{{prov}}</ion-option>
+            <ion-option *ngFor="let prov of tiposDocumento" [value]="prov">{{prov}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item>
@@ -26,19 +26,19 @@
     <ion-item>
         <ion-label>Nacionalidad</ion-label>
         <ion-select multiple="false">
-            <ion-option *ngFor="let prov of provincias" [value]="prov">{{prov}}</ion-option>
+            <ion-option *ngFor="let prov of nacionalidades" [value]="prov">{{prov}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item>
         <ion-label>Sexo</ion-label>
         <ion-select multiple="false">
-            <ion-option *ngFor="let prov of provincias" [value]="prov">{{prov}}</ion-option>
+            <ion-option *ngFor="let prov of sexos" [value]="prov">{{prov}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item>
         <ion-label>Genero</ion-label>
         <ion-select multiple="false">
-            <ion-option *ngFor="let prov of provincias" [value]="prov">{{prov}}</ion-option>
+            <ion-option *ngFor="let prov of generos" [value]="prov">{{prov}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item>
@@ -48,34 +48,34 @@
     <ion-item>
         <ion-label>Vinculo con Jefe de Hogar</ion-label>
         <ion-select multiple="false">
-            <ion-option *ngFor="let prov of provincias" [value]="prov">{{prov}}</ion-option>
+            <ion-option *ngFor="let prov of relacionesJefe" [value]="prov">{{prov}}</ion-option>
         </ion-select>
-    </ion-item>
+        </ion-item>
 
     <ion-item>
         <ion-label>Ocupación</ion-label>
         <ion-select multiple="false">
-            <ion-option *ngFor="let prov of provincias" [value]="prov">{{prov}}</ion-option>
+            <ion-option *ngFor="let prov of ocupaciones" [value]="prov">{{prov}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item>
         <ion-label>Beneficio Social</ion-label>
         <ion-select multiple="false">
-            <ion-option *ngFor="let prov of provincias" [value]="prov">{{prov}}</ion-option>
+            <ion-option *ngFor="let prov of beneficiosSociales" [value]="prov">{{prov}}</ion-option>
         </ion-select>
     </ion-item>
 
     <ion-item>
         <ion-label>Nivel Educacional</ion-label>
         <ion-select multiple="false">
-            <ion-option *ngFor="let prov of provincias" [value]="prov">{{prov}}</ion-option>
+            <ion-option *ngFor="let prov of nivelesEducacion" [value]="prov">{{prov}}</ion-option>
         </ion-select>
     </ion-item>
 
     <ion-item>
         <ion-label>Enfermedades Cronicas</ion-label>
         <ion-select multiple="false">
-            <ion-option *ngFor="let prov of provincias" [value]="prov">{{prov}}</ion-option>
+            <ion-option *ngFor="let prov of enfermedadesCronicas" [value]="prov">{{prov}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item>
@@ -95,27 +95,27 @@
     <ion-item>
         <ion-label>Cobertura de Salud</ion-label>
         <ion-select multiple="false">
-            <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
+            <ion-option *ngFor="let loc of coberturas" [value]="loc">{{loc}}</ion-option>
         </ion-select>
     </ion-item>
 
     <ion-item>
         <ion-label>Lugar de Atención</ion-label>
         <ion-select multiple="false">
-            <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
+            <ion-option *ngFor="let loc of lugaresAtencion" [value]="loc">{{loc}}</ion-option>
         </ion-select>
     </ion-item>
 
     <ion-item>
         <ion-label>Discapacidad</ion-label>
         <ion-select multiple="false">
-            <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
+            <ion-option *ngFor="let loc of discapacidades" [value]="loc">{{loc}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item>
         <ion-label>Cert. Discapacidad</ion-label>
         <ion-select multiple="false">
-            <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
+            <ion-option *ngFor="let loc of certificadosDiscapacidad" [value]="loc">{{loc}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item>
@@ -128,7 +128,7 @@
     </ion-item>
     <ion-item>
         <button ion-button icon-only class="outline success" [disabled]="disableArbol" (click)="gotoComponentesHogar()">
-            Guardar
+            Agregar
         </button>
     </ion-item>
 </ion-content>
