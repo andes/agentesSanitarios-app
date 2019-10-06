@@ -8,7 +8,9 @@ import { ToastProvider } from '../../providers/toast';
 import { ConstanteProvider } from '../../providers/constantes';
 
 // PAGES...
-import { OrganizacionesPage } from './organizaciones/organizaciones';
+
+import { PrincipalPage } from '../principal/principal';
+// import { OrganizacionesPage } from './organizaciones/organizaciones';
 import { VerificaCodigoPage } from '../registro/verifica-codigo/verifica-codigo';
 import { InformacionValidacionPage } from '../registro/informacion-validacion/informacion-validacion';
 import { RecuperarPasswordPage } from '../registro/recuperar-password/recuperar-password';
@@ -72,34 +74,6 @@ export class LoginPage {
             this.toastCtrl.danger('Complete los datos para ingresar.');
             return;
         }
-        if (!this.dniRegex.test(this.email)) {
-            // Login pacientes
-            let credentials = {
-                email: this.email,
-                password: this.password
-            };
-            this.inProgress = true;
-            this.authService.login(credentials).then((result) => {
-                this.inProgress = false;
-                this.deviceProvider.sync();
-
-                this.navCtrl.setRoot(HomePage);
-            }, (err) => {
-                this.inProgress = false;
-                if (err) {
-                    if (err.message === 'new_password_needed') {
-                        this.navCtrl.push(RegistroUserDataPage, {
-                            email: this.email,
-                            old_password: this.password
-                        })
-                        // this.toastCtrl.danger("GOTO SET PASSWORD");
-                    } else {
-                        this.toastCtrl.danger('Email o password incorrecto.');
-                    }
-                }
-            });
-        } else {
-            // Login profesional
             let credenciales = {
                 usuario: this.email,
                 password: this.password,
@@ -113,13 +87,13 @@ export class LoginPage {
                     esGestion: resultado.user.esGestion ? resultado.user.esGestion : false,
                     mantenerSesion: resultado.user.mantenerSesion ? resultado.user.mantenerSesion : true
                 };
-                this.navCtrl.setRoot(OrganizacionesPage);
+                // this.navCtrl.setRoot(OrganizacionesPage);
+                this.navCtrl.setRoot(PrincipalPage);
             }).catch(() => {
                 this.inProgress = false;
                 this.toastCtrl.danger('Credenciales incorrectas');
             });
 
-        }
     }
 
 }

@@ -1,0 +1,134 @@
+<ion-header home>
+    <page-navbar [menu]="true">
+        <ion-title>Formulario familiar</ion-title>
+    </page-navbar>
+</ion-header>
+
+<ion-content home background="white" padding>
+    <ion-item>
+        <ion-label>Tipo Documento</ion-label>
+        <ion-select multiple="false">
+            <ion-option *ngFor="let prov of provincias" [value]="prov">{{prov}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>Nro. Documento</ion-label>
+        <ion-input type="number" name="title"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Nombres</ion-label>
+        <ion-input type="number" name="title"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Apellidos</ion-label>
+        <ion-input type="number" name="title"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Nacionalidad</ion-label>
+        <ion-select multiple="false">
+            <ion-option *ngFor="let prov of provincias" [value]="prov">{{prov}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>Sexo</ion-label>
+        <ion-select multiple="false">
+            <ion-option *ngFor="let prov of provincias" [value]="prov">{{prov}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>Genero</ion-label>
+        <ion-select multiple="false">
+            <ion-option *ngFor="let prov of provincias" [value]="prov">{{prov}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>Fecha de nacimiento</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY"></ion-datetime>
+    </ion-item>
+    <ion-item>
+        <ion-label>Vinculo con Jefe de Hogar</ion-label>
+        <ion-select multiple="false">
+            <ion-option *ngFor="let prov of provincias" [value]="prov">{{prov}}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Ocupación</ion-label>
+        <ion-select multiple="false">
+            <ion-option *ngFor="let prov of provincias" [value]="prov">{{prov}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>Beneficio Social</ion-label>
+        <ion-select multiple="false">
+            <ion-option *ngFor="let prov of provincias" [value]="prov">{{prov}}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Nivel Educacional</ion-label>
+        <ion-select multiple="false">
+            <ion-option *ngFor="let prov of provincias" [value]="prov">{{prov}}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Enfermedades Cronicas</ion-label>
+        <ion-select multiple="false">
+            <ion-option *ngFor="let prov of provincias" [value]="prov">{{prov}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>Asist. Alimentaria</ion-label>
+        <ion-toggle color="primary"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Embarazo</ion-label>
+        <ion-toggle color="primary"></ion-toggle>
+    </ion-item>
+    <ion-item>
+        <ion-label>Esq. de Vacunas</ion-label>
+        <ion-toggle color="primary"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Cobertura de Salud</ion-label>
+        <ion-select multiple="false">
+            <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Lugar de Atención</ion-label>
+        <ion-select multiple="false">
+            <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Discapacidad</ion-label>
+        <ion-select multiple="false">
+            <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>Cert. Discapacidad</ion-label>
+        <ion-select multiple="false">
+            <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>CUD Nro.</ion-label>
+        <ion-input type="number" name="title"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Vigencia</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY"></ion-datetime>
+    </ion-item>
+    <ion-item>
+        <button ion-button icon-only class="outline success" [disabled]="disableArbol" (click)="gotoComponentesHogar()">
+            Guardar
+        </button>
+    </ion-item>
+</ion-content>

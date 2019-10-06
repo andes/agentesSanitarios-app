@@ -9,7 +9,6 @@ import { NetworkProvider } from './../providers/network';
 import { AuthProvider } from '../providers/auth/auth';
 import { DeviceProvider } from '../providers/auth/device';
 import { ConnectivityProvider } from '../providers/connectivity/connectivity';
-import { DatosGestionProvider } from '../providers/datos-gestion/datos-gestion.provider';
 
 // Pages
 import { HomePage } from '../pages/home/home';

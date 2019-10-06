@@ -5,6 +5,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 
 // pages
 import { LoginPage } from '../login/login';
+import { Encuesta1Page } from '../encuesta/encuesta1';
 import { DeviceProvider } from '../../providers/auth/device';
 import { ErrorReporterProvider } from '../../providers/errorReporter';
 
@@ -40,8 +41,10 @@ export class HomePage {
         return this.authService.user != null;
     }
 
-    isPaciente() {
-        return this.authService.user && this.authService.user.profesionalId == null;
+    nuevaEncuesta() {
+        if (this.isLogin()) {
+            this.navCtrl.push(Encuesta1Page);
+        }
     }
 
     isProfesional() {

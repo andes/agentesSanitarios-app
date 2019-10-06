@@ -1,0 +1,16 @@
+<ion-header home>
+    <page-navbar [menu]="true">
+        <ion-title>Formulario familiar</ion-title>
+    </page-navbar>
+</ion-header>
+
+<ion-content home background="white" padding>
+    <ion-item>
+        <button ion-button icon-only class="outline primary" [disabled]="disableArbol" (click)="nuevoComponenteHogar()">
+            Nuevo Integrante de Hogar
+        </button>
+    </ion-item>
+    <ion-item>
+        <ion-label>Tabla de componentes de hogar</ion-label>
+    </ion-item>
+</ion-content>

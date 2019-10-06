@@ -1,0 +1,183 @@
+<ion-header home>
+    <page-navbar [menu]="true">
+        <ion-title>Formulario familiar</ion-title>
+    </page-navbar>
+</ion-header>
+
+<ion-content home background="white" padding>
+    <ion-item>
+        <ion-label>Nro. Parcela</ion-label>
+        <ion-input type="number" name="title"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Nro. Planilla</ion-label>
+        <ion-input type="number" name="title"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Nro. Parcela</ion-label>
+        <ion-input type="number" name="title"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Nro. Vivienda</ion-label>
+        <ion-input type="number" name="title"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Nro. Hogar</ion-label>
+        <ion-input type="number" name="title"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Fecha visita</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY"></ion-datetime>
+    </ion-item>
+    <ion-item>
+        <ion-label>Fecha visita 1</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY"></ion-datetime>
+    </ion-item>
+    <ion-item>
+        <ion-label>Fecha visita 2</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Provincia</ion-label>
+        <ion-select multiple="false">
+            <ion-option *ngFor="let prov of provincias" [value]="prov">{{prov}}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+        <ion-label flaoating>Municipio</ion-label>
+        <ion-select multiple="false">
+            <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Localidad</ion-label>
+        <ion-select multiple="false">
+            <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Barrio</ion-label>
+        <ion-select multiple="false">
+            <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>Dirección</ion-label>
+        <ion-input typr="text"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Etnia</ion-label>
+        <ion-select multiple="false">
+            <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <!-- <ion-item>
+        <ion-label>Tipo de Zona</ion-label> -->
+        <!-- <ion-list>
+            <ion-radio-group>
+                <ion-list-header>
+                    <ion-label>Tipo de Zona</ion-label>
+                </ion-list-header>
+
+                <ion-item>
+                    <ion-label>Rural</ion-label>
+                    <ion-radio slot="start" value="rural"></ion-radio>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label>Urbana</ion-label>
+                    <ion-radio slot="start" value="urbana"></ion-radio>
+                </ion-item>
+            </ion-radio-group>
+        </ion-list> -->
+    <ion-item>
+        <ion-label>Rural</ion-label>
+        <ion-radio value="rural"></ion-radio>
+    </ion-item>
+    <ion-item>
+        <ion-label>Urbana</ion-label>
+        <ion-radio value="urbana"></ion-radio>
+    </ion-item>
+      
+    <ion-item>
+        <ion-label>Piso</ion-label>
+        <ion-select multiple="false">
+            <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Pared</ion-label>
+        <ion-select multiple="false">
+            <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Techo</ion-label>
+        <ion-select multiple="false">
+            <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Hab s/baño s/cocina</ion-label>
+        <ion-input type="number" name="title"></ion-input>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Inst. Eléctrica</ion-label>
+        <ion-toggle color="primary"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Trat. Basura</ion-label>
+        <ion-toggle color="primary"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Tipo de casa</ion-label>
+        <ion-select multiple="false" >
+            <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Baño</ion-label>
+        <ion-select multiple="false">
+            <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Baño</ion-label>
+        <ion-select multiple="false">
+            <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Animales</ion-label>
+    </ion-item>
+    
+    <ion-item>
+        <ion-label>De Consumo</ion-label>
+        <ion-toggle color="primary"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Domésticos</ion-label>
+        <ion-toggle color="primary"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+        <button ion-button icon-only class="outline primary" [disabled]="disableArbol" (click)="gotoComponentesHogar()">
+            Registrar Componentes Hogar
+        </button>
+    </ion-item>
+</ion-content>
