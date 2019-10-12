@@ -1,3 +1,4 @@
+import { AgentesSanitariosProvider } from './../providers/agentes-sanitarios/agendes-sanitarios';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, AlertController, NavController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -57,7 +58,8 @@ export class MyApp {
         public connectivity: ConnectivityProvider,
         private alertCtrl: AlertController,
         public storage: Storage,
-        public sqlite: SQLite) {
+        public sqlite: SQLite,
+        public agentesSanitariosProvider: AgentesSanitariosProvider) {
 
         this.initializeApp();
 
@@ -212,7 +214,7 @@ export class MyApp {
             location: 'default' // the location field is required
         })
             .then((db) => {
-                return; // this.datosGestion.setDatabase(db);
+                this.agentesSanitariosProvider.setDatabase(db);
             }).catch(error => {
                 return (error);
             });

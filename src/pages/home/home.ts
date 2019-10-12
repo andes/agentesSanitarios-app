@@ -1,3 +1,4 @@
+import { BuscadorEncuestasPage } from './../encuesta/consulta-encuestas/consulta-encuestas';
 import { Component } from '@angular/core';
 import { NavController, MenuController } from 'ionic-angular';
 
@@ -27,6 +28,7 @@ export class HomePage {
 
         this.user = this.authService.user;
     }
+
     ionViewWillEnter() {
         this.menuCtrl.enable(true);
     }
@@ -38,12 +40,19 @@ export class HomePage {
     }
 
     isLogin() {
-        return this.authService.user != null;
+        // return this.authService.user != null;
+        return true;
     }
 
     nuevaEncuesta() {
         if (this.isLogin()) {
             this.navCtrl.push(Encuesta1Page);
+        }
+    }
+
+    consultarEncuestas() {
+        if (this.isLogin()) {
+            this.navCtrl.push(BuscadorEncuestasPage);
         }
     }
 

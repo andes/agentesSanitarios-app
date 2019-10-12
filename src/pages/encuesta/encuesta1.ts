@@ -1,3 +1,4 @@
+import { AgentesSanitariosProvider } from './../../providers/agentes-sanitarios/agendes-sanitarios';
 import { ComponentesHogarPage } from './componentes-hogar/componentes-hogar';
 import { NavController } from 'ionic-angular';
 import { Component } from '@angular/core';
@@ -26,8 +27,40 @@ export class Encuesta1Page {
     tiposBano;
     tiposCasa;
 
+    encuesta = {
+        nroFormulario: null,
+        nroPlantilla: null,
+        nroParcela: null,
+        nroVivienda: null,
+        nroHogar: null,
+        fechaVisita: null,
+        fechaVisita1: null,
+        fechaVisita2: null,
+        provicia: null,
+        municipio: null,
+        localidad: null,
+        barrio: null,
+        direccion: null,
+        etnia: null,
+        materialPiso: null,
+        materialPared: null,
+        materialTecho: null,
+        cantidadHabitacionesSinServicio: null,
+        tieneInstalacionesElectricas: false,
+        tieneTratamientoBasura: false,
+        tipoCasa: null,
+        tipoBano: null,
+        tieneAnimalesConsumo: false,
+        animalesConsumoVacunados: false,
+        animalesConsumoDesparasitados: false,
+        tieneAnimalesDomestico: false,
+        animalesDomesticosVacunados: false,
+        animalesDomesticosDesparasitados: false
+    }
+
     constructor(
         public navCtrl: NavController,
+        public agentesSanitariosProvider: AgentesSanitariosProvider
         ) {
 
         this.provincias = Provincias;
@@ -39,7 +72,8 @@ export class Encuesta1Page {
         this.tiposCasa = TiposCasa;
     }
 
-    gotoComponentesHogar() {
+    async gotoComponentesHogar() {
+        await this.agentesSanitariosProvider.insertEncuesta(this.encuesta)
         this.navCtrl.push(ComponentesHogarPage);
     }
 

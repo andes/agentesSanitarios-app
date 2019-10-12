@@ -1,0 +1,11 @@
+<ion-header home>
+    <page-navbar [menu]="true">
+        <ion-title>Formulario familiar</ion-title>
+    </page-navbar>
+</ion-header>
+
+<ion-content home background="white" padding>
+    <ng-container *ngFor="let encuesta of encuestas">
+        {{encuesta}}
+    </ng-container>
+</ion-content>

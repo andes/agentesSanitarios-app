@@ -19,6 +19,7 @@ import { LoginPage } from '../pages/login/login';
 
 import { PrincipalPage } from '../pages/principal/principal';
 import { Encuesta1Page } from '../pages/encuesta/encuesta1';
+import { BuscadorEncuestasPage } from '../pages/encuesta/consulta-encuestas/consulta-encuestas';
 import { ComponentesHogarPage } from '../pages/encuesta/componentes-hogar/componentes-hogar';
 import { NavbarPage } from '../components/navbar/navbar';
 
@@ -47,6 +48,7 @@ import { ErrorReporterProvider } from '../providers/errorReporter';
 import { ConnectivityProvider } from '../providers/connectivity/connectivity';
 import { DatePickerModule } from 'ion-datepicker';
 import { EmailComposer } from '@ionic-native/email-composer';
+import { AgentesSanitariosProvider } from './../providers/agentes-sanitarios/agendes-sanitarios';
 
 @NgModule({
     declarations: [
@@ -58,6 +60,7 @@ import { EmailComposer } from '@ionic-native/email-composer';
         LoginPage,
         PrincipalPage,
         Encuesta1Page,
+        BuscadorEncuestasPage,
         ComponentesHogarPage,
         NuevoComponenteHogarPage,
         NavbarPage,
@@ -85,6 +88,7 @@ import { EmailComposer } from '@ionic-native/email-composer';
         Encuesta1Page,
         ComponentesHogarPage,
         NuevoComponenteHogarPage,
+        BuscadorEncuestasPage,
 //         EscanerDniPage,
 //         RegistroPersonalDataPage,
 //         RegistroUserDataPage,
@@ -96,6 +100,7 @@ import { EmailComposer } from '@ionic-native/email-composer';
         SplashScreen,
         BarcodeScanner,
         EmailComposer,
+        AgentesSanitariosProvider,
         Screenshot,
         SQLite,
         Network,
