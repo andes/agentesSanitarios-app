@@ -1,3 +1,6 @@
+import { SQLite } from '@ionic-native/sqlite';
+import { AgentesSanitariosProvider } from './../../providers/agentes-sanitarios/agendes-sanitarios';
+import { BuscadorEncuestasPage } from './../encuesta/consulta-encuestas/consulta-encuestas';
 import { Component } from '@angular/core';
 import { NavController, MenuController } from 'ionic-angular';
 
@@ -19,31 +22,55 @@ export class HomePage {
     showMpi = false;
 
     constructor(
+        public sqlite: SQLite,
         public authService: AuthProvider,
         public deviceService: DeviceProvider,
         public navCtrl: NavController,
         public menuCtrl: MenuController,
-        public reporter: ErrorReporterProvider) {
+        public reporter: ErrorReporterProvider,
+        public agentesSanitariosProvider: AgentesSanitariosProvider) {
 
         this.user = this.authService.user;
     }
+
     ionViewWillEnter() {
         this.menuCtrl.enable(true);
     }
 
-    ionViewDidLoad() {
+    async ionViewDidLoad() {
+        await this.createDatabase();
+        await this.agentesSanitariosProvider.createTableEncuesta();
         setTimeout(() => {
             this.started = true;
         }, 50);
     }
 
+    private async createDatabase() {
+        try {
+            const db = await this.sqlite.create({
+                name: 'data.db',
+                location: 'default' // the location field is required
+            })
+            await this.agentesSanitariosProvider.setDatabase(db);
+        } catch (err) {
+            return (err);
+        }
+    }
+
     isLogin() {
-        return this.authService.user != null;
+        // return this.authService.user != null;
+        return true;
     }
 
     nuevaEncuesta() {
         if (this.isLogin()) {
             this.navCtrl.push(Encuesta1Page);
+        }
+    }
+
+    consultarEncuestas() {
+        if (this.isLogin()) {
+            this.navCtrl.push(BuscadorEncuestasPage);
         }
     }
 

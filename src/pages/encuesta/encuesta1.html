@@ -6,72 +6,72 @@
 
 <ion-content home background="white" padding>
     <ion-item>
-        <ion-label>Nro. Parcela</ion-label>
-        <ion-input type="number" name="title"></ion-input>
+        <ion-label>Nro. Formulario</ion-label>
+        <ion-input [(ngModel)]="encuesta.nroFormulario" type="number" name="title"></ion-input>
     </ion-item>
     <ion-item>
         <ion-label>Nro. Planilla</ion-label>
-        <ion-input type="number" name="title"></ion-input>
+        <ion-input [(ngModel)]="encuesta.nroPlantilla" type="number" name="title"></ion-input>
     </ion-item>
     <ion-item>
         <ion-label>Nro. Parcela</ion-label>
-        <ion-input type="number" name="title"></ion-input>
+        <ion-input [(ngModel)]="encuesta.nroParcela" type="number" name="title"></ion-input>
     </ion-item>
     <ion-item>
         <ion-label>Nro. Vivienda</ion-label>
-        <ion-input type="number" name="title"></ion-input>
+        <ion-input [(ngModel)]="encuesta.nroVivienda" type="number" name="title"></ion-input>
     </ion-item>
     <ion-item>
         <ion-label>Nro. Hogar</ion-label>
-        <ion-input type="number" name="title"></ion-input>
+        <ion-input [(ngModel)]="encuesta.nroHogar" type="number" name="title"></ion-input>
     </ion-item>
     <ion-item>
         <ion-label>Fecha visita</ion-label>
-        <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY"></ion-datetime>
+        <ion-datetime [(ngModel)]="encuesta.fechaVisita" displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY"></ion-datetime>
     </ion-item>
     <ion-item>
         <ion-label>Fecha visita 1</ion-label>
-        <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY"></ion-datetime>
+        <ion-datetime [(ngModel)]="encuesta.fechaVisita1" displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY"></ion-datetime>
     </ion-item>
     <ion-item>
         <ion-label>Fecha visita 2</ion-label>
-        <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY"></ion-datetime>
+        <ion-datetime [(ngModel)]="encuesta.fechaVisita2" displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY"></ion-datetime>
     </ion-item>
 
     <ion-item>
         <ion-label>Provincia</ion-label>
-        <ion-select multiple="false">
+        <ion-select [(ngModel)]="encuesta.provicia" multiple="false">
             <ion-option *ngFor="let prov of provincias" [value]="prov">{{prov}}</ion-option>
         </ion-select>
     </ion-item>
 
     <ion-item>
         <ion-label flaoating>Municipio</ion-label>
-        <ion-select multiple="false">
+        <ion-select [(ngModel)]="encuesta.municipio" multiple="false">
             <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
         </ion-select>
     </ion-item>
 
     <ion-item>
         <ion-label>Localidad</ion-label>
-        <ion-select multiple="false">
+        <ion-select [(ngModel)]="encuesta.localidad" multiple="false">
             <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
         </ion-select>
     </ion-item>
 
     <ion-item>
         <ion-label>Barrio</ion-label>
-        <ion-select multiple="false">
+        <ion-select [(ngModel)]="encuesta.barrio" multiple="false">
             <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item>
         <ion-label>Dirección</ion-label>
-        <ion-input typr="text"></ion-input>
+        <ion-input [(ngModel)]="encuesta.direccion" type="text"></ion-input>
     </ion-item>
     <ion-item>
         <ion-label>Etnia</ion-label>
-        <ion-select multiple="false">
+        <ion-select [(ngModel)]="encuesta.etnia" multiple="false">
             <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
         </ion-select>
     </ion-item>
@@ -107,50 +107,57 @@
     
     <ion-item>
         <ion-label>Piso</ion-label>
-        <ion-select multiple="false">
+        <ion-select [(ngModel)]="encuesta.materialPiso" multiple="false">
             <ion-option *ngFor="let loc of materialesPiso" [value]="loc">{{loc}}</ion-option>
         </ion-select>
     </ion-item>
 
     <ion-item>
         <ion-label>Pared</ion-label>
-        <ion-select multiple="false">
+        <ion-select [(ngModel)]="encuesta.materialPared" multiple="false">
             <ion-option *ngFor="let loc of materialesPared" [value]="loc">{{loc}}</ion-option>
         </ion-select>
     </ion-item>
 
     <ion-item>
         <ion-label>Techo</ion-label>
-        <ion-select multiple="false">
+        <ion-select [(ngModel)]="encuesta.materialTecho" multiple="false">
             <ion-option *ngFor="let loc of materialesTecho" [value]="loc">{{loc}}</ion-option>
         </ion-select>
     </ion-item>
 
     <ion-item>
         <ion-label>Hab s/baño s/cocina</ion-label>
-        <ion-input type="number" name="title"></ion-input>
+        <ion-input [(ngModel)]="encuesta.cantidadHabitacionesSinServicio" type="number" name="title"></ion-input>
     </ion-item>
 
     <ion-item>
         <ion-label>Inst. Eléctrica</ion-label>
-        <ion-toggle color="primary"></ion-toggle>
+        <ion-toggle [(ngModel)]="encuesta.tieneInstalacionesElectricas" color="primary"></ion-toggle>
     </ion-item>
 
     <ion-item>
         <ion-label>Trat. Basura</ion-label>
-        <ion-toggle color="primary"></ion-toggle>
+        <ion-toggle [(ngModel)]="encuesta.tieneTratamientoBasura" color="primary"></ion-toggle>
     </ion-item>
 
     <ion-item>
         <ion-label>Tipo de casa</ion-label>
-        <ion-select multiple="false" >
+        <ion-select [(ngModel)]="encuesta.tipoCasa" multiple="false" >
             <ion-option *ngFor="let loc of tiposCasa" [value]="loc">{{loc}}</ion-option>
         </ion-select>
     </ion-item>
 
     <ion-item>
+        <ion-label>Fuente de  agua</ion-label>
+        <ion-select [(ngModel)]="encuesta.fuenteAgua" multiple="false">
+            <ion-option *ngFor="let loc of fuentesAgua" [value]="loc">{{loc}}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
         <ion-label>Baño</ion-label>
-        <ion-select multiple="false">
+        <ion-select [(ngModel)]="encuesta.tipoBano" multiple="false">
             <ion-option *ngFor="let loc of tiposBano" [value]="loc">{{loc}}</ion-option>
         </ion-select>
     </ion-item>
@@ -161,12 +168,12 @@
     
     <ion-item>
         <ion-label>De Consumo</ion-label>
-        <ion-toggle color="primary"></ion-toggle>
+        <ion-toggle [(ngModel)]="encuesta.tieneAnimalesConsumo" color="primary"></ion-toggle>
     </ion-item>
 
     <ion-item>
         <ion-label>Domésticos</ion-label>
-        <ion-toggle color="primary"></ion-toggle>
+        <ion-toggle [(ngModel)]="encuesta.tieneAnimalesDomesticos" color="primary"></ion-toggle>
     </ion-item>
 
     <ion-item>

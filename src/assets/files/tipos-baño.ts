@@ -3,5 +3,5 @@ export const TiposBano = [
     'Pozo c/cámara',
     'Pozo ciego',
     'Cielo abierto',
-    'Latrina'
+    'Letrina'
 ];
