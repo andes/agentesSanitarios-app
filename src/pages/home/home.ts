@@ -39,7 +39,7 @@ export class HomePage {
 
     async ionViewDidLoad() {
         await this.createDatabase();
-        await this.agentesSanitariosProvider.createTableEncuesta();
+        await this.agentesSanitariosProvider.createTables();
         setTimeout(() => {
             this.started = true;
         }, 50);

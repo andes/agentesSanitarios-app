@@ -19,67 +19,79 @@ export class AgentesSanitariosProvider {
     }
 
 
-    async update(tupla: any, objectId) {
-        let sql = `UPDATE encuesta SET
-            id = ?,
-            objectId =?
-            WHERE id = ?`;
-        try {
-            return await this.db.executeSql(sql, [tupla.id, objectId]);
-        } catch (err) {
-            return (err);
-        }
-    }
-
-    async insert(tupla: any, objectId) {
-        let sql = `INSERT INTO encuesta(id)
-            VALUES(?)`;
-        let id = tupla.id ? tupla.id : moment().valueOf().toString();
-        try {
-            return await this.db.executeSql(sql, [id]);
-        } catch (err) {
-            return (err);
-        }
+    async createTables() {
+        await this.createTableEncuesta();
+        await this.createTableComponenteHogar();
     }
 
     createTableEncuesta() {
-        let sql = `CREATE TABLE IF NOT EXISTS encuesta(
-            HEADER_nroFormulario INTEGER,
-            HEADER_nroPlanilla INTEGER,
-            HEADER_nroParcela INTEGER,
-            HEADER_nroVivienda INTEGER,
-            HEADER_nroHogar INTEGER,
-            HEADER_fechaVisita DATETIME,
-            HEADER_fechaVisita2 DATETIME,
-            HEADER_fechaVisita3 DATETIME,
-            HEADER_nombreEncuestador VARCHAR(100),
-            HEADER_apellidoEncuestador VARCHAR(100),
-            HEADER_provincia VARCHAR(100),
-            HEADER_municipio VARCHAR(100),
-            HEADER_localidad VARCHAR(100),
-            HEADER_barrio VARCHAR(100),
-            HEADER_direccion VARCHAR(200),
-            HEADER_tipoZona VARCHAR(50),
-            HEADER_etnia VARCHAR(100),
-
-            COND_SOC_materialPiso VARCHAR(20),
-            COND_SOC_materialPared VARCHAR(20),
-            COND_SOC_materialTecho VARCHAR(20),
-            COND_SOC_cantidadHabitacionesSinServicio INTEGER,
-            COND_SOC_tieneInstalacionElectrica BOOLEAN,
-            COND_SOC_tieneTratamiendoBasura BOOLEAN,
-            COND_SOC_tipoCasa VARCHAR(20),
-            COND_SOC_fuenteAgua VARCHAR(20),
-            COND_SOC_tipoBaño VARCHAR(20),
-            COND_SOC_tieneAnimalesConsumo BOOLEAN,
-            COND_SOC_animalesConsumoVacunados BOOLEAN,
-            COND_SOC_animalesConsumoDesparasitados BOOLEAN,
-            COND_SOC_tieneAnimalesDomesticos BOOLEAN,
-            COND_SOC_animalesDomesticosVacunados BOOLEAN,
-            COND_SOC_animalesDomesticosDesparasitados BOOLEAN)`;
         try {
+            let sql = `CREATE TABLE IF NOT EXISTS encuesta(
+                HEADER_nroFormulario INTEGER,
+                HEADER_nroPlanilla INTEGER,
+                HEADER_nroParcela INTEGER,
+                HEADER_nroVivienda INTEGER,
+                HEADER_nroHogar INTEGER,
+                HEADER_fechaVisita DATETIME,
+                HEADER_fechaVisita2 DATETIME,
+                HEADER_fechaVisita3 DATETIME,
+                HEADER_nombreEncuestador VARCHAR(100),
+                HEADER_apellidoEncuestador VARCHAR(100),
+                HEADER_provincia VARCHAR(100),
+                HEADER_municipio VARCHAR(100),
+                HEADER_localidad VARCHAR(100),
+                HEADER_barrio VARCHAR(100),
+                HEADER_direccion VARCHAR(200),
+                HEADER_tipoZona VARCHAR(50),
+                HEADER_etnia VARCHAR(100),
+
+                COND_SOC_materialPiso VARCHAR(20),
+                COND_SOC_materialPared VARCHAR(20),
+                COND_SOC_materialTecho VARCHAR(20),
+                COND_SOC_cantidadHabitacionesSinServicio INTEGER,
+                COND_SOC_tieneInstalacionElectrica BOOLEAN,
+                COND_SOC_tieneTratamiendoBasura BOOLEAN,
+                COND_SOC_tipoCasa VARCHAR(20),
+                COND_SOC_fuenteAgua VARCHAR(20),
+                COND_SOC_tipoBaño VARCHAR(20),
+                COND_SOC_tieneAnimalesConsumo BOOLEAN,
+                COND_SOC_animalesConsumoVacunados BOOLEAN,
+                COND_SOC_animalesConsumoDesparasitados BOOLEAN,
+                COND_SOC_tieneAnimalesDomesticos BOOLEAN,
+                COND_SOC_animalesDomesticosVacunados BOOLEAN,
+                COND_SOC_animalesDomesticosDesparasitados BOOLEAN)`;
             return this.db.executeSql(sql, []);
         } catch (err) {
+            return (err);
+        }
+    }
+
+    createTableComponenteHogar() {
+        try {
+            let sql = `CREATE TABLE IF NOT EXISTS componenteHogar(
+                apellido VARCHAR(50),
+                nombre VARCHAR(50),
+                tipo_documento VARCHAR(10),
+                numero_documento VARCHAR(10),
+                nacionalidad  VARCHAR(20),
+                sexo VARCHAR(10),
+                genero VARCHAR(10),
+                vinculo_jefe VARCHAR(20),
+                fecha_nacimiento DATETIME,
+                ocupacion VARCHAR(20),
+                beneficio_social VARCHAR(20),
+                nivel_educacional VARCHAR(20),
+                estado_cursada VARCHAR(10),
+                enfermedades_cronicas VARCHAR(20),
+                asistencia_alimentaria VARCHAR(20),
+                enquema_vacunacion BOOLEAN,
+                cobertura_salud  VARCHAR(20),
+                lugar_atencion VARCHAR(20),
+                discapacidad VARCHAR(20)
+            )`;
+            return this.db.executeSql(sql, []);
+        } catch (err) {
+            console.log('create componenteHogar', err)
             return (err);
         }
     }
@@ -158,6 +170,60 @@ export class AgentesSanitariosProvider {
             ]);
         } catch (err) {
             return err;
+        }
+    }
+
+    async insertComponenteHogar(componenteHogar) {
+        let sql = `INSERT INTO componenteHogar(
+        apellido,
+        nombre,
+        tipo_documento,
+        numero_documento,
+        nacionalidad,
+        sexo,
+        genero,
+        vinculo_jefe,
+        fecha_nacimiento,
+        ocupacion,
+        beneficio_social,
+        nivel_educacional,
+        estado_cursada,
+        enfermedades_cronicas,
+        asistencia_alimentaria,
+        enquema_vacunacion,
+        cobertura_salud,
+        lugar_atencion,
+        discapacidad)
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+        try {
+            return await this.db.executeSql(sql, [
+                componenteHogar.apellido,
+                componenteHogar.nombre,
+                componenteHogar.tipoDocumento,
+                componenteHogar.numeroDocumento,
+                componenteHogar.nacionalidad,
+                componenteHogar.sexo,
+                componenteHogar.genero,
+                componenteHogar.vinculoJefeHogar,
+                componenteHogar.fechaNacimiento,
+                componenteHogar.ocupacion,
+                componenteHogar.beneficioSocial,
+                componenteHogar.nivelEducacional,
+                componenteHogar.estadoCursada,
+                componenteHogar.enfermedadesCronicas,
+                componenteHogar.asistenciaAlimentaria,
+                // componenteHogar.embarazo,
+                componenteHogar.esquemaVacunacion,
+                componenteHogar.coberturaSalud,
+                componenteHogar.lugarAtencion,
+                componenteHogar.discapacidad,
+                // componenteHogar.certificadoDiscapacidad,
+                // componenteHogar.cudNumero,
+                // componenteHogar.cudVigencia
+            ]);
+        } catch (err) {
+            console.log(err)
+            return (err);
         }
     }
 

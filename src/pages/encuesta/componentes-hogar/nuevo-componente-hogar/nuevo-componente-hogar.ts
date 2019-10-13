@@ -1,3 +1,4 @@
+import { AgentesSanitariosProvider } from './../../../../providers/agentes-sanitarios/agendes-sanitarios';
 import { TiposDocumento } from './../../../../assets/files/tipos-documento';
 import { Ocupaciones } from './../../../../assets/files/ocupaciones';
 import { Sexos } from './../../../../assets/files/sexos';
@@ -41,42 +42,40 @@ export class NuevoComponenteHogarPage {
     sexos = Sexos;
     ocupaciones = Ocupaciones;
 
+    componenteHogar = {
+        apellido: null,
+        nombre: null,
+        tipoDocumento: null,
+        numeroDocumento: null,
+        nacionalidad: null,
+        sexo: null,
+        genero: null,
+        vinculoJefeHogar: null,
+        fechaNacimiento: null,
+        ocupacion: null,
+        beneficioSocial: null,
+        nivelEducacional: null,
+        estadoCursada: null,
+        enfermedadesCronicas: null,
+        asistenciaAlimentaria: false,
+        embarazo: false,
+        esquemaVacunacion: null,
+        coberturaSalud: null,
+        lugarAtencion: null,
+        discapacidad: null,
+        certificadoDiscapacidad: false,
+        cudNumero: null,
+        cudVigencia: null
+    }
+
+    guardar() {
+        console.log(this.componenteHogar)
+        this.agentesSanitariosProvider.insertComponenteHogar(this.componenteHogar)
+    }
+
     constructor(
+        public agentesSanitariosProvider: AgentesSanitariosProvider
         // public navCtrl: NavController,
         ) {
     }
-    // ionViewWillEnter() {
-    //     this.menuCtrl.enable(true);
-    // }
-
-    // ionViewDidLoad() {
-    //     setTimeout(() => {
-    //         this.started = true;
-    //     }, 50);
-    // }
-
-    // isLogin() {
-    //     return this.authService.user != null;
-    // }
-
-    // nuevaEncuesta() {
-    //     if (this.isLogin()) {
-    //         this.navCtrl.push(Encuesta1Page);
-    //     }
-    // }
-
-    // isProfesional() {
-    //     return this.authService.user && this.authService.user.profesionalId != null;
-    // }
-
-    // login() {
-    //     if (!this.isLogin()) {
-    //         this.navCtrl.push(LoginPage);
-    //     } else {
-    //         //   this.reporter.report();
-    //     }
-    // }
-
-
-
 }
