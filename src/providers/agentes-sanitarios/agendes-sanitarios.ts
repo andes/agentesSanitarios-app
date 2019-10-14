@@ -239,4 +239,17 @@ export class AgentesSanitariosProvider {
             })
             .catch(error => error);
     }
+
+    obtenerComponentesHogar(idEncuesta) {
+        let sql = 'SELECT * FROM componenteHogar';
+        return this.db.executeSql(sql, [])
+            .then(response => {
+                let datos = [];
+                for (let index = 0; index < response.rows.length; index++) {
+                    datos.push(response.rows.item(index));
+                }
+                return Promise.resolve(datos);
+            })
+            .catch(error => error);
+    }
 }

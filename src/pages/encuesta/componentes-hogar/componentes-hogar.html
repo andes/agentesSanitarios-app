@@ -11,6 +11,9 @@
         </button>
     </ion-item>
     <ion-item>
-        <ion-label>Tabla de componentes de hogar</ion-label>
+        <ng-container *ngFor="let componenteHogar of componentesHogar">
+            {{componenteHogar | json }}
+        </ng-container>
     </ion-item>
+
 </ion-content>
