@@ -248,6 +248,7 @@ export class AgentesSanitariosProvider {
                 for (let index = 0; index < response.rows.length; index++) {
                     datos.push(response.rows.item(index));
                 }
+                console.log(datos)
                 return Promise.resolve(datos);
             })
             .catch(error => error);

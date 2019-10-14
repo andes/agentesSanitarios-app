@@ -10,10 +10,12 @@
             Nuevo Integrante de Hogar
         </button>
     </ion-item>
-    <ion-item>
-        <ng-container *ngFor="let componenteHogar of componentesHogar">
-            {{componenteHogar | json }}
-        </ng-container>
-    </ion-item>
+
+    <ion-list>
+        <ion-item *ngFor="let componenteHogar of componentesHogar">
+            <h2>{{componenteHogar.apellido}}, {{componenteHogar.nombre}}</h2>
+            <h3>{{componenteHogar.numero_documento}} - {{componenteHogar.fecha_nacimiento}}</h3>
+        </ion-item>
+    </ion-list>
 
 </ion-content>
