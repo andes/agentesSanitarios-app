@@ -5,7 +5,10 @@
 </ion-header>
 
 <ion-content home background="white" padding>
-    <ng-container *ngFor="let encuesta of encuestas">
-        {{encuesta | json }}
-    </ng-container>
+    <ion-list>
+        <ion-item *ngFor="let encuesta of encuestas">
+            <h2>Formulario Nro.: {{encuesta.HEADER_nroFormulario}}, Fecha visita: {{encuesta.HEADER_fechaVisita}}</h2>
+        </ion-item>
+    </ion-list>
 </ion-content>
+

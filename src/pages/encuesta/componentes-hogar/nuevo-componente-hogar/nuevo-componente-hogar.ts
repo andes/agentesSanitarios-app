@@ -1,3 +1,4 @@
+import { IComponenteHogar } from './../../../../interfaces/componenteHogar.interface';
 import { AgentesSanitariosProvider } from './../../../../providers/agentes-sanitarios/agendes-sanitarios';
 import { TiposDocumento } from './../../../../assets/files/tipos-documento';
 import { Ocupaciones } from './../../../../assets/files/ocupaciones';
@@ -42,31 +43,7 @@ export class NuevoComponenteHogarPage {
     sexos = Sexos;
     ocupaciones = Ocupaciones;
 
-    componenteHogar = {
-        apellido: null,
-        nombre: null,
-        tipoDocumento: null,
-        numeroDocumento: null,
-        nacionalidad: null,
-        sexo: null,
-        genero: null,
-        vinculoJefeHogar: null,
-        fechaNacimiento: null,
-        ocupacion: null,
-        beneficioSocial: null,
-        nivelEducacional: null,
-        estadoCursada: null,
-        enfermedadesCronicas: null,
-        asistenciaAlimentaria: false,
-        embarazo: false,
-        esquemaVacunacion: null,
-        coberturaSalud: null,
-        lugarAtencion: null,
-        discapacidad: null,
-        certificadoDiscapacidad: false,
-        cudNumero: null,
-        cudVigencia: null
-    }
+    componenteHogar: IComponenteHogar;
 
     guardar() {
         console.log(this.componenteHogar)
@@ -77,5 +54,10 @@ export class NuevoComponenteHogarPage {
         public agentesSanitariosProvider: AgentesSanitariosProvider
         // public navCtrl: NavController,
         ) {
+        this.nuevoComponenteHogar();
+    }
+
+    nuevoComponenteHogar() {
+        this.componenteHogar = new IComponenteHogar();
     }
 }

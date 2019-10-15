@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { SQLiteObject } from '@ionic-native/sqlite';
 import * as moment from 'moment';
 import { NetworkProvider } from '../network';
+import { IEncuesta } from 'interfaces/encuesta.interface';
 
 @Injectable()
 export class AgentesSanitariosProvider {
@@ -27,6 +28,7 @@ export class AgentesSanitariosProvider {
     createTableEncuesta() {
         try {
             let sql = `CREATE TABLE IF NOT EXISTS encuesta(
+                HEADER_equipoNucleoReferencia VARCHAR(100),
                 HEADER_nroFormulario INTEGER,
                 HEADER_nroPlanilla INTEGER,
                 HEADER_nroParcela INTEGER,
@@ -96,9 +98,10 @@ export class AgentesSanitariosProvider {
         }
     }
 
-    async insertEncuesta(encuesta) {
+    async insertEncuesta(encuesta: IEncuesta) {
         try {
         let sql = `INSERT INTO encuesta(
+            HEADER_equipoNucleoReferencia,
             HEADER_nroFormulario,
             HEADER_nroPlanilla,
             HEADER_nroParcela,
@@ -135,8 +138,9 @@ export class AgentesSanitariosProvider {
             `;
 
             return await this.db.executeSql(sql, [
+                encuesta.equipoNucleoReferencia,
                 encuesta.nroFormulario,
-                encuesta.nroPlantilla,
+                encuesta.nroPlanilla,
                 encuesta.nroParcela,
                 encuesta.nroVivienda,
                 encuesta.nroHogar,
@@ -145,7 +149,7 @@ export class AgentesSanitariosProvider {
                 encuesta.fechaVisita2,
                 encuesta.nombreEncuestador,
                 encuesta.apellidoEncuestador,
-                encuesta.provicia,
+                encuesta.provincia,
                 encuesta.municipio,
                 encuesta.localidad,
                 encuesta.barrio,

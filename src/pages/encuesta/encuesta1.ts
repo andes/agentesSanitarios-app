@@ -10,6 +10,7 @@ import { MaterialesPiso } from '../../assets/files/material-piso';
 import { MaterialesTecho } from '../../assets/files/material-techo';
 import { TiposBano } from '../../assets/files/tipos-baño';
 import { TiposCasa } from '../../assets/files/tipos-casa';
+import { IEncuesta } from '../../interfaces/encuesta.interface';
 
 @Component({
     selector: 'encuesta1',
@@ -27,39 +28,7 @@ export class Encuesta1Page {
     tiposBano;
     tiposCasa;
 
-    encuesta = {
-        nroFormulario: null,
-        nroPlantilla: null,
-        nroParcela: null,
-        nroVivienda: null,
-        nroHogar: null,
-        nombreEncuestador: null,
-        apellidoEncuestador: null,
-        fechaVisita: null,
-        fechaVisita1: null,
-        fechaVisita2: null,
-        provicia: null,
-        municipio: null,
-        localidad: null,
-        barrio: null,
-        direccion: null,
-        etnia: null,
-        materialPiso: null,
-        materialPared: null,
-        materialTecho: null,
-        cantidadHabitacionesSinServicio: null,
-        tieneInstalacionesElectricas: false,
-        tieneTratamientoBasura: false,
-        tipoCasa: null,
-        fuenteAgua: null,
-        tipoBano: null,
-        tieneAnimalesConsumo: false,
-        animalesConsumoVacunados: false,
-        animalesConsumoDesparasitados: false,
-        tieneAnimalesDomestico: false,
-        animalesDomesticosVacunados: false,
-        animalesDomesticosDesparasitados: false
-    }
+    encuesta: IEncuesta;
 
     constructor(
         public navCtrl: NavController,
@@ -74,6 +43,14 @@ export class Encuesta1Page {
         this.tiposBano = TiposBano;
         this.tiposCasa = TiposCasa;
         this.fuentesAgua = FuentesAgua;
+
+        this.nuevaEncuesta();
+    }
+
+    nuevaEncuesta() {
+        this.encuesta = new IEncuesta();
+        this.encuesta.fechaVisita = new Date();
+        this.encuesta.provincia = 'San Juan';
     }
 
     async gotoComponentesHogar() {
