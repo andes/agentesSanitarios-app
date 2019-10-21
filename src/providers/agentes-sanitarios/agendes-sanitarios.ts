@@ -21,79 +21,224 @@ export class AgentesSanitariosProvider {
 
 
     async createTables() {
-        await this.createTableEncuesta();
-        await this.createTableComponenteHogar();
+        // await this.createTableEncuesta();
+        // await this.createTableComponenteHogar();
+        await this.createTableParcelas();
     }
 
-    createTableEncuesta() {
-        try {
-            let sql = `CREATE TABLE IF NOT EXISTS encuesta(
-                HEADER_equipoNucleoReferencia VARCHAR(100),
-                HEADER_nroFormulario INTEGER,
-                HEADER_nroPlanilla INTEGER,
-                HEADER_nroParcela INTEGER,
-                HEADER_nroVivienda INTEGER,
-                HEADER_nroHogar INTEGER,
-                HEADER_fechaVisita DATETIME,
-                HEADER_fechaVisita2 DATETIME,
-                HEADER_fechaVisita3 DATETIME,
-                HEADER_nombreEncuestador VARCHAR(100),
-                HEADER_apellidoEncuestador VARCHAR(100),
-                HEADER_provincia VARCHAR(100),
-                HEADER_municipio VARCHAR(100),
-                HEADER_localidad VARCHAR(100),
-                HEADER_barrio VARCHAR(100),
-                HEADER_direccion VARCHAR(200),
-                HEADER_tipoZona VARCHAR(50),
-                HEADER_etnia VARCHAR(100),
+    // createTableEncuesta() {
+    //     try {
+    //         let sql = `CREATE TABLE IF NOT EXISTS encuesta(
+    //             HEADER_equipoNucleoReferencia VARCHAR(100),
+    //             HEADER_nroFormulario INTEGER,
+    //             HEADER_nroPlanilla INTEGER,
+    //             HEADER_nroParcela INTEGER,
+    //             HEADER_nroVivienda INTEGER,
+    //             HEADER_nroHogar INTEGER,
+    //             HEADER_fechaVisita DATETIME,
+    //             HEADER_fechaVisita2 DATETIME,
+    //             HEADER_fechaVisita3 DATETIME,
+    //             HEADER_nombreEncuestador VARCHAR(100),
+    //             HEADER_apellidoEncuestador VARCHAR(100),
+    //             HEADER_provincia VARCHAR(100),
+    //             HEADER_municipio VARCHAR(100),
+    //             HEADER_localidad VARCHAR(100),
+    //             HEADER_barrio VARCHAR(100),
+    //             HEADER_direccion VARCHAR(200),
+    //             HEADER_tipoZona VARCHAR(50),
+    //             HEADER_etnia VARCHAR(100),
 
-                COND_SOC_materialPiso VARCHAR(20),
-                COND_SOC_materialPared VARCHAR(20),
-                COND_SOC_materialTecho VARCHAR(20),
-                COND_SOC_cantidadHabitacionesSinServicio INTEGER,
-                COND_SOC_tieneInstalacionElectrica BOOLEAN,
-                COND_SOC_tieneTratamiendoBasura BOOLEAN,
-                COND_SOC_tipoCasa VARCHAR(20),
-                COND_SOC_fuenteAgua VARCHAR(20),
-                COND_SOC_tipoBaño VARCHAR(20),
-                COND_SOC_tieneAnimalesConsumo BOOLEAN,
-                COND_SOC_animalesConsumoVacunados BOOLEAN,
-                COND_SOC_animalesConsumoDesparasitados BOOLEAN,
-                COND_SOC_tieneAnimalesDomesticos BOOLEAN,
-                COND_SOC_animalesDomesticosVacunados BOOLEAN,
-                COND_SOC_animalesDomesticosDesparasitados BOOLEAN)`;
+    //             COND_SOC_materialPiso VARCHAR(20),
+    //             COND_SOC_materialPared VARCHAR(20),
+    //             COND_SOC_materialTecho VARCHAR(20),
+    //             COND_SOC_cantidadHabitacionesSinServicio INTEGER,
+    //             COND_SOC_tieneInstalacionElectrica BOOLEAN,
+    //             COND_SOC_tieneTratamiendoBasura BOOLEAN,
+    //             COND_SOC_tipoCasa VARCHAR(20),
+    //             COND_SOC_fuenteAgua VARCHAR(20),
+    //             COND_SOC_tipoBaño VARCHAR(20),
+    //             COND_SOC_tieneAnimalesConsumo BOOLEAN,
+    //             COND_SOC_animalesConsumoVacunados BOOLEAN,
+    //             COND_SOC_animalesConsumoDesparasitados BOOLEAN,
+    //             COND_SOC_tieneAnimalesDomesticos BOOLEAN,
+    //             COND_SOC_animalesDomesticosVacunados BOOLEAN,
+    //             COND_SOC_animalesDomesticosDesparasitados BOOLEAN)`;
+    //         return this.db.executeSql(sql, []);
+    //     } catch (err) {
+    //         return (err);
+    //     }
+    // }
+
+    // createTableComponenteHogar() {
+    //     try {
+    //         let sql = `CREATE TABLE IF NOT EXISTS componenteHogar(
+    //             apellido VARCHAR(50),
+    //             nombre VARCHAR(50),
+    //             tipo_documento VARCHAR(10),
+    //             numero_documento VARCHAR(10),
+    //             nacionalidad  VARCHAR(20),
+    //             sexo VARCHAR(10),
+    //             genero VARCHAR(10),
+    //             vinculo_jefe VARCHAR(20),
+    //             fecha_nacimiento DATETIME,
+    //             ocupacion VARCHAR(20),
+    //             beneficio_social VARCHAR(20),
+    //             nivel_educacional VARCHAR(20),
+    //             estado_cursada VARCHAR(10),
+    //             enfermedades_cronicas VARCHAR(20),
+    //             asistencia_alimentaria VARCHAR(20),
+    //             enquema_vacunacion BOOLEAN,
+    //             cobertura_salud  VARCHAR(20),
+    //             lugar_atencion VARCHAR(20),
+    //             discapacidad VARCHAR(20)
+    //         )`;
+    //         return this.db.executeSql(sql, []);
+    //     } catch (err) {
+    //         console.log('create componenteHogar', err)
+    //         return (err);
+    //     }
+    // }
+
+    createTableParcelas() {
+        try {
+            let sql = `CREATE TABLE IF NOT EXISTS parcelas(
+                id INTEGER NOT NULL PRIMARY KEY,
+                FOREIGN KEY(idUsuarioCreacion) REFERENCES usuarios(id),
+                FOREIGN KEY(idUsuarioActualizacion) REFERENCES usuarios(id),
+                fechaCreacion DATETIME,
+                FechaActualizacion DATETIME,
+                nroParcela INTEGER,
+                provincia VARCHAR(100),
+                municipio VARCHAR(100),
+                localidad  VARCHAR(100),
+                barrio  VARCHAR(100),
+                direccion  VARCHAR(100),
+                zonaUbicacion  VARCHAR(100)
+                )`;
             return this.db.executeSql(sql, []);
         } catch (err) {
             return (err);
         }
     }
 
-    createTableComponenteHogar() {
+    createTableViviendas() {
         try {
-            let sql = `CREATE TABLE IF NOT EXISTS componenteHogar(
-                apellido VARCHAR(50),
-                nombre VARCHAR(50),
-                tipo_documento VARCHAR(10),
-                numero_documento VARCHAR(10),
-                nacionalidad  VARCHAR(20),
-                sexo VARCHAR(10),
-                genero VARCHAR(10),
-                vinculo_jefe VARCHAR(20),
-                fecha_nacimiento DATETIME,
-                ocupacion VARCHAR(20),
-                beneficio_social VARCHAR(20),
-                nivel_educacional VARCHAR(20),
-                estado_cursada VARCHAR(10),
-                enfermedades_cronicas VARCHAR(20),
-                asistencia_alimentaria VARCHAR(20),
-                enquema_vacunacion BOOLEAN,
-                cobertura_salud  VARCHAR(20),
-                lugar_atencion VARCHAR(20),
-                discapacidad VARCHAR(20)
-            )`;
+            let sql = `CREATE TABLE IF NOT EXISTS viviendas(
+                id INTEGER NOT NULL PRIMARY KEY,
+                FOREIGN KEY(idParcela) REFERENCES parcelas(id),
+                FOREIGN KEY(idUsuarioCreacion) REFERENCES usuarios(id),
+                FOREIGN KEY(idUsuarioActualizacion) REFERENCES usuarios(id),
+                fechaCreacion DATETIME,
+                FechaActualizacion DATETIME,
+                materialPiso VARCHAR(100),
+                materialPared VARCHAR(100),
+                materialTecho  VARCHAR(100),
+                cantidadHabitaciones  VARCHAR(100),
+                tipoCasa  VARCHAR(100),
+                obtencionAgua  VARCHAR(100),
+                bano  VARCHAR(100),
+                instalacionElectrica  VARCHAR(100),
+                tratamientoBasura  VARCHAR(100),
+                tieneAnimalesConsumo BOOLEAN,
+                animalesConsumoVacunados BOOLEAN,
+                animalesConsumoDesparasitados BOOLEAN,
+                tieneAnimalesDomesticos BOOLEAN,
+                animalesDomesticosVacunados BOOLEAN,
+                animalesDomesticosDesparasitados BOOLEAN,
+                internet BOOLEAN,
+                tvCable BOOLEAN,
+                dtv  BOOLEAN,
+                automovil  BOOLEAN,
+                moto  BOOLEAN,
+                lineaTelefono  BOOLEAN,
+                celularSinInternet  BOOLEAN,
+                celularConInternet BOOLEAN,
+                otrosDatos  VARCHAR(100)
+                )`;
             return this.db.executeSql(sql, []);
         } catch (err) {
-            console.log('create componenteHogar', err)
+            return (err);
+        }
+    }
+
+    createTableHogares() {
+        try {
+            let sql = `CREATE TABLE IF NOT EXISTS hogares(
+                id INTEGER NOT NULL PRIMARY KEY,
+                FOREIGN KEY(idVivienda) REFERENCES viviendas(id),
+                FOREIGN KEY(idUsuarioCreacion) REFERENCES usuarios(id),
+                FOREIGN KEY(idUsuarioActualizacion) REFERENCES usuarios(id),
+                fechaCreacion DATETIME,
+                FechaActualizacion DATETIME,
+                muerteNinoMenor5 BOOLEAN,
+                muerteNinoMenor5Causa VARCHAR(100),
+                muerteNinoMenor5CausaOtro VARCHAR(100),
+                menor5ConEnfermedadGrave INTEGER
+                )`;
+            return this.db.executeSql(sql, []);
+        } catch (err) {
+            return (err);
+        }
+    }
+
+    createTableIntegrantes() {
+        try {
+            let sql = `CREATE TABLE IF NOT EXISTS integrantes(
+                id INTEGER NOT NULL PRIMARY KEY,
+                FOREIGN KEY(idHogar) REFERENCES hogares(id),
+                FOREIGN KEY(idUsuarioCreacion) REFERENCES usuarios(id),
+                FOREIGN KEY(idUsuarioActualizacion) REFERENCES usuarios(id),
+                fechaCreacion DATETIME,
+                FechaActualizacion DATETIME,
+                esJefeHogar BOOLEAN,
+                apellido VARCHAR(100),
+                nombre VARCHAR(100),
+                tipoDocumento VARCHAR(100),
+                numeroDocumento VARCHAR(100),
+                nacionalidad VARCHAR(100),
+                sexo VARCHAR(100),
+                genero VARCHAR(100),
+                vinculoConJefeHogar VARCHAR(100),
+                fechaNacimiento DATETIME,
+                ocupacion VARCHAR(100),
+                beneficioSocial VARCHAR(100),
+                nivelEducativo VARCHAR(100),
+                nivelEducativoIncompletoEstado VARCHAR(100),
+                enfermedadCronica1 VARCHAR(100),
+                enfermedadCronica1Estado  VARCHAR(100),
+                enfermedadCronica2 VARCHAR(100),
+                enfermedadCronica2Estado  VARCHAR(100),
+                enfermedadCronica3 VARCHAR(100),
+                enfermedadCronica3Estado  VARCHAR(100),
+                enfermedadCronica4 VARCHAR(100),
+                enfermedadCronica4Estado  VARCHAR(100),
+                asistenciaAlimentaria BOOLEAN,
+                embarazada BOOLEAN,
+                embarzadaEstado VARCHAR(100),
+                antitetanica BOOLEAN,
+                esquemaVacunas BOOLEAN,
+                coberturaSalud VARCHAR(100),
+                lugarDeAtencion VARCHAR(100),
+                lugarDeAtencionOtro VARCHAR(100),
+                discapacidad VARCHAR(100),
+                discapacidadCertificado VARCHAR(100),
+                cudNumero VARCHAR(100),
+                cudVigencia DATETIME
+                )`;
+            return this.db.executeSql(sql, []);
+        } catch (err) {
+            return (err);
+        }
+    }
+
+    createTableUsuarios() {
+        try {
+            let sql = `CREATE TABLE IF NOT EXISTS usuarios(
+                id INTEGER NOT NULL PRIMARY KEY,
+                nombre VARCHAR(100)
+                )`;
+            return this.db.executeSql(sql, []);
+        } catch (err) {
             return (err);
         }
     }

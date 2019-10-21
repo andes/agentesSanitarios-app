@@ -65,7 +65,7 @@
         "build": "0.1.4",
         "com-badrit-base64": "^0.2.0",
         "com.darktalker.cordova.screenshot": "^0.1.6",
-        "cordova-android": "6.3.0",
+        "cordova-android": "8.1.0",
         "cordova-android-support-gradle-release": "^2.1.0",
         "cordova-plugin-add-swift-support": "^1.7.1",
         "cordova-plugin-camera": "^2.4.1",
@@ -156,8 +156,6 @@
             },
             "cordova-plugin-nativestorage": {}
         },
-        "platforms": [
-            "android"
-        ]
+        "platforms": []
     }
 }
