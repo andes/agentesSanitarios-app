@@ -40,9 +40,14 @@ export class HomePage {
     async ionViewDidLoad() {
         await this.createDatabase();
         await this.agentesSanitariosProvider.createTables();
+        await testInserts();
         setTimeout(() => {
             this.started = true;
         }, 50);
+    }
+
+    async testInserts() {
+        this.agentesSanitariosProvider.testInserts();
     }
 
     private async createDatabase() {
