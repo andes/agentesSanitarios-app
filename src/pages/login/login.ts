@@ -88,6 +88,8 @@ export class LoginPage {
                     mantenerSesion: resultado.user.mantenerSesion ? resultado.user.mantenerSesion : true
                 };
                 // this.navCtrl.setRoot(OrganizacionesPage);
+
+                
                 this.navCtrl.setRoot(PrincipalPage);
             }).catch(() => {
                 this.inProgress = false;

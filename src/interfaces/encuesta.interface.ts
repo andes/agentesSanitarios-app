@@ -30,7 +30,7 @@ export class IEncuesta {
     tieneAnimalesConsumo: Boolean;
     animalesConsumoVacunados: Boolean;
     animalesConsumoDesparasitados: Boolean;
-    tieneAnimalesDomestico: Boolean;
+    tieneAnimalesDomesticos: Boolean;
     animalesDomesticosVacunados: Boolean;
     animalesDomesticosDesparasitados: Boolean
 }

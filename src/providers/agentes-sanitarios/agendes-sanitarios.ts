@@ -1,3 +1,4 @@
+import { IComponenteHogar } from './../../interfaces/componenteHogar.interface';
 import { Injectable } from '@angular/core';
 import { SQLiteObject } from '@ionic-native/sqlite';
 import * as moment from 'moment';
@@ -55,7 +56,7 @@ export class AgentesSanitariosProvider {
                 COND_SOC_tieneTratamiendoBasura BOOLEAN,
                 COND_SOC_tipoCasa VARCHAR(20),
                 COND_SOC_fuenteAgua VARCHAR(20),
-                COND_SOC_tipoBaño VARCHAR(20),
+                COND_SOC_tipoBano VARCHAR(20),
                 COND_SOC_tieneAnimalesConsumo BOOLEAN,
                 COND_SOC_animalesConsumoVacunados BOOLEAN,
                 COND_SOC_animalesConsumoDesparasitados BOOLEAN,
@@ -71,6 +72,7 @@ export class AgentesSanitariosProvider {
     createTableComponenteHogar() {
         try {
             let sql = `CREATE TABLE IF NOT EXISTS componenteHogar(
+                encuestaId VARCHAR(50),
                 apellido VARCHAR(50),
                 nombre VARCHAR(50),
                 tipo_documento VARCHAR(10),
@@ -127,14 +129,14 @@ export class AgentesSanitariosProvider {
             COND_SOC_tieneTratamiendoBasura,
             COND_SOC_tipoCasa,
             COND_SOC_fuenteAgua,
-            COND_SOC_tipoBaño,
+            COND_SOC_tipoBano,
             COND_SOC_tieneAnimalesConsumo,
             COND_SOC_animalesConsumoVacunados,
             COND_SOC_animalesConsumoDesparasitados,
             COND_SOC_tieneAnimalesDomesticos,
             COND_SOC_animalesDomesticosVacunados,
             COND_SOC_animalesDomesticosDesparasitados)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             `;
 
             return await this.db.executeSql(sql, [
@@ -168,7 +170,7 @@ export class AgentesSanitariosProvider {
                 encuesta.tieneAnimalesConsumo,
                 encuesta.animalesConsumoVacunados,
                 encuesta.animalesConsumoDesparasitados,
-                encuesta.tieneAnimalesDomestico,
+                encuesta.tieneAnimalesDomesticos,
                 encuesta.animalesDomesticosVacunados,
                 encuesta.animalesDomesticosDesparasitados
             ]);
@@ -177,8 +179,9 @@ export class AgentesSanitariosProvider {
         }
     }
 
-    async insertComponenteHogar(componenteHogar) {
+    async insertComponenteHogar(componenteHogar: IComponenteHogar) {
         let sql = `INSERT INTO componenteHogar(
+        encuestaId,
         apellido,
         nombre,
         tipo_documento,
@@ -198,9 +201,10 @@ export class AgentesSanitariosProvider {
         cobertura_salud,
         lugar_atencion,
         discapacidad)
-            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
         try {
             return await this.db.executeSql(sql, [
+                componenteHogar.encuestaId,
                 componenteHogar.apellido,
                 componenteHogar.nombre,
                 componenteHogar.tipoDocumento,
@@ -232,7 +236,7 @@ export class AgentesSanitariosProvider {
     }
 
     obtenerEncuestas() {
-        let sql = 'SELECT * FROM encuesta';
+        let sql = 'SELECT rowid, * FROM encuesta';
         return this.db.executeSql(sql, [])
             .then(response => {
                 let datos = [];
@@ -244,17 +248,21 @@ export class AgentesSanitariosProvider {
             .catch(error => error);
     }
 
-    obtenerComponentesHogar(idEncuesta) {
+    obtenerComponentesHogar(encuestaId) {
+        console.log('obtenerComponentesHogar', encuestaId)
         let sql = 'SELECT * FROM componenteHogar';
+        // let sql = 'SELECT * FROM componenteHogar WHERE encuestaId = "' + encuestaId + '"';
         return this.db.executeSql(sql, [])
             .then(response => {
+                console.log(response)
                 let datos = [];
                 for (let index = 0; index < response.rows.length; index++) {
                     datos.push(response.rows.item(index));
                 }
-                console.log(datos)
                 return Promise.resolve(datos);
             })
-            .catch(error => error);
+            .catch(error => {
+                console.log('error', error)
+            });
     }
 }

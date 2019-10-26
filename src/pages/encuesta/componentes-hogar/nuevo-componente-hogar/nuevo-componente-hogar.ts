@@ -1,3 +1,5 @@
+import { Encuesta1Page } from './../../encuesta1';
+import { NavParams } from 'ionic-angular';
 import { IComponenteHogar } from './../../../../interfaces/componenteHogar.interface';
 import { AgentesSanitariosProvider } from './../../../../providers/agentes-sanitarios/agendes-sanitarios';
 import { TiposDocumento } from './../../../../assets/files/tipos-documento';
@@ -23,9 +25,11 @@ import { Component } from '@angular/core';
     templateUrl: 'nuevo-componente-hogar.html'
 })
 export class NuevoComponenteHogarPage {
-    started = false;
-    user: any;
-    showMpi = false;
+    encuestaId;
+
+    // started = false;
+    // user: any;
+    // showMpi = false;
     tiposDocumento = TiposDocumento;
     beneficiosSociales = BeneficiosSociales;
     certificadosDiscapacidad = CertificadosDiscapacidad;
@@ -46,18 +50,19 @@ export class NuevoComponenteHogarPage {
     componenteHogar: IComponenteHogar;
 
     guardar() {
-        console.log(this.componenteHogar)
         this.agentesSanitariosProvider.insertComponenteHogar(this.componenteHogar)
     }
 
     constructor(
-        public agentesSanitariosProvider: AgentesSanitariosProvider
-        // public navCtrl: NavController,
+        public agentesSanitariosProvider: AgentesSanitariosProvider,
+        public navParams: NavParams
         ) {
         this.nuevoComponenteHogar();
+        this.encuestaId = this.navParams.get('encuestaId');
     }
 
     nuevoComponenteHogar() {
         this.componenteHogar = new IComponenteHogar();
+        this.componenteHogar.encuestaId = this.encuestaId;
     }
 }

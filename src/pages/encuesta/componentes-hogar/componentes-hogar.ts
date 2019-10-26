@@ -1,6 +1,6 @@
 import { AgentesSanitariosProvider } from './../../../providers/agentes-sanitarios/agendes-sanitarios';
 import { NuevoComponenteHogarPage } from './nuevo-componente-hogar/nuevo-componente-hogar';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { Component } from '@angular/core';
 
 @Component({
@@ -12,19 +12,26 @@ export class ComponentesHogarPage {
     user: any;
     showMpi = false;
     provincias;
-    componentesHogar
+    componentesHogar;
+
+    encuestaId;
+
 
     constructor(
         public navCtrl: NavController,
-        public agentesSanitariosProvider: AgentesSanitariosProvider
+        public agentesSanitariosProvider: AgentesSanitariosProvider,
+        public navParams: NavParams
         ) {
+            this.encuestaId = this.navParams.get('encuestaId');
     }
 
     nuevoComponenteHogar() {
-        this.navCtrl.push(NuevoComponenteHogarPage);
+        this.navCtrl.push(NuevoComponenteHogarPage, { encuestaId: this.encuestaId} );
     }
 
     async ionViewWillEnter() {
-        this.componentesHogar = await this.agentesSanitariosProvider.obtenerComponentesHogar(null);
+        this.componentesHogar = await this.agentesSanitariosProvider.obtenerComponentesHogar(this.encuestaId);
+        console.log(this.componentesHogar)
+
     }
 }
