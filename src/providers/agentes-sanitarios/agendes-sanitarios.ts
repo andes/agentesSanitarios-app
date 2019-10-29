@@ -1,17 +1,14 @@
 import { IIntegrante } from './../../interfaces/integrante.interface';
-import { IComponenteHogar } from './../../interfaces/componenteHogar.interface';
 import { Injectable } from '@angular/core';
 import { SQLiteObject } from '@ionic-native/sqlite';
-import * as moment from 'mo     ment';
 import { NetworkProvider } from '../network';
-import { IEncuesta } from './../../interfaces/encuesta.interface';
 import { IParcela } from './../../interfaces/parcela.interface';
 import { IHogar } from './../../interfaces/hogar.interface';
 import { IVivienda } from './../../interfaces/vivienda.interface';
 
 @Injectable()
 export class AgentesSanitariosProvider {
-    private baseUrl = 'modules/mobileApp/encuestas';
+    // private baseUrl = 'modules/mobileApp/encuestas';
 
     db: SQLiteObject = null;
 
@@ -87,12 +84,27 @@ export class AgentesSanitariosProvider {
         }
     }
 
+    getParcela(numeroDocumento) {
+        try {
+            let sql = `SELECT p.id as pid, v.id as vid, * FROM parcela p
+                JOIN vivienda v on v.parcelaId = p.id
+                JOIN hogar h on h.viviendaId = v.id
+                JOIN integrante i on i.hogarId = h.id
+                WHERE i.numeroDocumento = ${numeroDocumento}`;
+
+            return this.db.executeSql(sql, []);
+        } catch (err) {
+            console.log('selectParcela Error!')
+            return err;
+        }
+    }
+
     createTableViviendas() {
         console.log('createTableViviendas')
         try {
             let sql = `CREATE TABLE IF NOT EXISTS vivienda(
-                id INTEGER,
-                idParcela INTEGER,
+                id INTEGER NOT NULL PRIMARY KEY,
+                parcelaId INTEGER,
                 idUsuarioCreacion INTEGER,
                 idUsuarioActualizacion INTEGER,
                 fechaCreacion DATETIME,
@@ -105,7 +117,7 @@ export class AgentesSanitariosProvider {
                 obtencionAgua VARCHAR(100),
                 bano VARCHAR(100),
                 instalacionElectrica VARCHAR(100),
-                tratamientoBasura VARCHAR(100),
+                tratamientoBasura BOOLEAN,
                 tieneAnimalesConsumo BOOLEAN,
                 animalesConsumoVacunados BOOLEAN,
                 animalesConsumoDesparasitados BOOLEAN,
@@ -129,11 +141,11 @@ export class AgentesSanitariosProvider {
         }
     }
 
-    insertVivienda(vivienda: IVivienda, idParcela) {
-        console.log('insertVivienda', idParcela)
+    insertVivienda(vivienda: IVivienda, parcelaId) {
+        console.log('insertVivienda', parcelaId)
         try {
             let sql = `INSERT INTO vivienda(
-                idParcela,
+                parcelaId,
                 fechaCreacion,
                 fechaActualizacion,
                 materialPiso,
@@ -163,7 +175,7 @@ export class AgentesSanitariosProvider {
             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
             return this.db.executeSql(sql, [
-                idParcela,
+                parcelaId,
                 new Date(),
                 new Date(),
                 vivienda.materialPiso,
@@ -201,7 +213,7 @@ export class AgentesSanitariosProvider {
         console.log('createTableHogares')
         try {
             let sql = `CREATE TABLE IF NOT EXISTS hogar(
-                id INTEGER,
+                id INTEGER NOT NULL PRIMARY KEY,
                 viviendaId INTEGER,
                 idUsuarioCreacion INTEGER,
                 idUsuarioActualizacion INTEGER,
@@ -262,8 +274,8 @@ export class AgentesSanitariosProvider {
         console.log('createTableIntegrantes')
         try {
             let sql = `CREATE TABLE IF NOT EXISTS integrante(
-                id INTEGER,
-                idHogar INTEGER,
+                id INTEGER NOT NULL PRIMARY KEY,
+                hogarId INTEGER,
                 idUsuarioCreacion INTEGER,
                 idUsuarioActualizacion  INTEGER,
                 fechaCreacion DATETIME,
@@ -309,9 +321,9 @@ export class AgentesSanitariosProvider {
         }
     }
 
-    insertIntegrante(integrante: IIntegrante, idHogar) {
+    insertIntegrante(integrante: IIntegrante, hogarId) {
         let sql = `INSERT INTO integrante(
-                idHogar,
+                hogarId,
                 fechaCreacion,
                 fechaActualizacion,
                 esJefeHogar,
@@ -352,7 +364,7 @@ export class AgentesSanitariosProvider {
 
         try {
             return this.db.executeSql(sql, [
-                idHogar,
+                hogarId,
                 new Date(),
                 new Date(),
                 integrante.esJefeHogar,
@@ -643,7 +655,8 @@ export class AgentesSanitariosProvider {
     testInserts() {
         try {
             console.log('testInserts(')
-            return this.insertParcela(new IParcela()).then(
+            return this.insertParcela(new IParcela())
+            .then(
                 resParcela => {
                     console.log('testInserts parcela', resParcela.insertId)
 
@@ -653,9 +666,21 @@ export class AgentesSanitariosProvider {
 
                             this.insertHogar(new IHogar(), resVivienda.insertId).then(
                                 resHogar =>  {
-                                    console.log('testInserts hogar')
-                                    this.insertIntegrante(new IIntegrante(), resHogar.insertId)
-
+                                    console.log('testInserts hogar');
+                                    let i = new IIntegrante();
+                                    i.numeroDocumento = '123456789'
+                                    this.insertIntegrante(i, resHogar.insertId).then( () => {
+                                        console.log('testInserts Integrante');
+                                        this.getParcela('123456789').then( data => {
+                                            for (let i = 0; i < data.rows.length; i++) {
+                                                let item = data.rows.item(i);
+                                                // do something with it
+                                                console.log(item)
+                                                // this.results.push(item);
+                                        }
+                                            console.log('res', data)
+                                        })
+                                    } )
                                 }
                             )
                         }
