@@ -4,10 +4,10 @@ import { Injectable } from '@angular/core';
 import { SQLiteObject } from '@ionic-native/sqlite';
 import * as moment from 'mo     ment';
 import { NetworkProvider } from '../network';
-import { IEncuesta } from 'interfaces/encuesta.interface';
-import { IParcela } from 'interfaces/parcela.interface';
-import { IVivienda } from 'interfaces/vivienda.interface';
-import { IHogar } from 'interfaces/hogar.interface';
+import { IEncuesta } from './../../interfaces/encuesta.interface';
+import { IParcela } from './../../interfaces/parcela.interface';
+import { IHogar } from './../../interfaces/hogar.interface';
+import { IVivienda } from './../../interfaces/vivienda.interface';
 
 @Injectable()
 export class AgentesSanitariosProvider {
@@ -27,14 +27,18 @@ export class AgentesSanitariosProvider {
         // await this.createTableEncuesta();
         // await this.createTableComponenteHogar();
         await this.createTableParcelas();
+        await this.createTableViviendas();
+        await this.createTableHogares();
+        await this.createTableIntegrantes();
     }
 
     createTableParcelas() {
         try {
+            console.log('createTableParcelas')
             let sql = `CREATE TABLE IF NOT EXISTS parcela(
                 id INTEGER NOT NULL PRIMARY KEY,
-                FOREIGN KEY(idUsuarioCreacion) REFERENCES usuarios(id),
-                FOREIGN KEY(idUsuarioActualizacion) REFERENCES usuarios(id),
+                idUsuarioCreacion INTEGER,
+                idUsuarioActualizacion INTEGER,
                 fechaCreacion DATETIME,
                 fechaActualizacion DATETIME,
                 nroParcela INTEGER,
@@ -47,11 +51,12 @@ export class AgentesSanitariosProvider {
                 )`;
             return this.db.executeSql(sql, []);
         } catch (err) {
+            console.log('Error!', err)
             return (err);
         }
     }
 
-    async insertParcela(parcela: IParcela) {
+    insertParcela(parcela: IParcela) {
         try {
             let sql = `INSERT INTO parcela(
                 fechaCreacion,
@@ -65,7 +70,7 @@ export class AgentesSanitariosProvider {
                 zonaUbicacion)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-            return await this.db.executeSql(sql, [
+            return this.db.executeSql(sql, [
                 new Date(),
                 new Date(),
                 parcela.nroParcela,
@@ -77,39 +82,30 @@ export class AgentesSanitariosProvider {
                 parcela.tipoZona
             ]);
         } catch (err) {
+            console.log('insertParcela Error!')
             return err;
         }
     }
 
-    createTableRelParcelaVivienda() {
-        try {
-            let sql = `CREATE TABLE IF NOT EXISTS parcelaVivienda(
-                FOREIGN KEY(parcelaId) REFERENCES parcela(id),
-                FOREIGN KEY(viviendaId) REFERENCES vivienda(id) )`;
-            return this.db.executeSql(sql, []);
-        } catch (err) {
-            return (err);
-        }
-    }
-
     createTableViviendas() {
+        console.log('createTableViviendas')
         try {
-            let sql = `CREATE TABLE IF NOT EXISTS viviendas(
-                id INTEGER NOT NULL PRIMARY KEY,
-                FOREIGN KEY(idParcela) REFERENCES parcelas(id),
-                FOREIGN KEY(idUsuarioCreacion) REFERENCES usuarios(id),
-                FOREIGN KEY(idUsuarioActualizacion) REFERENCES usuarios(id),
+            let sql = `CREATE TABLE IF NOT EXISTS vivienda(
+                id INTEGER,
+                idParcela INTEGER,
+                idUsuarioCreacion INTEGER,
+                idUsuarioActualizacion INTEGER,
                 fechaCreacion DATETIME,
                 fechaActualizacion DATETIME,
                 materialPiso VARCHAR(100),
                 materialPared VARCHAR(100),
-                materialTecho  VARCHAR(100),
-                cantidadHabitaciones  VARCHAR(100),
-                tipoCasa  VARCHAR(100),
-                obtencionAgua  VARCHAR(100),
-                bano  VARCHAR(100),
-                instalacionElectrica  VARCHAR(100),
-                tratamientoBasura  VARCHAR(100),
+                materialTecho VARCHAR(100),
+                cantidadHabitaciones VARCHAR(100),
+                tipoCasa VARCHAR(100),
+                obtencionAgua VARCHAR(100),
+                bano VARCHAR(100),
+                instalacionElectrica VARCHAR(100),
+                tratamientoBasura VARCHAR(100),
                 tieneAnimalesConsumo BOOLEAN,
                 animalesConsumoVacunados BOOLEAN,
                 animalesConsumoDesparasitados BOOLEAN,
@@ -118,21 +114,23 @@ export class AgentesSanitariosProvider {
                 animalesDomesticosDesparasitados BOOLEAN,
                 internet BOOLEAN,
                 tvCable BOOLEAN,
-                dtv  BOOLEAN,
-                automovil  BOOLEAN,
-                moto  BOOLEAN,
-                lineaTelefono  BOOLEAN,
-                celularSinInternet  BOOLEAN,
+                dtv BOOLEAN,
+                automovil BOOLEAN,
+                moto BOOLEAN,
+                lineaTelefono BOOLEAN,
+                celularSinInternet BOOLEAN,
                 celularConInternet BOOLEAN,
-                otrosDatos  VARCHAR(100)
+                otrosDatos VARCHAR(100)
                 )`;
             return this.db.executeSql(sql, []);
         } catch (err) {
+            console.log('err', err)
             return (err);
         }
     }
 
     insertVivienda(vivienda: IVivienda, idParcela) {
+        console.log('insertVivienda', idParcela)
         try {
             let sql = `INSERT INTO vivienda(
                 idParcela,
@@ -162,7 +160,7 @@ export class AgentesSanitariosProvider {
                 celularSinInternet,
                 celularConInternet,
                 otrosDatos )
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
             return this.db.executeSql(sql, [
                 idParcela,
@@ -191,20 +189,22 @@ export class AgentesSanitariosProvider {
                 null, // vivienda.lineaTelefono,
                 null, // vivienda.celularSinInternet,
                 null, // vivienda.celularConInternet,
-                null, // vivienda.otrosDatos
+                null // vivienda.otrosDatos
             ]);
         } catch (err) {
+            console.log('err', err)
             return err;
         }
     }
 
     createTableHogares() {
+        console.log('createTableHogares')
         try {
             let sql = `CREATE TABLE IF NOT EXISTS hogar(
-                id INTEGER NOT NULL PRIMARY KEY,
-                FOREIGN KEY(idVivienda) REFERENCES viviendas(id),
-                FOREIGN KEY(idUsuarioCreacion) REFERENCES usuarios(id),
-                FOREIGN KEY(idUsuarioActualizacion) REFERENCES usuarios(id),
+                id INTEGER,
+                viviendaId INTEGER,
+                idUsuarioCreacion INTEGER,
+                idUsuarioActualizacion INTEGER,
                 fechaCreacion DATETIME,
                 fechaActualizacion DATETIME,
                 muerteNinoMenor5 BOOLEAN,
@@ -219,37 +219,53 @@ export class AgentesSanitariosProvider {
     }
 
     insertHogar(hogar: IHogar, viviendaId) {
+        console.log('insertHogar', viviendaId, hogar)
+        // let sql = `INSERT INTO hogar(
+        //     viviendaId,
+        //     fechaCreacion,
+        //     fechaActualizacion,
+        //     muerteNinoMenor5,
+        //     muerteNinoMenor5Causa,
+        //     menor5ConEnfermedadGrave)
+        //      VALUES(?,?,?,?,?,?)`;
+
+        // try {
+        //     return this.db.executeSql(sql, [
+        //         viviendaId,
+        //         new Date(),
+        //         new Date(),
+        //         false, // hogar.muerteNinoMenor5,
+        //         '', // hogar.muerteNinoMenor5Causa,
+        //         '' // hogar.menor5ConEnfermedadGrave
+        //     ]);
         let sql = `INSERT INTO hogar(
-            viviendaId,
-            fechaCreacion,
-            fechaActualizacion,
-            muerteNinoMenor5,
-            muerteNinoMenor5Causa,
-            menor5ConEnfermedadGrave)
-            VALUES(?,?,?,?,?,?,?)`;
+            viviendaId)
+             VALUES(?)`;
 
         try {
             return this.db.executeSql(sql, [
-                viviendaId,
-                new Date(),
-                new Date(),
-                hogar.muerteNinoMenor5,
-                hogar.muerteNinoMenor5Causa,
-                hogar.menor5ConEnfermedadGrave
+                viviendaId
+                //,
+                // new Date(),
+                // new Date(),
+                // false, // hogar.muerteNinoMenor5,
+                // '', // hogar.muerteNinoMenor5Causa,
+                // '' // hogar.menor5ConEnfermedadGrave
             ]);
         } catch (err) {
-            console.log(err)
+            console.log('err', err)
             return (err);
         }
     }
 
     createTableIntegrantes() {
+        console.log('createTableIntegrantes')
         try {
-            let sql = `CREATE TABLE IF NOT EXISTS integrantes(
-                id INTEGER NOT NULL PRIMARY KEY,
-                FOREIGN KEY(idHogar) REFERENCES hogares(id),
-                FOREIGN KEY(idUsuarioCreacion) REFERENCES usuarios(id),
-                FOREIGN KEY(idUsuarioActualizacion) REFERENCES usuarios(id),
+            let sql = `CREATE TABLE IF NOT EXISTS integrante(
+                id INTEGER,
+                idHogar INTEGER,
+                idUsuarioCreacion INTEGER,
+                idUsuarioActualizacion  INTEGER,
                 fechaCreacion DATETIME,
                 fechaActualizacion DATETIME,
                 esJefeHogar BOOLEAN,
@@ -332,7 +348,7 @@ export class AgentesSanitariosProvider {
                 cudNumero,
                 cudVigencia
             )
-            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
         try {
             return this.db.executeSql(sql, [
@@ -626,15 +642,28 @@ export class AgentesSanitariosProvider {
 
     testInserts() {
         try {
-            this.insertParcela(new IParcela()).then(
-                idParcela => this.insertVivienda(new IVivienda(), idParcela).then(
-                    idVivienda => this.insertHogar(new IHogar(), idVivienda).then(
-                        idHogar => this.insertIntegrante(new IIntegrante(), idHogar)
+            console.log('testInserts(')
+            return this.insertParcela(new IParcela()).then(
+                resParcela => {
+                    console.log('testInserts parcela', resParcela.insertId)
+
+                    this.insertVivienda(new IVivienda(), resParcela.insertId).then(
+                        resVivienda => {
+                        console.log('testInserts vivi', resVivienda)
+
+                            this.insertHogar(new IHogar(), resVivienda.insertId).then(
+                                resHogar =>  {
+                                    console.log('testInserts hogar')
+                                    this.insertIntegrante(new IIntegrante(), resHogar.insertId)
+
+                                }
+                            )
+                        }
                     )
-                )
+                }
             )
         } catch (e) {
-            console.log(e)
+            console.log('TEST FAILED!', e)
         }
         
     }

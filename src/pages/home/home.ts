@@ -39,15 +39,18 @@ export class HomePage {
 
     async ionViewDidLoad() {
         await this.createDatabase();
+        console.log('gonna  create tables')
         await this.agentesSanitariosProvider.createTables();
-        await testInserts();
+        console.log('tables created')
+        await this.testInserts();
         setTimeout(() => {
             this.started = true;
         }, 50);
     }
 
     async testInserts() {
-        this.agentesSanitariosProvider.testInserts();
+        console.log('home.ts testInsert')
+        return this.agentesSanitariosProvider.testInserts();
     }
 
     private async createDatabase() {

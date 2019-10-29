@@ -54,8 +54,8 @@ export class Encuesta1Page {
     }
 
     async gotoComponentesHogar() {
-        let insertId = (await this.agentesSanitariosProvider.insertEncuesta(this.encuesta)).insertId;
-        this.navCtrl.push(ComponentesHogarPage, {encuestaId: insertId});
+        // let insertId = (await this.agentesSanitariosProvider.insertEncuesta(this.encuesta)).insertId;
+        // this.navCtrl.push(ComponentesHogarPage, {encuestaId: insertId});
     }
 
 

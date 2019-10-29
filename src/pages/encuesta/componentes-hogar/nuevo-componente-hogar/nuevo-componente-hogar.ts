@@ -50,7 +50,7 @@ export class NuevoComponenteHogarPage {
     componenteHogar: IComponenteHogar;
 
     guardar() {
-        this.agentesSanitariosProvider.insertComponenteHogar(this.componenteHogar)
+        // this.agentesSanitariosProvider.insertComponenteHogar(this.componenteHogar)
     }
 
     constructor(
