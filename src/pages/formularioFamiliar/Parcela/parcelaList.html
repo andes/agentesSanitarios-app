@@ -1,0 +1,13 @@
+<ion-header home>
+    <page-navbar [menu]="true">
+        <ion-title>Listado de Parcelas</ion-title>
+    </page-navbar>
+</ion-header>
+
+<ion-content home background="white" padding>
+    <ion-list>
+        <ion-item *ngFor="let parcela of parcelas">
+            <h2>Parcela Nro.: {{parcela.nroParcela}}, Fecha realizada: {{parcela.fechaCreacion}}</h2>
+        </ion-item>
+    </ion-list>
+</ion-content>

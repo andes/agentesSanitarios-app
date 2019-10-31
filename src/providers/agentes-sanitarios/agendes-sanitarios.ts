@@ -3,6 +3,7 @@ import { SQLiteObject } from '@ionic-native/sqlite';
 import * as moment from 'moment';
 import { NetworkProvider } from '../network';
 import { IEncuesta } from 'interfaces/encuesta.interface';
+import { IParcela } from 'interfaces/parcela.interface';
 
 @Injectable()
 export class AgentesSanitariosProvider {
@@ -14,6 +15,8 @@ export class AgentesSanitariosProvider {
 
 
     setDatabase(db: SQLiteObject) {
+        console.log('la base de datos essssssssssssssss');
+        console.log(db);
         if (this.db === null) {
             this.db = db;
         }
@@ -102,9 +105,8 @@ export class AgentesSanitariosProvider {
     createTableParcelas() {
         try {
             let sql = `CREATE TABLE IF NOT EXISTS parcelas(
-                id INTEGER NOT NULL PRIMARY KEY,
-                FOREIGN KEY(idUsuarioCreacion) REFERENCES usuarios(id),
-                FOREIGN KEY(idUsuarioActualizacion) REFERENCES usuarios(id),
+                idUsuarioCreacion INTEGER,
+                idUsuarioActualizacion INTEGER,
                 fechaCreacion DATETIME,
                 FechaActualizacion DATETIME,
                 nroParcela INTEGER,
@@ -117,6 +119,8 @@ export class AgentesSanitariosProvider {
                 )`;
             return this.db.executeSql(sql, []);
         } catch (err) {
+            console.log('error al crear tabla parcelas');
+            console.log(err);
             return (err);
         }
     }
@@ -133,7 +137,7 @@ export class AgentesSanitariosProvider {
                 materialPiso VARCHAR(100),
                 materialPared VARCHAR(100),
                 materialTecho  VARCHAR(100),
-                cantidadHabitaciones  VARCHAR(100),
+                cantidadHabitaciones  INTEGER,
                 tipoCasa  VARCHAR(100),
                 obtencionAgua  VARCHAR(100),
                 bano  VARCHAR(100),
@@ -243,6 +247,41 @@ export class AgentesSanitariosProvider {
         }
     }
 
+    async insertParcela(parcela: IParcela) {
+    try {
+        let sql = `INSERT INTO parcelas(
+            idUsuarioCreacion,
+            idUsuarioActualizacion,
+            fechaCreacion,
+            FechaActualizacion,
+            nroParcela,
+            provincia,
+            municipio,
+            localidad,
+            barrio,
+            direccion,
+            zonaUbicacion
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            `;
+            return await this.db.executeSql(sql, [
+                parcela.idUsuarioCreacion,
+                parcela.idUsuarioActualizacion,
+                parcela.fechaCreacion,
+                parcela.FechaActualizacion,
+                parcela.nroParcela,
+                parcela.provincia,
+                parcela.municipio,
+                parcela.localidad,
+                parcela.barrio,
+                parcela.direccion,
+                parcela.zonaUbicacion
+            ]);
+        } catch (err) {
+            console.log(err);
+            return err;
+        }
+    }
     async insertEncuesta(encuesta: IEncuesta) {
         try {
         let sql = `INSERT INTO encuesta(
@@ -371,7 +410,6 @@ export class AgentesSanitariosProvider {
                 // componenteHogar.cudVigencia
             ]);
         } catch (err) {
-            console.log(err)
             return (err);
         }
     }
@@ -389,6 +427,19 @@ export class AgentesSanitariosProvider {
             .catch(error => error);
     }
 
+    obtenerParcelas() {
+        let sql = 'SELECT * FROM parcelas';
+        return this.db.executeSql(sql, [])
+            .then(response => {
+                let datos = [];
+                for (let index = 0; index < response.rows.length; index++) {
+                    datos.push(response.rows.item(index));
+                }
+                console.log(datos);
+                return Promise.resolve(datos);
+            })
+            .catch(error => error);
+    }
     obtenerComponentesHogar(idEncuesta) {
         let sql = 'SELECT * FROM componenteHogar';
         return this.db.executeSql(sql, [])

@@ -1,0 +1,53 @@
+<ion-header home>
+    <page-navbar [menu]="true">
+        <ion-title>Creación de Parcela</ion-title>
+    </page-navbar>
+</ion-header>
+
+<ion-content home background="white" padding>    
+    <ion-item>
+        <ion-label>Nro. Parcela</ion-label>
+        <ion-input [(ngModel)]="parcela.nroParcela" type="number"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Provincia</ion-label>
+        <ion-select [(ngModel)]="parcela.provincia" multiple="false" disabled>
+            <ion-option *ngFor="let prov of provincias" [value]="prov">{{prov}}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+        <ion-label flaoating>Municipio</ion-label>
+        <ion-select [(ngModel)]="parcela.municipio" interface="popover">
+            <ion-option *ngFor="let mun of municipios" [value]="mun">{{mun}}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Localidad</ion-label>
+        <ion-input [(ngModel)]="parcela.localidad" type="string"></ion-input>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Barrio</ion-label>
+        <ion-input [(ngModel)]="parcela.barrio" type="string"></ion-input>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Dirección</ion-label>
+        <ion-input [(ngModel)]="parcela.direccion" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+        <ion-label flaoating>Zona</ion-label>
+        <ion-select [(ngModel)]="parcela.zonaUbicacion" multiple="false">
+            <ion-option *ngFor="let zona of zonasUbicacion" [value]="zona">{{zona}}</ion-option>
+        </ion-select>
+    </ion-item>   
+
+    <ion-item>
+        <button ion-button icon-only class="outline primary" [disabled]="disableArbol" (click)="gotoParcelaList()">
+            Guardar
+        </button>
+    </ion-item>
+</ion-content>

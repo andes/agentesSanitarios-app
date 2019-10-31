@@ -184,26 +184,6 @@ ion-header {
     }
 }
 
-.popover-content .list {
-    margin: -1px 0 0 0;
-}
-
-.turno-item-popover {
-    .cancelar-item {
-        ion-icon {
-            color: $danger;
-            font-size: 2rem;
-        }
-    }
-
-    .confirmar-item {
-        ion-icon {
-            color: $success;
-            font-size: 2rem;
-        }
-    }
-}
-
 ion-item {
     background: transparent;
 }
@@ -1196,59 +1176,6 @@ ion-content[resultados] {
 }
 
 // Resultados Select
-ion-popover {
-    left: 0px;
-    bottom: 8px;
-    opacity: 0.9;
-
-    .popover-viewport {
-        padding-right: 26px;
-    }
-}
-
-.popover-ios,
-.popover-md {
-    .popover-arrow {
-        display: none;
-    }
-
-    .popover-content {
-        width: 90vw;
-        left: 5vw !important;
-    }
-}
-
-.popover-md .popover-content {
-    bottom: 12px;
-    top: 267px;
-    left: 0px;
-    transform-origin: right top 0px;
-    transform: scale(1);
-    -webkit-transform-origin: left top;
-    transform-origin: left top;
-    width: 100%;
-    min-width: 0;
-    min-height: 0;
-    max-height: 90%;
-    color: #000;
-    background: #fff;
-    box-shadow: none;
-}
-
-.popover-content {
-    position: absolute;
-    z-index: 10;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    overflow: auto;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
-}
 
 .andes-list li .andes-container>ion-icon.icon-action,
 .andes-list li .andes-container>img.icon-action {

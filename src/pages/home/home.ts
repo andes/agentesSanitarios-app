@@ -11,6 +11,7 @@ import { LoginPage } from '../login/login';
 import { Encuesta1Page } from '../encuesta/encuesta1';
 import { DeviceProvider } from '../../providers/auth/device';
 import { ErrorReporterProvider } from '../../providers/errorReporter';
+import { ParcelaCreatePage } from '../formularioFamiliar/Parcela/parcelaCreate';
 
 @Component({
     selector: 'page-home',
@@ -53,6 +54,8 @@ export class HomePage {
             })
             await this.agentesSanitariosProvider.setDatabase(db);
         } catch (err) {
+            console.log('error al crear base de datos');
+            console.log(err);
             return (err);
         }
     }
@@ -68,6 +71,13 @@ export class HomePage {
         }
     }
 
+    crearParcela() {
+        if (this.isLogin()) {
+            console.log('por hacer push');
+            this.navCtrl.push(ParcelaCreatePage);
+            console.log('luego de hacer push');
+        }
+    }
     consultarEncuestas() {
         if (this.isLogin()) {
             this.navCtrl.push(BuscadorEncuestasPage);

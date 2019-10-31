@@ -22,8 +22,8 @@ import { Encuesta1Page } from '../pages/encuesta/encuesta1';
 import { BuscadorEncuestasPage } from '../pages/encuesta/consulta-encuestas/consulta-encuestas';
 import { ComponentesHogarPage } from '../pages/encuesta/componentes-hogar/componentes-hogar';
 import { NavbarPage } from '../components/navbar/navbar';
-
-
+import { ParcelaListPage } from '../pages/formularioFamiliar/Parcela/parcelaList';
+import { ParcelaCreatePage } from '../pages/formularioFamiliar/Parcela/parcelaCreate';
 // // Plugins
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -64,6 +64,8 @@ import { AgentesSanitariosProvider } from './../providers/agentes-sanitarios/age
         ComponentesHogarPage,
         NuevoComponenteHogarPage,
         NavbarPage,
+        ParcelaCreatePage,
+        ParcelaListPage
     ],
     imports: [
         BrowserModule,
@@ -94,6 +96,8 @@ import { AgentesSanitariosProvider } from './../providers/agentes-sanitarios/age
 //         RegistroUserDataPage,
         LoginPage,
         NavbarPage,
+        ParcelaCreatePage,
+        ParcelaListPage
     ],
     providers: [
         StatusBar,
