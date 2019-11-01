@@ -21,8 +21,9 @@ export class AgentesSanitariosProvider {
     }
 
     async createTables() {
-        // await this.createTableEncuesta();
-        // await this.createTableComponenteHogar();
+        // await this.db.executeSql('DROP TABLE parcela', []);
+        // await this.db.executeSql('DROP TABLE vivienda', []);
+
         await this.createTableParcelas();
         await this.createTableViviendas();
         await this.createTableHogares();
@@ -41,10 +42,10 @@ export class AgentesSanitariosProvider {
                 nroParcela INTEGER,
                 provincia VARCHAR(100),
                 municipio VARCHAR(100),
-                localidad  VARCHAR(100),
-                barrio  VARCHAR(100),
-                direccion  VARCHAR(100),
-                zonaUbicacion  VARCHAR(100)
+                localidad VARCHAR(100),
+                barrio VARCHAR(100),
+                direccion VARCHAR(100),
+                tipoZona VARCHAR(100)
                 )`;
             return this.db.executeSql(sql, []);
         } catch (err) {
@@ -64,7 +65,7 @@ export class AgentesSanitariosProvider {
                 localidad,
                 barrio,
                 direccion,
-                zonaUbicacion)
+                tipoZona)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
             return this.db.executeSql(sql, [
@@ -79,22 +80,50 @@ export class AgentesSanitariosProvider {
                 parcela.tipoZona
             ]);
         } catch (err) {
-            console.log('insertParcela Error!')
             return err;
         }
     }
 
-    getParcela(numeroDocumento) {
+    updateParcela(parcela: IParcela) {
         try {
-            let sql = `SELECT p.id as pid, v.id as vid, * FROM parcela p
+            let sql = `UPDATE parcela SET
+                fechaCreacion=?,
+                fechaActualizacion=?,
+                nroParcela=?,
+                provincia=?,
+                municipio=?,
+                localidad=?,
+                barrio=?,
+                direccion=?,
+                tipoZona=?
+            WHERE id=?`;
+
+            return this.db.executeSql(sql, [
+                new Date(),
+                new Date(),
+                parcela.nroParcela,
+                parcela.provincia,
+                parcela.municipio,
+                parcela.localidad,
+                parcela.barrio,
+                parcela.direccion,
+                parcela.tipoZona,
+                parcela.id
+            ]);
+        } catch (err) {
+            return err;
+        }
+    }
+
+    async getParcela(numeroDocumento) {
+        try {
+            let sql = `SELECT p.* FROM parcela p
                 JOIN vivienda v on v.parcelaId = p.id
                 JOIN hogar h on h.viviendaId = v.id
-                JOIN integrante i on i.hogarId = h.id
+                JOIN integrante i on i.hogarId = h.id;
                 WHERE i.numeroDocumento = ${numeroDocumento}`;
-
-            return this.db.executeSql(sql, []);
+            return (await this.db.executeSql(sql, [])).rows.item(0);
         } catch (err) {
-            console.log('selectParcela Error!')
             return err;
         }
     }
@@ -112,12 +141,12 @@ export class AgentesSanitariosProvider {
                 materialPiso VARCHAR(100),
                 materialPared VARCHAR(100),
                 materialTecho VARCHAR(100),
-                cantidadHabitaciones VARCHAR(100),
+                cantidadHabitacionesSinServicio VARCHAR(100),
                 tipoCasa VARCHAR(100),
-                obtencionAgua VARCHAR(100),
-                bano VARCHAR(100),
-                instalacionElectrica VARCHAR(100),
-                tratamientoBasura BOOLEAN,
+                fuenteAgua VARCHAR(100),
+                tipoBano VARCHAR(100),
+                tieneInstalacionesElectricas VARCHAR(100),
+                tieneTratamientoBasura BOOLEAN,
                 tieneAnimalesConsumo BOOLEAN,
                 animalesConsumoVacunados BOOLEAN,
                 animalesConsumoDesparasitados BOOLEAN,
@@ -151,12 +180,12 @@ export class AgentesSanitariosProvider {
                 materialPiso,
                 materialPared,
                 materialTecho,
-                cantidadHabitaciones,
+                cantidadHabitacionesSinServicio,
                 tipoCasa,
-                obtencionAgua,
-                bano,
-                instalacionElectrica,
-                tratamientoBasura,
+                fuenteAgua,
+                tipoBano,
+                tieneInstalacionesElectricas,
+                tieneTratamientoBasura,
                 tieneAnimalesConsumo,
                 animalesConsumoVacunados,
                 animalesConsumoDesparasitados,
@@ -204,7 +233,101 @@ export class AgentesSanitariosProvider {
                 null // vivienda.otrosDatos
             ]);
         } catch (err) {
-            console.log('err', err)
+            return err;
+        }
+    }
+
+    updateVivienda(vivienda: IVivienda) {
+        console.log('updateVivienda', vivienda)
+        try {
+            let sql = `UPDATE vivienda SET
+                fechaCreacion=?,
+                fechaActualizacion=?,
+                materialPiso=?,
+                materialPared=?,
+                materialTecho=?,
+                cantidadHabitacionesSinServicio=?,
+                tipoCasa=?,
+                fuenteAgua=?,
+                tipoBano=?,
+                tieneInstalacionesElectricas=?,
+                tieneTratamientoBasura=?,
+                tieneAnimalesConsumo=?,
+                animalesConsumoVacunados=?,
+                animalesConsumoDesparasitados=?,
+                tieneAnimalesDomesticos=?,
+                animalesDomesticosVacunados=?,
+                animalesDomesticosDesparasitados=?,
+                internet=?,
+                tvCable=?,
+                dtv=?,
+                automovil=?,
+                moto=?,
+                lineaTelefono=?,
+                celularSinInternet=?,
+                celularConInternet=?,
+                otrosDatos=?
+            WHERE id=?`;
+
+            return this.db.executeSql(sql, [
+                new Date(),
+                new Date(),
+                vivienda.materialPiso,
+                vivienda.materialPared,
+                vivienda.materialTecho,
+                vivienda.cantidadHabitacionesSinServicio,
+                vivienda.tipoCasa,
+                vivienda.fuenteAgua,
+                vivienda.tipoBano,
+                vivienda.tieneInstalacionesElectricas,
+                vivienda.tieneTratamientoBasura,
+                vivienda.tieneAnimalesConsumo,
+                vivienda.animalesConsumoVacunados,
+                vivienda.animalesConsumoDesparasitados,
+                vivienda.tieneAnimalesDomesticos,
+                vivienda.animalesDomesticosVacunados,
+                vivienda.animalesDomesticosDesparasitados,
+                null, // vivienda.internet,
+                null, // vivienda.tvCable,
+                null, // vivienda.dtv,
+                null, // vivienda.automovil,
+                null, // vivienda.moto,
+                null, // vivienda.lineaTelefono,
+                null, // vivienda.celularSinInternet,
+                null, // vivienda.celularConInternet,
+                null, // vivienda.otrosDatos,
+                vivienda.id
+            ]);
+        } catch (err) {
+            return err;
+        }
+    }
+
+    async getViviendasByparcelaId(parcelaId) {
+        console.log('getViviendasByparcelaId', parcelaId);
+        try {
+            let sql = `SELECT * FROM vivienda
+                WHERE parcelaId = ${parcelaId}`;
+
+            let viviendas = []
+            let rows = (await this.db.executeSql(sql, []) as any).rows;
+            for (let i = 0; i < rows.length; i++) {
+                viviendas.push(rows.item(i) as IParcela);
+            }
+
+            // let parcela: IParcela = new IParcela();
+            // parcela.nroParcela = resParcela.nroParcela;
+            // parcela.provincia = resParcela.provincia;
+            // parcela.municipio = resParcela.municipio;
+            // parcela.localidad = resParcela.localidad;
+            // parcela.barrio = resParcela.barrio;
+            // parcela.direccion = resParcela.direccion;
+            // parcela.tipoZona = resParcela.tipoZona;
+            // let viviendas = [];
+            // parcela.viviendas = (viviendas as [IVivienda]);
+            // return parcela;
+            return viviendas;
+        } catch (err) {
             return err;
         }
     }
@@ -231,42 +354,65 @@ export class AgentesSanitariosProvider {
     }
 
     insertHogar(hogar: IHogar, viviendaId) {
-        console.log('insertHogar', viviendaId, hogar)
-        // let sql = `INSERT INTO hogar(
-        //     viviendaId,
-        //     fechaCreacion,
-        //     fechaActualizacion,
-        //     muerteNinoMenor5,
-        //     muerteNinoMenor5Causa,
-        //     menor5ConEnfermedadGrave)
-        //      VALUES(?,?,?,?,?,?)`;
-
-        // try {
-        //     return this.db.executeSql(sql, [
-        //         viviendaId,
-        //         new Date(),
-        //         new Date(),
-        //         false, // hogar.muerteNinoMenor5,
-        //         '', // hogar.muerteNinoMenor5Causa,
-        //         '' // hogar.menor5ConEnfermedadGrave
-        //     ]);
         let sql = `INSERT INTO hogar(
-            viviendaId)
-             VALUES(?)`;
+            viviendaId,
+            fechaCreacion,
+            fechaActualizacion,
+            muerteNinoMenor5,
+            muerteNinoMenor5Causa,
+            menor5ConEnfermedadGrave)
+             VALUES(?,?,?,?,?,?)`;
 
         try {
             return this.db.executeSql(sql, [
-                viviendaId
-                //,
-                // new Date(),
-                // new Date(),
-                // false, // hogar.muerteNinoMenor5,
-                // '', // hogar.muerteNinoMenor5Causa,
-                // '' // hogar.menor5ConEnfermedadGrave
+                viviendaId,
+                new Date(),
+                new Date(),
+                false, // hogar.muerteNinoMenor5,
+                '', // hogar.muerteNinoMenor5Causa,
+                '' // hogar.menor5ConEnfermedadGrave
             ]);
         } catch (err) {
-            console.log('err', err)
             return (err);
+        }
+    }
+
+    updateHogar(hogar: IHogar) {
+        let sql = `UPDATE hogar SET
+            viviendaId=?,
+            fechaCreacion=?,
+            fechaActualizacion=?,
+            muerteNinoMenor5=?,
+            muerteNinoMenor5Causa=?,
+            menor5ConEnfermedadGrave=?
+            WHERE id = ?`;
+
+        try {
+            return this.db.executeSql(sql, [
+                new Date(),
+                new Date(),
+                false, // hogar.muerteNinoMenor5,
+                '', // hogar.muerteNinoMenor5Causa,
+                '', // hogar.menor5ConEnfermedadGrave
+                hogar.id
+            ]);
+        } catch (err) {
+            return (err);
+        }
+    }
+
+    async getHogaresByViviendaId(viviendaId) {
+        try {
+            let sql = `SELECT * FROM hogar
+                WHERE viviendaId = ${viviendaId}`;
+            let hogares = []
+            let rows = (await this.db.executeSql(sql, []) as any).rows;
+            for (let i = 0; i < rows.length; i++) {
+                hogares.push(rows.item(i) as IHogar);
+            }
+            return hogares;
+        } catch (err) {
+            return err;
         }
     }
 
@@ -306,12 +452,12 @@ export class AgentesSanitariosProvider {
                 embarazada BOOLEAN,
                 embarzadaEstado VARCHAR(100),
                 antitetanica BOOLEAN,
-                esquemaVacunas BOOLEAN,
+                esquemaVacunacion BOOLEAN,
                 coberturaSalud VARCHAR(100),
-                lugarDeAtencion VARCHAR(100),
-                lugarDeAtencionOtro VARCHAR(100),
+                lugarAtencion VARCHAR(100),
+                lugarAtencionOtro VARCHAR(100),
                 discapacidad VARCHAR(100),
-                discapacidadCertificado VARCHAR(100),
+                certificadoDiscapacidad VARCHAR(100),
                 cudNumero VARCHAR(100),
                 cudVigencia DATETIME
                 )`;
@@ -352,11 +498,11 @@ export class AgentesSanitariosProvider {
                 embarazada,
                 embarzadaEstado,
                 antitetanica,
-                esquemaVacunas,
+                esquemaVacunacion,
                 coberturaSalud,
-                lugarDeAtencion,
+                lugarAtencion,
                 discapacidad,
-                discapacidadCertificado,
+                certificadoDiscapacidad,
                 cudNumero,
                 cudVigencia
             )
@@ -375,12 +521,12 @@ export class AgentesSanitariosProvider {
                 integrante.nacionalidad,
                 integrante.sexo,
                 integrante.genero,
-                integrante.vinculoJefeHogar,
+                integrante.vinculoConJefeHogar,
                 integrante.fechaNacimiento,
                 integrante.ocupacion,
                 integrante.beneficioSocial,
-                integrante.nivelEducacional,
-                null, // integrante.nivelEducacionalIncompletoEstado,
+                integrante.nivelEducativo,
+                null, // integrante.nivelEducativoIncompletoEstado,
                 null, // integrante.enfermedadCronica1,
                 null, // integrante.enfermedadCronica1Estado,
                 null, // integrante.enfermedadCronica2,
@@ -390,7 +536,7 @@ export class AgentesSanitariosProvider {
                 null, // integrante.enfermedadCronica4,
                 null, // integrante.enfermedadCronica4Estado,
                 integrante.asistenciaAlimentaria,
-                integrante.embarazo,
+                integrante.embarazada,
                 null, // integrante.embarzadaEstado,
                 null, // integrante.antitetanica,
                 integrante.esquemaVacunacion,
@@ -407,6 +553,105 @@ export class AgentesSanitariosProvider {
         }
     }
 
+    updateIntegrante(integrante: IIntegrante) {
+        console.log('updateIntegrante');
+        let sql = `UPDATE integrante SET
+                fechaCreacion=?,
+                fechaActualizacion=?,
+                esJefeHogar=?,
+                apellido=?,
+                nombre=?,
+                tipoDocumento=?,
+                numeroDocumento=?,
+                nacionalidad=?,
+                sexo=?,
+                genero=?,
+                vinculoConJefeHogar=?,
+                fechaNacimiento=?,
+                ocupacion=?,
+                beneficioSocial=?,
+                nivelEducativo=?,
+                nivelEducativoIncompletoEstado=?,
+                enfermedadCronica1=?,
+                enfermedadCronica1Estado=?,
+                enfermedadCronica2=?,
+                enfermedadCronica2Estado=?,
+                enfermedadCronica3=?,
+                enfermedadCronica3Estado=?,
+                enfermedadCronica4=?,
+                enfermedadCronica4Estado=?,
+                asistenciaAlimentaria=?,
+                embarazada=?,
+                embarzadaEstado=?,
+                antitetanica=?,
+                esquemaVacunacion=?,
+                coberturaSalud=?,
+                lugarAtencion=?,
+                discapacidad=?,
+                certificadoDiscapacidad=?,
+                cudNumero=?,
+                cudVigencia=?
+            WHERE id = ?`;
+
+        try {
+            return this.db.executeSql(sql, [
+                new Date(),
+                new Date(),
+                integrante.esJefeHogar,
+                integrante.apellido,
+                integrante.nombre,
+                integrante.tipoDocumento,
+                integrante.numeroDocumento,
+                integrante.nacionalidad,
+                integrante.sexo,
+                integrante.genero,
+                integrante.vinculoConJefeHogar,
+                integrante.fechaNacimiento,
+                integrante.ocupacion,
+                integrante.beneficioSocial,
+                integrante.vinculoConJefeHogar,
+                null, // integrante.vinculoConJefeHogarIncompletoEstado,
+                null, // integrante.enfermedadCronica1,
+                null, // integrante.enfermedadCronica1Estado,
+                null, // integrante.enfermedadCronica2,
+                null, // integrante.enfermedadCronica2Estado,
+                null, // integrante.enfermedadCronica3,
+                null, // integrante.enfermedadCronica3Estado,
+                null, // integrante.enfermedadCronica4,
+                null, // integrante.enfermedadCronica4Estado,
+                integrante.asistenciaAlimentaria,
+                integrante.embarazada,
+                null, // integrante.embarzadaEstado,
+                null, // integrante.antitetanica,
+                integrante.esquemaVacunacion,
+                integrante.coberturaSalud,
+                integrante.lugarAtencion,
+                integrante.discapacidad,
+                integrante.certificadoDiscapacidad,
+                integrante.cudNumero,
+                integrante.cudVigencia,
+                integrante.id
+            ]);
+        } catch (err) {
+            return (err);
+        }
+    }
+
+    async getIntegrantesByHogarId(hogarId) {
+        try {
+            let sql = `SELECT * FROM integrante
+                WHERE hogarId = ${hogarId}`;
+            let hogares = []
+            let rows = (await this.db.executeSql(sql, []) as any).rows;
+            for (let i = 0; i < rows.length; i++) {
+                hogares.push(rows.item(i) as IHogar);
+            }
+            return hogares;
+        } catch (err) {
+            return err;
+        }
+    }
+
     createTableUsuarios() {
         try {
             let sql = `CREATE TABLE IF NOT EXISTS usuarios(
@@ -417,6 +662,50 @@ export class AgentesSanitariosProvider {
         } catch (err) {
             return (err);
         }
+    }
+
+    async testQueries() {
+        try {
+
+            let parcelaId = (await this.insertParcela(new IParcela())).insertId;
+            console.log('testInserts parcela', parcelaId);
+            let viviendaId = this.insertVivienda(new IVivienda(), parcelaId);
+            console.log('testInserts vivi', viviendaId);
+            let hogarId = this.insertHogar(new IHogar(), viviendaId);
+            console.log('testInserts hogar', hogarId);
+            let i = new IIntegrante();
+            i.numeroDocumento = '123456789'
+            let integranteId = this.insertIntegrante(i, hogarId);
+            console.log('testInserts Integrante', integranteId);
+            let parcela: IParcela = await this.getParcela('123456789');
+            console.log('parcela', parcela);
+            parcela.viviendas = (await this.getViviendasByparcelaId(parcela.id) as [IVivienda]);
+            console.log('parcela.viviendas', parcela.viviendas);
+            parcela.viviendas.forEach(async v => {
+                v.hogares = await this.getHogaresByViviendaId(v.id);
+                console.log('v.hogares', v.hogares);
+                v.hogares.forEach(async h => {
+                    h.integrantes = await this.getIntegrantesByHogarId(h.id);
+                    console.log('h.integrantes', h.integrantes);
+                });
+            })
+            console.log('await this.getViviendasByparcelaId', await this.getViviendasByparcelaId(parcela.id));
+            console.log('await this.updateParcela(parcela)', await this.updateParcela(parcela));
+
+            parcela.viviendas.forEach( async (v: IVivienda) => {
+                console.log('await this.updateVivienda(v)', await this.updateVivienda(v));
+                v.hogares.forEach( async (h: IHogar) => {
+                    console.log('await this.updateHogar(h)', h.id, await this.updateHogar(h));
+                    h.integrantes.forEach(async (i: IIntegrante) => {
+                        console.log('await this.updateIntegrante(i)', await this.updateIntegrante(i));
+                    })
+                })
+            })
+            console.log('OK');
+        } catch (e) {
+            console.log('TEST FAILED!', e)
+        }
+        
     }
 
     // async insertEncuesta(encuesta: IEncuesta) {
@@ -529,11 +818,11 @@ export class AgentesSanitariosProvider {
     //             componenteHogar.nacionalidad,
     //             componenteHogar.sexo,
     //             componenteHogar.genero,
-    //             componenteHogar.vinculoJefeHogar,
+    //             componenteHogar.vinculoConJefeHogar,
     //             componenteHogar.fechaNacimiento,
     //             componenteHogar.ocupacion,
     //             componenteHogar.beneficioSocial,
-    //             componenteHogar.nivelEducacional,
+    //             componenteHogar.vinculoConJefeHogar,
     //             componenteHogar.estadoCursada,
     //             componenteHogar.enfermedadesCronicas,
     //             componenteHogar.asistenciaAlimentaria,
@@ -652,44 +941,5 @@ export class AgentesSanitariosProvider {
     //     }
     // }
 
-    testInserts() {
-        try {
-            console.log('testInserts(')
-            return this.insertParcela(new IParcela())
-            .then(
-                resParcela => {
-                    console.log('testInserts parcela', resParcela.insertId)
 
-                    this.insertVivienda(new IVivienda(), resParcela.insertId).then(
-                        resVivienda => {
-                        console.log('testInserts vivi', resVivienda)
-
-                            this.insertHogar(new IHogar(), resVivienda.insertId).then(
-                                resHogar =>  {
-                                    console.log('testInserts hogar');
-                                    let i = new IIntegrante();
-                                    i.numeroDocumento = '123456789'
-                                    this.insertIntegrante(i, resHogar.insertId).then( () => {
-                                        console.log('testInserts Integrante');
-                                        this.getParcela('123456789').then( data => {
-                                            for (let i = 0; i < data.rows.length; i++) {
-                                                let item = data.rows.item(i);
-                                                // do something with it
-                                                console.log(item)
-                                                // this.results.push(item);
-                                        }
-                                            console.log('res', data)
-                                        })
-                                    } )
-                                }
-                            )
-                        }
-                    )
-                }
-            )
-        } catch (e) {
-            console.log('TEST FAILED!', e)
-        }
-        
-    }
 }

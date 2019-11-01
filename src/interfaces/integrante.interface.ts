@@ -1,4 +1,5 @@
 export class IIntegrante {
+    id: Number;
     encuestaId: String;
     apellido: String;
     nombre: String;
@@ -8,15 +9,16 @@ export class IIntegrante {
     nacionalidad: String;
     sexo: String;
     genero: String;
-    vinculoJefeHogar: String;
+    vinculoConJefeHogar: String;
     fechaNacimiento: Date;
     ocupacion: String;
     beneficioSocial: String;
-    nivelEducacional: String;
+    nivelEducativo: String;
+    nivelEducativoIncompletoEstado: String;
     estadoCursada: String;
     enfermedadesCronicas: String;
     asistenciaAlimentaria: Boolean;
-    embarazo: Boolean;
+    embarazada: Boolean;
     esquemaVacunacion: Boolean;
     coberturaSalud: String;
     lugarAtencion: String;

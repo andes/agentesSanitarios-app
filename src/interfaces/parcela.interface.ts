@@ -1,6 +1,7 @@
 import { IVivienda } from './vivienda.interface';
 
 export class IParcela {
+    id: Number;
     equipoNucleoReferencia: String;
     nroFormulario: Number;
     nroPlanilla: Number;
