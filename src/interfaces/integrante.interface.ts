@@ -1,4 +1,5 @@
 export class IIntegrante {
+    id: Number;
     encuestaId: String;
     apellido: String;
     nombre: String;

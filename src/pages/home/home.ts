@@ -49,8 +49,7 @@ export class HomePage {
     }
 
     async testInserts() {
-        console.log('home.ts testInsert')
-        return this.agentesSanitariosProvider.testInserts();
+        return this.agentesSanitariosProvider.testQueries();
     }
 
     private async createDatabase() {
