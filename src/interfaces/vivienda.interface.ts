@@ -18,6 +18,15 @@ export class IVivienda {
     animalesConsumoDesparasitados: Boolean;
     tieneAnimalesDomesticos: Boolean;
     animalesDomesticosVacunados: Boolean;
-    animalesDomesticosDesparasitados: Boolean
+    animalesDomesticosDesparasitados: Boolean;
+    internet: Boolean;
+    tvCable: Boolean;
+    dtv: Boolean;
+    automovil: Boolean;
+    moto: Boolean;
+    lineaTelefono: Boolean;
+    celularSinInternet: Boolean;
+    celularConInternet: Boolean;
+    otrosDatos: Boolean;
     hogares: [IHogar]
 }

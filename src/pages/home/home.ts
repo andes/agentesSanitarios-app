@@ -48,6 +48,11 @@ export class HomePage {
         }, 50);
     }
 
+    async reset() {
+        await this.agentesSanitariosProvider.dropTables();
+        await this.agentesSanitariosProvider.createTables();
+        return await this.agentesSanitariosProvider.testQueries();
+    }
     async testInserts() {
         return this.agentesSanitariosProvider.testQueries();
     }

@@ -20,10 +20,19 @@ export class AgentesSanitariosProvider {
         }
     }
 
-    async createTables() {
-        // await this.db.executeSql('DROP TABLE parcela', []);
-        // await this.db.executeSql('DROP TABLE vivienda', []);
+    async dropTables() {
+        try {
+            await this.db.executeSql('DROP TABLE IF EXISTS parcela', []);
+            await this.db.executeSql('DROP TABLE IF EXISTS vivienda', []);
+            await this.db.executeSql('DROP TABLE IF EXISTS hogar', []);
+            await this.db.executeSql('DROP TABLE IF EXISTS integrante', []);
+        } catch (e) {
+            return e;
+        }
 
+    }
+
+    async createTables() {
         await this.createTableParcelas();
         await this.createTableViviendas();
         await this.createTableHogares();
@@ -120,8 +129,8 @@ export class AgentesSanitariosProvider {
             let sql = `SELECT p.* FROM parcela p
                 JOIN vivienda v on v.parcelaId = p.id
                 JOIN hogar h on h.viviendaId = v.id
-                JOIN integrante i on i.hogarId = h.id;
-                WHERE i.numeroDocumento = ${numeroDocumento}`;
+                JOIN integrante i on i.hogarId = h.id
+                WHERE i.numeroDocumento = '${numeroDocumento}'`;
             return (await this.db.executeSql(sql, [])).rows.item(0);
         } catch (err) {
             return err;
@@ -222,15 +231,15 @@ export class AgentesSanitariosProvider {
                 vivienda.tieneAnimalesDomesticos,
                 vivienda.animalesDomesticosVacunados,
                 vivienda.animalesDomesticosDesparasitados,
-                null, // vivienda.internet,
-                null, // vivienda.tvCable,
-                null, // vivienda.dtv,
-                null, // vivienda.automovil,
-                null, // vivienda.moto,
-                null, // vivienda.lineaTelefono,
-                null, // vivienda.celularSinInternet,
-                null, // vivienda.celularConInternet,
-                null // vivienda.otrosDatos
+                vivienda.internet,
+                vivienda.tvCable,
+                vivienda.dtv,
+                vivienda.automovil,
+                vivienda.moto,
+                vivienda.lineaTelefono,
+                vivienda.celularSinInternet,
+                vivienda.celularConInternet,
+                vivienda.otrosDatos
             ]);
         } catch (err) {
             return err;
@@ -287,15 +296,15 @@ export class AgentesSanitariosProvider {
                 vivienda.tieneAnimalesDomesticos,
                 vivienda.animalesDomesticosVacunados,
                 vivienda.animalesDomesticosDesparasitados,
-                null, // vivienda.internet,
-                null, // vivienda.tvCable,
-                null, // vivienda.dtv,
-                null, // vivienda.automovil,
-                null, // vivienda.moto,
-                null, // vivienda.lineaTelefono,
-                null, // vivienda.celularSinInternet,
-                null, // vivienda.celularConInternet,
-                null, // vivienda.otrosDatos,
+                vivienda.internet,
+                vivienda.tvCable,
+                vivienda.dtv,
+                vivienda.automovil,
+                vivienda.moto,
+                vivienda.lineaTelefono,
+                vivienda.celularSinInternet,
+                vivienda.celularConInternet,
+                vivienda.otrosDatos,
                 vivienda.id
             ]);
         } catch (err) {
@@ -304,7 +313,7 @@ export class AgentesSanitariosProvider {
     }
 
     async getViviendasByparcelaId(parcelaId) {
-        console.log('getViviendasByparcelaId', parcelaId);
+        console.log('getViviendasByparcelaId xxx', parcelaId);
         try {
             let sql = `SELECT * FROM vivienda
                 WHERE parcelaId = ${parcelaId}`;
@@ -526,19 +535,19 @@ export class AgentesSanitariosProvider {
                 integrante.ocupacion,
                 integrante.beneficioSocial,
                 integrante.nivelEducativo,
-                null, // integrante.nivelEducativoIncompletoEstado,
-                null, // integrante.enfermedadCronica1,
-                null, // integrante.enfermedadCronica1Estado,
-                null, // integrante.enfermedadCronica2,
-                null, // integrante.enfermedadCronica2Estado,
-                null, // integrante.enfermedadCronica3,
-                null, // integrante.enfermedadCronica3Estado,
-                null, // integrante.enfermedadCronica4,
-                null, // integrante.enfermedadCronica4Estado,
+                integrante.nivelEducativoIncompletoEstado,
+                integrante.enfermedadCronica1,
+                integrante.enfermedadCronica1Estado,
+                integrante.enfermedadCronica2,
+                integrante.enfermedadCronica2Estado,
+                integrante.enfermedadCronica3,
+                integrante.enfermedadCronica3Estado,
+                integrante.enfermedadCronica4,
+                integrante.enfermedadCronica4Estado,
                 integrante.asistenciaAlimentaria,
                 integrante.embarazada,
-                null, // integrante.embarzadaEstado,
-                null, // integrante.antitetanica,
+                integrante.embarzadaEstado,
+                integrante.antitetanica,
                 integrante.esquemaVacunacion,
                 integrante.coberturaSalud,
                 integrante.lugarAtencion,
@@ -610,19 +619,19 @@ export class AgentesSanitariosProvider {
                 integrante.ocupacion,
                 integrante.beneficioSocial,
                 integrante.vinculoConJefeHogar,
-                null, // integrante.vinculoConJefeHogarIncompletoEstado,
-                null, // integrante.enfermedadCronica1,
-                null, // integrante.enfermedadCronica1Estado,
-                null, // integrante.enfermedadCronica2,
-                null, // integrante.enfermedadCronica2Estado,
-                null, // integrante.enfermedadCronica3,
-                null, // integrante.enfermedadCronica3Estado,
-                null, // integrante.enfermedadCronica4,
-                null, // integrante.enfermedadCronica4Estado,
+                integrante.vinculoConJefeHogarIncompletoEstado,
+                integrante.enfermedadCronica1,
+                integrante.enfermedadCronica1Estado,
+                integrante.enfermedadCronica2,
+                integrante.enfermedadCronica2Estado,
+                integrante.enfermedadCronica3,
+                integrante.enfermedadCronica3Estado,
+                integrante.enfermedadCronica4,
+                integrante.enfermedadCronica4Estado,
                 integrante.asistenciaAlimentaria,
                 integrante.embarazada,
-                null, // integrante.embarzadaEstado,
-                null, // integrante.antitetanica,
+                integrante.embarzadaEstado,
+                integrante.antitetanica,
                 integrante.esquemaVacunacion,
                 integrante.coberturaSalud,
                 integrante.lugarAtencion,
@@ -669,13 +678,13 @@ export class AgentesSanitariosProvider {
 
             let parcelaId = (await this.insertParcela(new IParcela())).insertId;
             console.log('testInserts parcela', parcelaId);
-            let viviendaId = this.insertVivienda(new IVivienda(), parcelaId);
+            let viviendaId = (await this.insertVivienda(new IVivienda(), parcelaId)).insertId;
             console.log('testInserts vivi', viviendaId);
-            let hogarId = this.insertHogar(new IHogar(), viviendaId);
+            let hogarId = (await this.insertHogar(new IHogar(), viviendaId)).insertId;
             console.log('testInserts hogar', hogarId);
             let i = new IIntegrante();
             i.numeroDocumento = '123456789'
-            let integranteId = this.insertIntegrante(i, hogarId);
+            let integranteId = (await this.insertIntegrante(i, hogarId)).insertId;
             console.log('testInserts Integrante', integranteId);
             let parcela: IParcela = await this.getParcela('123456789');
             console.log('parcela', parcela);
@@ -689,9 +698,7 @@ export class AgentesSanitariosProvider {
                     console.log('h.integrantes', h.integrantes);
                 });
             })
-            console.log('await this.getViviendasByparcelaId', await this.getViviendasByparcelaId(parcela.id));
             console.log('await this.updateParcela(parcela)', await this.updateParcela(parcela));
-
             parcela.viviendas.forEach( async (v: IVivienda) => {
                 console.log('await this.updateVivienda(v)', await this.updateVivienda(v));
                 v.hogares.forEach( async (h: IHogar) => {
@@ -701,11 +708,10 @@ export class AgentesSanitariosProvider {
                     })
                 })
             })
-            console.log('OK');
+            console.log('OK', parcela);
         } catch (e) {
             console.log('TEST FAILED!', e)
         }
-        
     }
 
     // async insertEncuesta(encuesta: IEncuesta) {
