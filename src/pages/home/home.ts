@@ -11,7 +11,7 @@ import { LoginPage } from '../login/login';
 import { Encuesta1Page } from '../encuesta/encuesta1';
 import { DeviceProvider } from '../../providers/auth/device';
 import { ErrorReporterProvider } from '../../providers/errorReporter';
-import { ParcelaCreatePage } from '../formularioFamiliar/Parcela/parcelaCreate';
+import { ParcelaCreatePage } from '../formularioFamiliar/parcela/parcelaCreate';
 
 @Component({
     selector: 'page-home',

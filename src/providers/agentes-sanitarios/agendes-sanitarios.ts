@@ -63,7 +63,7 @@ export class AgentesSanitariosProvider {
         }
     }
 
-    insertParcela(parcela: IParcela) {
+    async insertParcela(parcela: IParcela) {
         try {
             let sql = `INSERT INTO parcela(
                 fechaCreacion,
@@ -77,7 +77,7 @@ export class AgentesSanitariosProvider {
                 tipoZona)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-            return this.db.executeSql(sql, [
+            return (await this.db.executeSql(sql, [
                 new Date(),
                 new Date(),
                 parcela.nroParcela,
@@ -87,7 +87,7 @@ export class AgentesSanitariosProvider {
                 parcela.barrio,
                 parcela.direccion,
                 parcela.tipoZona
-            ]);
+            ])).insertId;
         } catch (err) {
             return err;
         }
@@ -179,8 +179,8 @@ export class AgentesSanitariosProvider {
         }
     }
 
-    insertVivienda(vivienda: IVivienda, parcelaId) {
-        console.log('insertVivienda', parcelaId)
+    async insertVivienda(vivienda: IVivienda) {
+        console.log('insertVivienda')
         try {
             let sql = `INSERT INTO vivienda(
                 parcelaId,
@@ -212,8 +212,8 @@ export class AgentesSanitariosProvider {
                 otrosDatos )
             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
-            return this.db.executeSql(sql, [
-                parcelaId,
+            return (await this.db.executeSql(sql, [
+                vivienda.parcelaId,
                 new Date(),
                 new Date(),
                 vivienda.materialPiso,
@@ -240,7 +240,7 @@ export class AgentesSanitariosProvider {
                 vivienda.celularSinInternet,
                 vivienda.celularConInternet,
                 vivienda.otrosDatos
-            ]);
+            ])).insertId;
         } catch (err) {
             return err;
         }
@@ -362,7 +362,7 @@ export class AgentesSanitariosProvider {
         }
     }
 
-    insertHogar(hogar: IHogar, viviendaId) {
+    async insertHogar(hogar: IHogar) {
         let sql = `INSERT INTO hogar(
             viviendaId,
             fechaCreacion,
@@ -373,15 +373,16 @@ export class AgentesSanitariosProvider {
              VALUES(?,?,?,?,?,?)`;
 
         try {
-            return this.db.executeSql(sql, [
-                viviendaId,
+            return (await this.db.executeSql(sql, [
+                hogar.viviendaId,
                 new Date(),
                 new Date(),
                 false, // hogar.muerteNinoMenor5,
                 '', // hogar.muerteNinoMenor5Causa,
                 '' // hogar.menor5ConEnfermedadGrave
-            ]);
+            ])).insertId;
         } catch (err) {
+            console.log('insert hogar', err)
             return (err);
         }
     }
@@ -476,7 +477,7 @@ export class AgentesSanitariosProvider {
         }
     }
 
-    insertIntegrante(integrante: IIntegrante, hogarId) {
+    async insertIntegrante(integrante: IIntegrante) {
         let sql = `INSERT INTO integrante(
                 hogarId,
                 fechaCreacion,
@@ -518,8 +519,8 @@ export class AgentesSanitariosProvider {
             VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
         try {
-            return this.db.executeSql(sql, [
-                hogarId,
+            return (await this.db.executeSql(sql, [
+                integrante.hogarId,
                 new Date(),
                 new Date(),
                 integrante.esJefeHogar,
@@ -555,9 +556,9 @@ export class AgentesSanitariosProvider {
                 integrante.certificadoDiscapacidad,
                 integrante.cudNumero,
                 integrante.cudVigencia
-            ]);
+            ])).insertId;
         } catch (err) {
-            console.log(err)
+            console.log('err', err);
             return (err);
         }
     }
@@ -649,13 +650,13 @@ export class AgentesSanitariosProvider {
     async getIntegrantesByHogarId(hogarId) {
         try {
             let sql = `SELECT * FROM integrante
-                WHERE hogarId = ${hogarId}`;
-            let hogares = []
+                 WHERE hogarId = ${hogarId}`;
+            let integrantes = []
             let rows = (await this.db.executeSql(sql, []) as any).rows;
             for (let i = 0; i < rows.length; i++) {
-                hogares.push(rows.item(i) as IHogar);
+                integrantes.push(rows.item(i) as IHogar);
             }
-            return hogares;
+            return integrantes;
         } catch (err) {
             return err;
         }
@@ -676,15 +677,20 @@ export class AgentesSanitariosProvider {
     async testQueries() {
         try {
 
-            let parcelaId = (await this.insertParcela(new IParcela())).insertId;
+            let parcelaId = await this.insertParcela(new IParcela());
             console.log('testInserts parcela', parcelaId);
-            let viviendaId = (await this.insertVivienda(new IVivienda(), parcelaId)).insertId;
+            let vivienda = new IVivienda();
+            vivienda.parcelaId = parcelaId;
+            let viviendaId = await this.insertVivienda(vivienda);
             console.log('testInserts vivi', viviendaId);
-            let hogarId = (await this.insertHogar(new IHogar(), viviendaId)).insertId;
+            let hogar = new IHogar();
+            hogar.viviendaId = viviendaId;
+            let hogarId = await this.insertHogar(hogar);
             console.log('testInserts hogar', hogarId);
             let i = new IIntegrante();
+            i.hogarId = hogarId;
             i.numeroDocumento = '123456789'
-            let integranteId = (await this.insertIntegrante(i, hogarId)).insertId;
+            let integranteId = await this.insertIntegrante(i);
             console.log('testInserts Integrante', integranteId);
             let parcela: IParcela = await this.getParcela('123456789');
             console.log('parcela', parcela);

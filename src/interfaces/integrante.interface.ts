@@ -1,6 +1,6 @@
 export class IIntegrante {
     id: Number;
-    encuestaId: String;
+    hogarId: String;
     apellido: String;
     nombre: String;
     tipoDocumento: String;

@@ -1,5 +1,5 @@
 import { AgentesSanitariosProvider } from './../../../providers/agentes-sanitarios/agendes-sanitarios';
-import { NuevoComponenteHogarPage } from './nuevo-componente-hogar/nuevo-componente-hogar';
+// import { NuevoComponenteHogarPage } from './nuevo-componente-hogar/nuevo-componente-hogar';
 import { NavController, NavParams } from 'ionic-angular';
 import { Component } from '@angular/core';
 
@@ -26,7 +26,7 @@ export class ComponentesHogarPage {
     }
 
     nuevoComponenteHogar() {
-        this.navCtrl.push(NuevoComponenteHogarPage, { encuestaId: this.encuestaId} );
+        // this.navCtrl.push(NuevoComponenteHogarPage, { encuestaId: this.encuestaId} );
     }
 
     async ionViewWillEnter() {

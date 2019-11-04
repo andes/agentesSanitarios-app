@@ -1,8 +1,9 @@
-// LIB
-import { NavController } from 'ionic-angular';
+import { ViviendaListPage } from './../vivienda/viviendaList';
+import { ViviendaEditPage } from './../vivienda/viviendaEdit';
 import { Component } from '@angular/core';
+import { NavController } from 'ionic-angular';
+// LIB
 // COMPONENTS
-import { ParcelaListPage } from './parcelaList';
 // PROVIDERS
 import { AgentesSanitariosProvider } from '../../../providers/agentes-sanitarios/agendes-sanitarios';
 // ASSETS
@@ -51,9 +52,9 @@ export class ParcelaCreatePage {
 
     async gotoParcelaList() {
         console.log(this.parcela);
-        await this.agentesSanitariosProvider.insertParcela(this.parcela)
-        console.log('se guardo!');
-        this.navCtrl.push(ParcelaListPage);
+        let parcelaId = await this.agentesSanitariosProvider.insertParcela(this.parcela);
+        console.log('se guardo!', parcelaId);
+        this.navCtrl.push(ViviendaListPage, { parcelaId: parcelaId });
     }
 
 

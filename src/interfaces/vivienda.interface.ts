@@ -2,6 +2,7 @@ import { IHogar } from './hogar.interface';
 
 export class IVivienda {
     id: Number;
+    parcelaId: Number;
     direccion: String;
     etnia: String;
     materialPiso: String;

@@ -1,4 +1,10 @@
-import { NuevoComponenteHogarPage } from './../pages/encuesta/componentes-hogar/nuevo-componente-hogar/nuevo-componente-hogar';
+import { IntegranteEditPage } from './../pages/formularioFamiliar/integrante/integranteEdit';
+import { IntegranteListPage } from './../pages/formularioFamiliar/integrante/integranteList';
+import { HogarListPage } from './../pages/formularioFamiliar/hogar/hogarList';
+import { HogarEditPage } from './../pages/formularioFamiliar/hogar/hogarEdit';
+import { ViviendaListPage } from './../pages/formularioFamiliar/vivienda/viviendaList';
+import { ViviendaEditPage } from './../pages/formularioFamiliar/vivienda/viviendaEdit';
+// import { NuevoComponenteHogarPage } from './../pages/encuesta/componentes-hogar/nuevo-componente-hogar/nuevo-componente-hogar';
 import { ENV } from '@app/env';
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -20,10 +26,10 @@ import { LoginPage } from '../pages/login/login';
 import { PrincipalPage } from '../pages/principal/principal';
 import { Encuesta1Page } from '../pages/encuesta/encuesta1';
 import { BuscadorEncuestasPage } from '../pages/encuesta/consulta-encuestas/consulta-encuestas';
-import { ComponentesHogarPage } from '../pages/encuesta/componentes-hogar/componentes-hogar';
+// import { ComponentesHogarPage } from '../pages/encuesta/componentes-hogar/componentes-hogar';
 import { NavbarPage } from '../components/navbar/navbar';
-import { ParcelaListPage } from '../pages/formularioFamiliar/Parcela/parcelaList';
-import { ParcelaCreatePage } from '../pages/formularioFamiliar/Parcela/parcelaCreate';
+import { ParcelaListPage } from '../pages/formularioFamiliar/parcela/parcelaList';
+import { ParcelaCreatePage } from '../pages/formularioFamiliar/parcela/parcelaCreate';
 // // Plugins
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -61,11 +67,17 @@ import { AgentesSanitariosProvider } from './../providers/agentes-sanitarios/age
         PrincipalPage,
         Encuesta1Page,
         BuscadorEncuestasPage,
-        ComponentesHogarPage,
-        NuevoComponenteHogarPage,
+        // ComponentesHogarPage,
+        // NuevoComponenteHogarPage,
         NavbarPage,
         ParcelaCreatePage,
-        ParcelaListPage
+        ParcelaListPage,
+        ViviendaEditPage,
+        ViviendaListPage,
+        HogarEditPage,
+        HogarListPage,
+        IntegranteEditPage,
+        IntegranteListPage
     ],
     imports: [
         BrowserModule,
@@ -88,8 +100,8 @@ import { AgentesSanitariosProvider } from './../providers/agentes-sanitarios/age
         MyApp,
         HomePage,
         Encuesta1Page,
-        ComponentesHogarPage,
-        NuevoComponenteHogarPage,
+        // ComponentesHogarPage,
+        // NuevoComponenteHogarPage,
         BuscadorEncuestasPage,
 //         EscanerDniPage,
 //         RegistroPersonalDataPage,
@@ -97,7 +109,13 @@ import { AgentesSanitariosProvider } from './../providers/agentes-sanitarios/age
         LoginPage,
         NavbarPage,
         ParcelaCreatePage,
-        ParcelaListPage
+        ParcelaListPage,
+        ViviendaEditPage,
+        ViviendaListPage,
+        HogarEditPage,
+        HogarListPage,
+        IntegranteEditPage,
+        IntegranteListPage
     ],
     providers: [
         StatusBar,
