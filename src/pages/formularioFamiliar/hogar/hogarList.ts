@@ -25,6 +25,10 @@ export class HogarListPage {
 
     }
 
+    clickHogar(hogar) {
+        this.navCtrl.push(HogarEditPage, {hogar: hogar});
+    }
+
     async nuevoHogar() {
         // let insertId = (await this.agentesSanitariosProvider.insertEncuesta(this.encuesta)).insertId;
         this.navCtrl.push(HogarEditPage, {viviendaId: this.viviendaId});

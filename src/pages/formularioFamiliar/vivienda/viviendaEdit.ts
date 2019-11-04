@@ -65,12 +65,16 @@ export class ViviendaEditPage {
         this.tiposBano = TiposBano;
         this.tiposCasa = TiposCasa;
         this.fuentesAgua = FuentesAgua;
-        this.parcelaId = this.navParams.get('parcelaId');
         this.nuevaVivienda();
     }
 
     async ionViewWillEnter() {
-
+        if (this.navParams.get('parcelaId')) {
+            this.parcelaId = this.navParams.get('parcelaId');
+            this.vivienda.parcelaId = this.parcelaId;
+        } else if (this.navParams.get('vivienda')) {
+            this.vivienda = this.navParams.get('vivienda');
+        }
     }
 
     nuevaVivienda() {
@@ -83,9 +87,16 @@ export class ViviendaEditPage {
     }
 
     async gotoHogar() {
-        console.log(this.vivienda);
-        let viviendaId = await this.agentesSanitariosProvider.insertVivienda(this.vivienda);
-        console.log('se guardo!');
+        let viviendaId = await this.guardar();
         this.navCtrl.push(HogarListPage, { viviendaId: viviendaId });
+    }
+
+    async guardar() {
+        if (!this.vivienda.id) {
+            return await this.agentesSanitariosProvider.insertVivienda(this.vivienda);
+        } else {
+            await this.agentesSanitariosProvider.updateVivienda(this.vivienda);
+            return this.vivienda.id;
+        }
     }
 }

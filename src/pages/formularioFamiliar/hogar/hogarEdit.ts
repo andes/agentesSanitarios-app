@@ -36,9 +36,16 @@ export class HogarEditPage {
         this.nuevaHogar();
     }
 
+    async ionViewWillEnter() {
+        if (this.navParams.get('viviendaId')) {
+            this.hogar.viviendaId = this.navParams.get('viviendaId');
+        } else if (this.navParams.get('hogar')) {
+            this.hogar = this.navParams.get('hogar');
+        }
+    }
+
     nuevaHogar() {
         this.hogar = new IHogar();
-        this.hogar.viviendaId = this.navParams.get('viviendaId');
         this.idUsuarioCreacion = 23
         this.idUsuarioActualizacion = 23;
         // this.hogar.fechaCreacion = new Date();
@@ -47,9 +54,18 @@ export class HogarEditPage {
 
     async gotoIntegrante() {
         console.log(this.hogar);
-        this.hogarId = await this.agentesSanitariosProvider.insertHogar(this.hogar);
+        this.hogarId = await this.guardar();
         console.log('se guardo!');
         this.navCtrl.push(IntegranteListPage, { hogarId: this.hogarId });
+    }
+
+    async guardar() {
+        if (!this.hogar.id) {
+            return await this.agentesSanitariosProvider.insertHogar(this.hogar);
+        } else {
+            await this.agentesSanitariosProvider.updateHogar(this.hogar);
+            return this.hogar.id;
+        }
     }
 
 

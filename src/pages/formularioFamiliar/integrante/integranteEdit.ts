@@ -48,10 +48,6 @@ export class IntegranteEditPage {
 
     integrante: IIntegrante;
 
-    guardar() {
-        this.agentesSanitariosProvider.insertIntegrante(this.integrante)
-    }
-
     constructor(
         public agentesSanitariosProvider: AgentesSanitariosProvider,
         public navParams: NavParams
@@ -59,8 +55,25 @@ export class IntegranteEditPage {
         this.nuevoIntegrante();
     }
 
+    async ionViewWillEnter() {
+        if (this.navParams.get('hogarId')) {
+            this.integrante.hogarId = this.navParams.get('hogarId');
+        } else if (this.navParams.get('hogar')) {
+            this.integrante = this.navParams.get('hogar');
+        }
+    }
+
     nuevoIntegrante() {
         this.integrante = new IIntegrante();
-        this.integrante.hogarId = this.navParams.get('hogarId');
+    }
+
+    async guardar() {
+        console.log('this.integrante.id', this.integrante.id)
+        if (!this.integrante.id) {
+            return this.integrante.id = (await this.agentesSanitariosProvider.insertIntegrante(this.integrante));
+        } else {
+            console.log('this.integrante', this.integrante)
+            return await this.agentesSanitariosProvider.updateIntegrante(this.integrante);
+        }
     }
 }

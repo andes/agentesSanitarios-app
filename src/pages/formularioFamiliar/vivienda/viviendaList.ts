@@ -27,6 +27,10 @@ export class ViviendaListPage {
         this.navCtrl.push(ViviendaEditPage, { parcelaId: this.parcelaId} );
     }
 
+    clickVivienda(vivienda) {
+        this.navCtrl.push(ViviendaEditPage, { vivienda: vivienda} );
+    }
+
     async ionViewWillEnter() {
         this.parcelaId = this.navParams.get('parcelaId');
         this.viviendas = await this.agentesSanitariosProvider.getViviendasByparcelaId(this.parcelaId);
