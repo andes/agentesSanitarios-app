@@ -12,6 +12,7 @@ import { Encuesta1Page } from '../encuesta/encuesta1';
 import { DeviceProvider } from '../../providers/auth/device';
 import { ErrorReporterProvider } from '../../providers/errorReporter';
 import { ParcelaCreatePage } from '../formularioFamiliar/parcela/parcelaCreate';
+import { ParcelaListPage } from '../formularioFamiliar/parcela/parcelaList';
 
 @Component({
     selector: 'page-home',
@@ -85,9 +86,12 @@ export class HomePage {
 
     crearParcela() {
         if (this.isLogin()) {
-            console.log('por hacer push');
             this.navCtrl.push(ParcelaCreatePage);
-            console.log('luego de hacer push');
+        }
+    }
+    listarParcela() {
+        if (this.isLogin()) {
+            this.navCtrl.push(ParcelaListPage);
         }
     }
     consultarEncuestas() {
