@@ -1,13 +1,38 @@
-<ion-header home>
+<ion-header background="dark">
     <page-navbar [menu]="true">
-        <ion-title>Listado de Parcelas</ion-title>
+        <span nav-title> Listado de Parcelas </span>
     </page-navbar>
 </ion-header>
 
 <ion-content home background="white" padding>
-    <ion-list>
-        <ion-item *ngFor="let parcela of parcelas">
-            <h2>Parcela Nro.: {{parcela.nroParcela}}, Fecha realizada: {{parcela.fechaCreacion}}</h2>
-        </ion-item>
-    </ion-list>
+    <ul class="andes-list" *ngIf="parcelas?.length > 0">
+        <li *ngFor="let parcela of parcelas">
+            <div class="andes-container">
+                <div class="andes-wraper">
+                    <h2 class="andes-list-title">
+                        Parcela Nro.: <strong>{{parcela.nroParcela}}</strong>
+                    </h2>
+                    <div class="andes-list-content">
+                        <div class="columna">
+                            <span class="andes-list-subtitle">Ultima visita:
+                                {{parcela.fechaCreacion | date: "d/MM/yyyy" }} </span>
+                        </div>
+                    </div>
+                </div>
+                <button ion-button item-end color="primary">
+                    <ion-icon name="arrow-round-forward"></ion-icon>
+                </button>
+            </div>
+        </li>
+    </ul>
+    <br>
+    <br>
+    <br>
+    <br>
+    <ion-fab right bottom>
+        <button ion-fab color="secondary" (click)="crearParcela()">
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-fab>
+
 </ion-content>
