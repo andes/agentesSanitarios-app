@@ -18,9 +18,6 @@
         <button class="fab-principal home-button" (click)="nuevaEncuesta()">
             Nueva encuesta
         </button>
-        <button class="fab-principal home-button" (click)="crearParcela()">
-            Crear Parcela
-        </button>
         <button class="fab-principal home-button" (click)="consultarEncuestas()">
             Consultar encuestas
         </button>
@@ -37,14 +34,41 @@
             <img class="" src="assets/svg/andes-paciente-in.svg" *ngIf="isLogin()" alt="">
             <img class="nologin" src="assets/svg/andes-paciente-out.svg" *ngIf="!isLogin()" alt="">
         </button>
-    </section>
+        <ul class="circle-container">
 
-    <!-- Menu principal Profesional -->
-    <section class="fab-container" [ngClass]="{'show': started}" *ngIf="isProfesional()">
-        <button class="fab-principal home-button">
-            <img src="assets/svg/andes-profesional-in.svg" alt="">
-        </button>
-        
+            <li class="fab-secundario">
+                <div class="item-content horizontal ic-0">
+                    <button class="item-icon outline circular" (click)="crearParcela()">
+                        <ion-icon name="andes-turno"></ion-icon>
+                    </button>
+                    <div class="fab-title" (click)="crearParcela()">Crear<br>Parcela</div>
+                </div>
+            </li>
+            <li class="fab-secundario">
+                <div class="item-content horizontal ic-1">
+                    <button class="item-icon outline circular" (click)="listarParcela()">
+                        <ion-icon name="eye"></ion-icon>
+                    </button>
+                    <div class="fab-title" (click)="crearParcela()">Listado<br>Parcela</div>
+                </div>
+            </li>
+            <li class="fab-secundario">
+                <div class="item-content vertical ic-2">
+                    <button class="item-icon outline circular" (click)="listarParcela()">
+                        <ion-icon name="eye"></ion-icon>
+                    </button>
+                    <div class="fab-title" (click)="crearParcela()">Listado<br>asdsa</div>
+                </div>
+            </li>
+            <li class="fab-secundario">
+                <div class="item-content horizontal-left ic-3">
+                    <button class="item-icon outline circular" (click)="listarParcela()">
+                        <ion-icon name="eye"></ion-icon>
+                    </button>
+                    <div class="fab-title" (click)="crearParcela()">asdasd<br>Parcela</div>
+                </div>
+            </li>
+        </ul>
     </section>
 
 </ion-content>
