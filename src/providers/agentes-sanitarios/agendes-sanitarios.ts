@@ -5,6 +5,7 @@ import { NetworkProvider } from '../network';
 import { IParcela } from './../../interfaces/parcela.interface';
 import { IHogar } from './../../interfaces/hogar.interface';
 import { IVivienda } from './../../interfaces/vivienda.interface';
+import { IIntegranteEnfermedadCronica } from './../../interfaces/integranteEnfermedadCronica.interface';
 
 @Injectable()
 export class AgentesSanitariosProvider {
@@ -37,8 +38,10 @@ export class AgentesSanitariosProvider {
         await this.createTableViviendas();
         await this.createTableHogares();
         await this.createTableIntegrantes();
+        await this.createTableIntegrantesEnfermedadesCronicas();
     }
 
+    // ***********************PARCELA
     createTableParcelas() {
         try {
             console.log('createTableParcelas')
@@ -66,6 +69,8 @@ export class AgentesSanitariosProvider {
     async insertParcela(parcela: IParcela) {
         try {
             let sql = `INSERT INTO parcela(
+                idUsuarioCreacion,
+                idUsuarioActualizacion,
                 fechaCreacion,
                 fechaActualizacion,
                 nroParcela,
@@ -75,11 +80,13 @@ export class AgentesSanitariosProvider {
                 barrio,
                 direccion,
                 tipoZona)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
             return (await this.db.executeSql(sql, [
-                new Date(),
-                new Date(),
+                parcela.idUsuarioCreacion,
+                parcela.idUsuarioActualizacion,
+                parcela.fechaCreacion,
+                parcela.fechaActualizacion,
                 parcela.nroParcela,
                 parcela.provincia,
                 parcela.municipio,
@@ -96,6 +103,8 @@ export class AgentesSanitariosProvider {
     updateParcela(parcela: IParcela) {
         try {
             let sql = `UPDATE parcela SET
+                idUsuarioCreacion=?,
+                idUsuarioActualizacion=?,
                 fechaCreacion=?,
                 fechaActualizacion=?,
                 nroParcela=?,
@@ -108,6 +117,8 @@ export class AgentesSanitariosProvider {
             WHERE id=?`;
 
             return this.db.executeSql(sql, [
+                parcela.idUsuarioCreacion,
+                parcela.idUsuarioActualizacion,
                 new Date(),
                 new Date(),
                 parcela.nroParcela,
@@ -136,7 +147,7 @@ export class AgentesSanitariosProvider {
             return err;
         }
     }
-
+    // ***********************VIVIENDA
     createTableViviendas() {
         console.log('createTableViviendas')
         try {
@@ -184,6 +195,8 @@ export class AgentesSanitariosProvider {
         try {
             let sql = `INSERT INTO vivienda(
                 parcelaId,
+                idUsuarioCreacion,
+                idUsuarioActualizacion,
                 fechaCreacion,
                 fechaActualizacion,
                 materialPiso,
@@ -210,12 +223,14 @@ export class AgentesSanitariosProvider {
                 celularSinInternet,
                 celularConInternet,
                 otrosDatos )
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
             return (await this.db.executeSql(sql, [
                 vivienda.parcelaId,
-                new Date(),
-                new Date(),
+                vivienda.idUsuarioCreacion,
+                vivienda.idUsuarioActualizacion,
+                vivienda.fechaCreacion,
+                vivienda.fechaActualizacion,
                 vivienda.materialPiso,
                 vivienda.materialPared,
                 vivienda.materialTecho,
@@ -340,7 +355,7 @@ export class AgentesSanitariosProvider {
             return err;
         }
     }
-
+    // ***********************HOGAR
     createTableHogares() {
         console.log('createTableHogares')
         try {
@@ -351,6 +366,9 @@ export class AgentesSanitariosProvider {
                 idUsuarioActualizacion INTEGER,
                 fechaCreacion DATETIME,
                 fechaActualizacion DATETIME,
+                fechaVisita1 DATETIME,
+                fechaVisita2 DATETIME,
+                fechaVisita3 DATETIME,
                 muerteNinoMenor5 BOOLEAN,
                 muerteNinoMenor5Causa VARCHAR(100),
                 muerteNinoMenor5CausaOtro VARCHAR(100),
@@ -365,21 +383,33 @@ export class AgentesSanitariosProvider {
     async insertHogar(hogar: IHogar) {
         let sql = `INSERT INTO hogar(
             viviendaId,
+            idUsuarioCreacion,
+            idUsuarioActualizacion,
             fechaCreacion,
             fechaActualizacion,
+            fechaVisita1,
+            fechaVisita2,
+            fechaVisita3,
             muerteNinoMenor5,
             muerteNinoMenor5Causa,
+            muerteNinoMenor5CausaOtro,
             menor5ConEnfermedadGrave)
-             VALUES(?,?,?,?,?,?)`;
+             VALUES(?,?,?,?,?,?,?,?,?,?,?,?)`;
 
         try {
             return (await this.db.executeSql(sql, [
                 hogar.viviendaId,
-                new Date(),
-                new Date(),
-                false, // hogar.muerteNinoMenor5,
-                '', // hogar.muerteNinoMenor5Causa,
-                '' // hogar.menor5ConEnfermedadGrave
+                hogar.idUsuarioCreacion,
+                hogar.idUsuarioActualizacion,
+                hogar.fechaCreacion,
+                hogar.fechaActualizacion,
+                hogar.fechaVisita1,
+                hogar.fechaVisita2,
+                hogar.fechaVisita3,
+                hogar.muerteNinoMenor5,
+                hogar.muerteNinoMenor5Causa,
+                hogar.muerteNinoMenor5CausaOtro,
+                hogar.menor5ConEnfermedadGrave
             ])).insertId;
         } catch (err) {
             console.log('insert hogar', err)
@@ -425,7 +455,7 @@ export class AgentesSanitariosProvider {
             return err;
         }
     }
-
+    // ***********************INTEGRANTE
     createTableIntegrantes() {
         console.log('createTableIntegrantes')
         try {
@@ -449,15 +479,7 @@ export class AgentesSanitariosProvider {
                 ocupacion VARCHAR(100),
                 beneficioSocial VARCHAR(100),
                 nivelEducativo VARCHAR(100),
-                nivelEducativoIncompletoEstado VARCHAR(100),
-                enfermedadCronica1 VARCHAR(100),
-                enfermedadCronica1Estado  VARCHAR(100),
-                enfermedadCronica2 VARCHAR(100),
-                enfermedadCronica2Estado  VARCHAR(100),
-                enfermedadCronica3 VARCHAR(100),
-                enfermedadCronica3Estado  VARCHAR(100),
-                enfermedadCronica4 VARCHAR(100),
-                enfermedadCronica4Estado  VARCHAR(100),
+                nivelEducativoEstado VARCHAR(100),
                 asistenciaAlimentaria BOOLEAN,
                 embarazada BOOLEAN,
                 embarzadaEstado VARCHAR(100),
@@ -480,6 +502,8 @@ export class AgentesSanitariosProvider {
     async insertIntegrante(integrante: IIntegrante) {
         let sql = `INSERT INTO integrante(
                 hogarId,
+                idUsuarioCreacion,
+                idUsuarioActualizacion,
                 fechaCreacion,
                 fechaActualizacion,
                 esJefeHogar,
@@ -495,15 +519,7 @@ export class AgentesSanitariosProvider {
                 ocupacion,
                 beneficioSocial,
                 nivelEducativo,
-                nivelEducativoIncompletoEstado,
-                enfermedadCronica1,
-                enfermedadCronica1Estado,
-                enfermedadCronica2,
-                enfermedadCronica2Estado,
-                enfermedadCronica3,
-                enfermedadCronica3Estado,
-                enfermedadCronica4,
-                enfermedadCronica4Estado,
+                nivelEducativoEstado,
                 asistenciaAlimentaria,
                 embarazada,
                 embarzadaEstado,
@@ -511,18 +527,21 @@ export class AgentesSanitariosProvider {
                 esquemaVacunacion,
                 coberturaSalud,
                 lugarAtencion,
+                lugarAtencionOtro,
                 discapacidad,
                 certificadoDiscapacidad,
                 cudNumero,
                 cudVigencia
             )
-            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
         try {
             return (await this.db.executeSql(sql, [
                 integrante.hogarId,
-                new Date(),
-                new Date(),
+                integrante.idUsuarioCreacion,
+                integrante.idUsuarioActualizacion,
+                integrante.fechaCreacion,
+                integrante.fechaActualizacion,
                 integrante.esJefeHogar,
                 integrante.apellido,
                 integrante.nombre,
@@ -536,15 +555,7 @@ export class AgentesSanitariosProvider {
                 integrante.ocupacion,
                 integrante.beneficioSocial,
                 integrante.nivelEducativo,
-                integrante.nivelEducativoIncompletoEstado,
-                integrante.enfermedadCronica1,
-                integrante.enfermedadCronica1Estado,
-                integrante.enfermedadCronica2,
-                integrante.enfermedadCronica2Estado,
-                integrante.enfermedadCronica3,
-                integrante.enfermedadCronica3Estado,
-                integrante.enfermedadCronica4,
-                integrante.enfermedadCronica4Estado,
+                integrante.nivelEducativoEstado,
                 integrante.asistenciaAlimentaria,
                 integrante.embarazada,
                 integrante.embarzadaEstado,
@@ -661,7 +672,58 @@ export class AgentesSanitariosProvider {
             return err;
         }
     }
+    // ***********************INTEGRANTES/ENFERMEDAD CRONICA
+    createTableIntegrantesEnfermedadesCronicas() {
+        console.log('createTableIntegrantesEnfermedadesCronicas')
+        try {
+            let sql = `CREATE TABLE IF NOT EXISTS integranteEnfermedadCronica(
+                id INTEGER NOT NULL PRIMARY KEY,
+                idUsuarioCreacion INTEGER,
+                idUsuarioActualizacion  INTEGER,
+                fechaCreacion DATETIME,
+                fechaActualizacion DATETIME,
+                integranteId INTEGER,
+                enfermedadCronica VARCHAR(100),
+                enfermedadCronicaEstado VARCHAR(100)
+                )`;
+            return this.db.executeSql(sql, []);
+        } catch (err) {
+            return (err);
+        }
+    }
 
+    async insertIntegrantesEnfermedadesCronicas(integranteEnfermedadCronica: IIntegranteEnfermedadCronica) {
+        let sql = `INSERT INTO integranteEnfermedadCronica(
+                idUsuarioCreacion,
+                idUsuarioActualizacion,
+                fechaCreacion,
+                fechaActualizacion,
+                integranteId,
+                enfermedadCronica,
+                enfermedadCronicaEstado
+            )
+            VALUES(?,?,?,?,?,?,?)`;
+
+        try {
+            return (await this.db.executeSql(sql, [
+                integranteEnfermedadCronica.idUsuarioCreacion,
+                integranteEnfermedadCronica.idUsuarioActualizacion,
+                integranteEnfermedadCronica.fechaCreacion,
+                integranteEnfermedadCronica.fechaActualizacion,
+                integranteEnfermedadCronica.integranteId,
+                integranteEnfermedadCronica.enfermedadCronica,
+                integranteEnfermedadCronica.enfermedadCronicaEstado
+            ])).insertId;
+        } catch (err) {
+            console.log('err', err);
+            return (err);
+        }
+    }
+
+
+
+
+    // ***********************USUARIOS
     createTableUsuarios() {
         try {
             let sql = `CREATE TABLE IF NOT EXISTS usuarios(

@@ -1,6 +1,10 @@
 export class IIntegrante {
     id: Number;
-    hogarId: String;
+    hogarId: Number;
+    idUsuarioCreacion: Number;
+    idUsuarioActualizacion: Number;
+    fechaCreacion: Date;
+    fechaActualizacion: Date;
     apellido: String;
     nombre: String;
     tipoDocumento: String;
@@ -15,15 +19,7 @@ export class IIntegrante {
     beneficioSocial: String;
     vinculoConJefeHogarIncompletoEstado: String;
     nivelEducativo: String;
-    nivelEducativoIncompletoEstado: String;
-    enfermedadCronica1: Boolean;
-    enfermedadCronica1Estado: Boolean;
-    enfermedadCronica2: Boolean;
-    enfermedadCronica2Estado: Boolean;
-    enfermedadCronica3: Boolean;
-    enfermedadCronica3Estado: Boolean;
-    enfermedadCronica4: Boolean;
-    enfermedadCronica4Estado: Boolean;
+    nivelEducativoEstado: String;
     estadoCursada: String;
     enfermedadesCronicas: String;
     asistenciaAlimentaria: Boolean;
