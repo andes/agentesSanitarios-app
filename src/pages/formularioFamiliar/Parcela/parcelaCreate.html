@@ -1,10 +1,16 @@
-<ion-header home>
-    <page-navbar [menu]="true">
+<ion-header background="dark">
+    <ion-navbar>
+        <!-- <ion-title color="light">Creación de Parcela</ion-title> -->
         <ion-title>Creación de Parcela</ion-title>
-    </page-navbar>
+        <ion-buttons end>
+            <button ion-button clear color="light" (click)="guardar()">
+                <ion-icon name="checkmark"></ion-icon> Guardar
+            </button>
+        </ion-buttons>
+    </ion-navbar>
 </ion-header>
 
-<ion-content home background="white" padding>    
+<ion-content home background="white" padding>
     <ion-item>
         <ion-label>Nro. Parcela</ion-label>
         <ion-input [(ngModel)]="parcela.nroParcela" type="number"></ion-input>
@@ -40,14 +46,8 @@
 
     <ion-item>
         <ion-label flaoating>Zona</ion-label>
-        <ion-select [(ngModel)]="parcela.zonaUbicacion" multiple="false">
+        <ion-select [(ngModel)]="parcela.zonaUbicacion" multiple="false" interface="popover">
             <ion-option *ngFor="let zona of zonasUbicacion" [value]="zona">{{zona}}</ion-option>
         </ion-select>
-    </ion-item>   
-
-    <ion-item>
-        <button ion-button icon-only class="outline primary" [disabled]="disableArbol" (click)="gotoParcelaList()">
-            Guardar
-        </button>
     </ion-item>
 </ion-content>
