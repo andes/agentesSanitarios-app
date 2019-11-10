@@ -1,5 +1,4 @@
 import { IntegranteListPage } from './../integrante/integranteList';
-import { HogarListPage } from './../hogar/hogarList';
 // LIB
 import { NavController, NavParams } from 'ionic-angular';
 import { Component } from '@angular/core';

@@ -58,8 +58,8 @@ export class IntegranteEditPage {
     async ionViewWillEnter() {
         if (this.navParams.get('hogarId')) {
             this.integrante.hogarId = this.navParams.get('hogarId');
-        } else if (this.navParams.get('hogar')) {
-            this.integrante = this.navParams.get('hogar');
+        } else if (this.navParams.get('integrante')) {
+            this.integrante = this.navParams.get('integrante');
         }
     }
 

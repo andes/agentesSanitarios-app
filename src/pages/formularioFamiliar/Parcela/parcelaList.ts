@@ -21,8 +21,11 @@ export class ParcelaListPage {
         console.log('this.parcelas', this.parcelas)
     }
 
-
     crearParcela() {
         this.navCtrl.push(ParcelaCreatePage);
+    }
+
+    editarParcela(parcela) {
+        this.navCtrl.push(ParcelaCreatePage, { parcela: parcela});
     }
 }

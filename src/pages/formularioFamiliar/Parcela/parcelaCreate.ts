@@ -1,7 +1,7 @@
 import { ViviendaListPage } from './../vivienda/viviendaList';
 import { ViviendaEditPage } from './../vivienda/viviendaEdit';
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 // LIB
 // COMPONENTS
 // PROVIDERS
@@ -32,13 +32,22 @@ export class ParcelaCreatePage {
 
     constructor(
         public navCtrl: NavController,
-        public agentesSanitariosProvider: AgentesSanitariosProvider
+        public agentesSanitariosProvider: AgentesSanitariosProvider,
+        public navParams: NavParams
         ) {
 
         this.provincias = Provincias;
         this.municipios = Municipios;
         this.zonasUbicacion = ZonasUbicacion;
         this.nuevaParcela();
+    }
+
+    async ionViewWillEnter() {
+        if (this.navParams.get('parcela')) {
+            this.parcela = this.navParams.get('parcela');
+        } else {
+            this.nuevaParcela();
+        }
     }
 
     nuevaParcela() {
@@ -51,11 +60,17 @@ export class ParcelaCreatePage {
     }
 
     async gotoParcelaList() {
-        console.log(this.parcela);
-        let parcelaId = await this.agentesSanitariosProvider.insertParcela(this.parcela);
-        console.log('se guardo!', parcelaId);
+        let parcelaId = await this.guardar();
         this.navCtrl.push(ViviendaListPage, { parcelaId: parcelaId });
     }
 
+    async guardar() {
+        if (!this.parcela.id) {
+            return await this.agentesSanitariosProvider.insertParcela(this.parcela);
+        } else {
+            await this.agentesSanitariosProvider.updateParcela(this.parcela);
+            return this.parcela.id;
+        }
+    }
 
 }

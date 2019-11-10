@@ -5,7 +5,6 @@ import { MaterialesPiso } from './../../../assets/files/material-piso';
 import { MaterialesPared } from './../../../assets/files/material-pared';
 import { FuentesAgua } from './../../../assets/files/fuentas-agua';
 import { HogarListPage } from './../hogar/hogarList';
-import { HogarEditPage } from './../hogar/hogarEdit';
 // LIB
 import { NavController, NavParams } from 'ionic-angular';
 import { Component } from '@angular/core';
@@ -32,7 +31,7 @@ export class ViviendaEditPage {
 
     started = false;
     user: any;
-    showMpi = false; 
+    showMpi = false;
     provincias;
     municipios;
     zonasUbicacion;
@@ -74,6 +73,7 @@ export class ViviendaEditPage {
             this.vivienda.parcelaId = this.parcelaId;
         } else if (this.navParams.get('vivienda')) {
             this.vivienda = this.navParams.get('vivienda');
+            console.log('this.vivienda')
         }
     }
 
