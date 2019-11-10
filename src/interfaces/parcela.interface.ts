@@ -2,7 +2,7 @@ import { IVivienda } from './vivienda.interface';
 
 export class IParcela {
     id: Number;
-    idUsuarioCreacion: String;
+    idUsuarioCreacion: Number;
     idUsuarioActualizacion: Number;
     fechaCreacion: Date;
     fechaActualizacion: Date;
