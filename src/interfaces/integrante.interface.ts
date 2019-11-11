@@ -18,7 +18,6 @@ export class IIntegrante {
     fechaNacimiento: Date;
     ocupacion: String;
     beneficioSocial: String;
-    vinculoConJefeHogarIncompletoEstado: String;
     nivelEducativo: String;
     nivelEducativoEstado: String;
     estadoCursada: String;
