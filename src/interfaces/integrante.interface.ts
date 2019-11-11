@@ -13,6 +13,7 @@ export class IIntegrante {
     nacionalidad: String;
     sexo: String;
     genero: String;
+    etnia: String;
     vinculoConJefeHogar: String;
     fechaNacimiento: Date;
     ocupacion: String;

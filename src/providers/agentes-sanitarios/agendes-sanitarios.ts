@@ -474,6 +474,7 @@ export class AgentesSanitariosProvider {
                 nacionalidad VARCHAR(100),
                 sexo VARCHAR(100),
                 genero VARCHAR(100),
+                etnia VARCHAR(100),
                 vinculoConJefeHogar VARCHAR(100),
                 fechaNacimiento DATETIME,
                 ocupacion VARCHAR(100),
@@ -514,6 +515,7 @@ export class AgentesSanitariosProvider {
                 nacionalidad,
                 sexo,
                 genero,
+                etnia,
                 vinculoConJefeHogar,
                 fechaNacimiento,
                 ocupacion,
@@ -533,7 +535,7 @@ export class AgentesSanitariosProvider {
                 cudNumero,
                 cudVigencia
             )
-            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
         try {
             return (await this.db.executeSql(sql, [

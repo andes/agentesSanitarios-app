@@ -8,7 +8,6 @@ export class IVivienda {
     fechaActualizacion: Date;
     parcelaId: Number;
     direccion: String;
-    etnia: String;
     materialPiso: String;
     materialPared: String;
     materialTecho: String;
