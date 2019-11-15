@@ -15,16 +15,7 @@
     </div>
 
     <div class="cabecera home">
-        <button class="fab-principal home-button" (click)="nuevaEncuesta()">
-            Nueva encuesta
-        </button>
-        <button class="fab-principal home-button" (click)="consultarEncuestas()">
-            Consultar encuestas
-        </button>
-
-        <button class="fab-principal home-button" (click)="reset()">
-            Reset
-        </button>
+        Aca podria ir un texto explicativo
     </div>
 
     <!-- Menu principal Paciente logueado/validado -->
@@ -49,7 +40,7 @@
                     <button class="item-icon outline circular" (click)="listarParcela()">
                         <ion-icon name="eye"></ion-icon>
                     </button>
-                    <div class="fab-title" (click)="crearParcela()">Listado<br>Parcela</div>
+                    <div class="fab-title" (click)="listarParcela()">Listado<br>Parcela</div>
                 </div>
             </li>
             <li class="fab-secundario">
@@ -57,15 +48,15 @@
                     <button class="item-icon outline circular" (click)="listarParcela()">
                         <ion-icon name="eye"></ion-icon>
                     </button>
-                    <div class="fab-title" (click)="crearParcela()">Listado<br>asdsa</div>
+                    <div class="fab-title" (click)="listarParcela()">Listado<br>asdsa</div>
                 </div>
             </li>
             <li class="fab-secundario">
                 <div class="item-content horizontal-left ic-3">
-                    <button class="item-icon outline circular" (click)="listarParcela()">
+                    <button class="item-icon outline circular" (click)="reset()">
                         <ion-icon name="eye"></ion-icon>
                     </button>
-                    <div class="fab-title" (click)="crearParcela()">asdasd<br>Parcela</div>
+                    <div class="fab-title" (click)="reset()">reset</div>
                 </div>
             </li>
         </ul>

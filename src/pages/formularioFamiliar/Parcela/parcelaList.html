@@ -1,7 +1,7 @@
 <ion-header background="dark">
-    <page-navbar [menu]="true">
-        <span nav-title> Listado de Parcelas </span>
-    </page-navbar>
+    <ion-navbar>
+        <ion-title>Listado de Parcelas</ion-title>
+    </ion-navbar>
 </ion-header>
 
 <ion-content home background="white" padding>
@@ -20,6 +20,9 @@
                     </div>
                 </div>
                 <button ion-button item-end color="primary" (click)="editarParcela(parcela)" >
+                    <ion-icon name="create"></ion-icon>
+                </button>
+                <button ion-button item-end color="primary" (click)="listadoViviendas(parcela)" >
                     <ion-icon name="arrow-round-forward"></ion-icon>
                 </button>
             </div>

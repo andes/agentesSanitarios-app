@@ -2,6 +2,7 @@ import { NavController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { AgentesSanitariosProvider } from '../../../providers/agentes-sanitarios/agendes-sanitarios';
 import { ParcelaCreatePage } from './parcelaCreate';
+import { ViviendaListPage } from '../vivienda/viviendaList';
 
 @Component({
     selector: 'parcelaList',
@@ -27,5 +28,10 @@ export class ParcelaListPage {
 
     editarParcela(parcela) {
         this.navCtrl.push(ParcelaCreatePage, { parcela: parcela});
+    }
+
+    listadoViviendas(parcela) {
+        console.log('parcelaId', parcela['id']);
+        this.navCtrl.push(ViviendaListPage, { parcelaId: parcela['id']});
     }
 }
