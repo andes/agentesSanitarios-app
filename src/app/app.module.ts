@@ -24,9 +24,6 @@ import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 
 import { PrincipalPage } from '../pages/principal/principal';
-import { Encuesta1Page } from '../pages/encuesta/encuesta1';
-import { BuscadorEncuestasPage } from '../pages/encuesta/consulta-encuestas/consulta-encuestas';
-// import { ComponentesHogarPage } from '../pages/encuesta/componentes-hogar/componentes-hogar';
 import { NavbarPage } from '../components/navbar/navbar';
 import { ParcelaListPage } from '../pages/formularioFamiliar/parcela/parcelaList';
 import { ParcelaCreatePage } from '../pages/formularioFamiliar/parcela/parcelaCreate';
@@ -65,10 +62,6 @@ import { AgentesSanitariosProvider } from './../providers/agentes-sanitarios/age
 //         RegistroUserDataPage,
         LoginPage,
         PrincipalPage,
-        Encuesta1Page,
-        BuscadorEncuestasPage,
-        // ComponentesHogarPage,
-        // NuevoComponenteHogarPage,
         NavbarPage,
         ParcelaCreatePage,
         ParcelaListPage,
@@ -99,10 +92,6 @@ import { AgentesSanitariosProvider } from './../providers/agentes-sanitarios/age
     entryComponents: [
         MyApp,
         HomePage,
-        Encuesta1Page,
-        // ComponentesHogarPage,
-        // NuevoComponenteHogarPage,
-        BuscadorEncuestasPage,
 //         EscanerDniPage,
 //         RegistroPersonalDataPage,
 //         RegistroUserDataPage,

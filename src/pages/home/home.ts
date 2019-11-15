@@ -1,6 +1,5 @@
 import { SQLite } from '@ionic-native/sqlite';
 import { AgentesSanitariosProvider } from './../../providers/agentes-sanitarios/agendes-sanitarios';
-import { BuscadorEncuestasPage } from './../encuesta/consulta-encuestas/consulta-encuestas';
 import { Component } from '@angular/core';
 import { NavController, MenuController } from 'ionic-angular';
 
@@ -8,7 +7,6 @@ import { AuthProvider } from '../../providers/auth/auth';
 
 // pages
 import { LoginPage } from '../login/login';
-import { Encuesta1Page } from '../encuesta/encuesta1';
 import { DeviceProvider } from '../../providers/auth/device';
 import { ErrorReporterProvider } from '../../providers/errorReporter';
 import { ParcelaCreatePage } from '../formularioFamiliar/parcela/parcelaCreate';
@@ -78,12 +76,6 @@ export class HomePage {
         return true;
     }
 
-    nuevaEncuesta() {
-        if (this.isLogin()) {
-            this.navCtrl.push(Encuesta1Page);
-        }
-    }
-
     crearParcela() {
         if (this.isLogin()) {
             this.navCtrl.push(ParcelaCreatePage);
@@ -92,11 +84,6 @@ export class HomePage {
     listarParcela() {
         if (this.isLogin()) {
             this.navCtrl.push(ParcelaListPage);
-        }
-    }
-    consultarEncuestas() {
-        if (this.isLogin()) {
-            this.navCtrl.push(BuscadorEncuestasPage);
         }
     }
 
