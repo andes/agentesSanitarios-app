@@ -1,7 +1,12 @@
-<ion-header home>
-    <page-navbar [menu]="true">
-        <ion-title>Formulario familiar</ion-title>
-    </page-navbar>
+<ion-header background="dark">
+    <ion-navbar>
+        <ion-title>Creación de Integrante</ion-title>
+        <ion-buttons end>
+            <button ion-button round outline color="light" (click)="guardar()">
+                <!-- <ion-icon name="checkmark"></ion-icon> Guardar -->Guardar
+            </button>
+        </ion-buttons>
+    </ion-navbar>
 </ion-header>
 
 <ion-content home background="white" padding>
@@ -43,14 +48,15 @@
     </ion-item>
     <ion-item>
         <ion-label>Fecha de nacimiento</ion-label>
-        <ion-datetime [(ngModel)]="integrante.fechaNacimiento" displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY"></ion-datetime>
+        <ion-datetime [(ngModel)]="integrante.fechaNacimiento" displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY">
+        </ion-datetime>
     </ion-item>
     <ion-item>
         <ion-label>Vinculo con Jefe de Hogar</ion-label>
         <ion-select [(ngModel)]="integrante.vinculoJefeHogar" multiple="false">
             <ion-option *ngFor="let prov of relacionesJefe" [value]="prov">{{prov}}</ion-option>
         </ion-select>
-        </ion-item>
+    </ion-item>
 
     <ion-item>
         <ion-label>Ocupación</ion-label>
@@ -131,11 +137,7 @@
     </ion-item>
     <ion-item>
         <ion-label>Vigencia</ion-label>
-        <ion-datetime [(ngModel)]="integrante.cudVigencia" displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY"></ion-datetime>
-    </ion-item>
-    <ion-item>
-        <button ion-button icon-only class="outline success" [disabled]="disableArbol" (click)="guardar()">
-            Agregar
-        </button>
+        <ion-datetime [(ngModel)]="integrante.cudVigencia" displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY">
+        </ion-datetime>
     </ion-item>
 </ion-content>

@@ -1,18 +1,38 @@
-<ion-header home>
-    <page-navbar [menu]="true">
-        <ion-title>Integrantes</ion-title>
-    </page-navbar>
+<ion-header background="dark">
+    <ion-navbar>
+        <ion-title>Listado de Integrantes</ion-title>
+    </ion-navbar>
 </ion-header>
 
+
 <ion-content home background="white" padding>
-    <ion-item>
-        <button ion-button icon-only class="outline primary" (click)="nuevoIntegrante()">
-            Nuevo Integrante 
+    <ul class="andes-list" *ngIf="integrantes?.length > 0">
+        <li *ngFor="let integrante of integrantes">
+            <div class="andes-container">
+                <div class="andes-wraper">
+                    <h2 class="andes-list-title">
+                        Integrante Nro.: <strong>{{integrante.id}}</strong>
+                    </h2>
+                    <div class="andes-list-content">
+                        <div class="columna">
+                            <span class="andes-list-subtitle">Ultima visita:
+                                {{integrante.fechaCreacion | date: "d/MM/yyyy" }} </span>
+                        </div>
+                    </div>
+                </div>
+                <button ion-button item-end color="primary" (click)="editarIntegrante(integrante)">
+                    <ion-icon name="create"></ion-icon>
+                </button>
+            </div>
+        </li>
+    </ul>
+    <br>
+    <br>
+    <br>
+    <br>
+    <ion-fab right bottom>
+        <button ion-fab color="dark" (click)="nuevoIntegrante()">
+            <ion-icon name="add"></ion-icon>
         </button>
-    </ion-item>
-    <ion-list>
-        <ion-item *ngFor="let integrante of integrantes">
-            <h2 (click)='clickIntegrante(integrante)'>{{integrante}}</h2>
-        </ion-item>
-    </ion-list>
+    </ion-fab>
 </ion-content>

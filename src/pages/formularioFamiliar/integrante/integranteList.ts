@@ -30,7 +30,7 @@ export class IntegranteListPage {
         this.navCtrl.push(IntegranteEditPage, {hogarId: this.hogarId});
     }
 
-    clickIntegrante(integrante) {
+    editarIntegrante(integrante) {
         this.navCtrl.push(IntegranteEditPage, {integrante: integrante});
     }
 
