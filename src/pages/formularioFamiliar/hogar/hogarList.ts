@@ -1,4 +1,5 @@
 import { HogarEditPage } from './hogarEdit';
+import { IntegranteListPage } from './../integrante/integranteList';
 import { NavController, NavParams } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { AgentesSanitariosProvider } from '../../../providers/agentes-sanitarios/agendes-sanitarios';
@@ -25,7 +26,7 @@ export class HogarListPage {
 
     }
 
-    clickHogar(hogar) {
+    editarHogar(hogar) {
         this.navCtrl.push(HogarEditPage, {hogar: hogar});
     }
 
@@ -34,4 +35,7 @@ export class HogarListPage {
         this.navCtrl.push(HogarEditPage, {viviendaId: this.viviendaId});
     }
 
+    listadoIntegrante(hogar) {
+        this.navCtrl.push(IntegranteListPage, { hogarId: hogar['id'] });
+    }
 }

@@ -1,13 +1,14 @@
-<ion-header home>
-    <page-navbar [menu]="true">
-        <ion-title>Hogar</ion-title>
-    </page-navbar>
-</ion-header>
+<ion-header background="dark">
+        <ion-navbar>
+            <ion-title>Creación de Hogar</ion-title>
+            <ion-buttons end>
+                <button ion-button round outline color="light" (click)="gotoIntegrante()">
+                    <!-- <ion-icon name="checkmark"></ion-icon> Guardar -->Guardar
+                </button>
+            </ion-buttons>
+        </ion-navbar>
+    </ion-header>
 
-<ion-content home background="white" padding>    
-    <ion-item>
-        <button ion-button icon-only class="outline primary" [disabled]="disableArbol" (click)="gotoIntegrante()">
-            Guardar
-        </button>
-    </ion-item>
+<ion-content home background="white" padding>
+    Formulario aquí
 </ion-content>

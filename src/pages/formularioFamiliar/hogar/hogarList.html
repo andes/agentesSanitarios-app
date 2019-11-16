@@ -1,19 +1,41 @@
-<ion-header home>
-    <page-navbar [menu]="true">
-        <ion-title>Hogares</ion-title>
-    </page-navbar>
+<ion-header background="dark">
+    <ion-navbar>
+        <ion-title>Listado de Hogares</ion-title>
+    </ion-navbar>
 </ion-header>
 
-<ion-content home background="white" padding>
-    <ion-item>
-        <button ion-button icon-only class="outline primary" (click)="nuevoHogar()">
-            Nuevo Hogar
-        </button>
-    </ion-item>
 
-    <ion-list>
-        <ion-item *ngFor="let hogar of hogares">
-            <h2 (click)='clickHogar(hogar)' >{{hogar}}</h2>
-        </ion-item>
-    </ion-list>
+<ion-content home background="white" padding>
+    <ul class="andes-list" *ngIf="parcelas?.length > 0">
+        <li *ngFor="let hogar of hogares">
+            <div class="andes-container">
+                <div class="andes-wraper">
+                    <h2 class="andes-list-title">
+                        Hogar Nro.: <strong>{{hogar.id}}</strong>
+                    </h2>
+                    <div class="andes-list-content">
+                        <div class="columna">
+                            <span class="andes-list-subtitle">Ultima visita:
+                                {{hogar.fechaCreacion | date: "d/MM/yyyy" }} </span>
+                        </div>
+                    </div>
+                </div>
+                <button ion-button item-end color="primary" (click)="editarHogar(hogar)">
+                    <ion-icon name="create"></ion-icon>
+                </button>
+                <button ion-button item-end color="primary" (click)="listadoIntegrantes(hogar)">
+                    <ion-icon name="arrow-round-forward"></ion-icon>
+                </button>
+            </div>
+        </li>
+    </ul>
+    <br>
+    <br>
+    <br>
+    <br>
+    <ion-fab right bottom>
+        <button ion-fab color="dark" (click)="nuevoHogar()">
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-fab>
 </ion-content>
