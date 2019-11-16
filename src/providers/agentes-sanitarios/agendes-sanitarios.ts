@@ -304,8 +304,7 @@ export class AgentesSanitariosProvider {
                 lineaTelefono=?,
                 celularSinInternet=?,
                 celularConInternet=?,
-                otrosDatos=?,
-                id=?
+                otrosDatos=?
             WHERE id=?`;
 
             return this.db.executeSql(sql, [
@@ -341,6 +340,7 @@ export class AgentesSanitariosProvider {
                 vivienda.id
             ]);
         } catch (err) {
+            console.log('err',err);
             return err;
         }
     }
@@ -354,6 +354,7 @@ export class AgentesSanitariosProvider {
             let viviendas = []
             let rows = (await this.db.executeSql(sql, []) as any).rows;
             for (let i = 0; i < rows.length; i++) {
+                console.log('rows.item(i)', rows.item(i))
                 viviendas.push(rows.item(i) as IParcela);
             }
             return viviendas;
@@ -447,9 +448,8 @@ export class AgentesSanitariosProvider {
             muerteNinoMenor5=?,
             muerteNinoMenor5Causa=?,
             muerteNinoMenor5CausaOtro=?,
-            menor5ConEnfermedadGrave=?,
-            id=?
-            WHERE id = ?`;
+            menor5ConEnfermedadGrave=?
+            WHERE id =?`;
 
         try {
             return this.db.executeSql(sql, [
@@ -619,7 +619,7 @@ export class AgentesSanitariosProvider {
     }
 
     updateIntegrante(integrante: IIntegrante) {
-        console.log('updateIntegrante');
+        console.log('updateIntegrante', integrante);
         let sql = `UPDATE integrante SET
                 hogarId=?,
                 idUsuarioCreacion=?,
@@ -652,9 +652,8 @@ export class AgentesSanitariosProvider {
                 discapacidad=?,
                 certificadoDiscapacidad=?,
                 cudNumero=?,
-                cudVigencia=?,
-                id=?
-            WHERE id = ?`;
+                cudVigencia=?
+            WHERE id =?`;
 
         try {
             return this.db.executeSql(sql, [
@@ -685,6 +684,7 @@ export class AgentesSanitariosProvider {
                 integrante.esquemaVacunacion,
                 integrante.coberturaSalud,
                 integrante.lugarAtencion,
+                integrante.lugarAtencionOtro,
                 integrante.discapacidad,
                 integrante.certificadoDiscapacidad,
                 integrante.cudNumero,
@@ -692,6 +692,7 @@ export class AgentesSanitariosProvider {
                 integrante.id
             ]);
         } catch (err) {
+            console.log(err)
             return (err);
         }
     }
@@ -779,8 +780,7 @@ export class AgentesSanitariosProvider {
                 fechaActualizacion=?,
                 integranteId=?,
                 enfermedadCronica=?,
-                enfermedadCronicaEstado=?,
-                id=?
+                enfermedadCronicaEstado=?
             WHERE id = ?`;
 
         try {

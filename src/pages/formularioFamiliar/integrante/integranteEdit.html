@@ -53,7 +53,7 @@
     </ion-item>
     <ion-item>
         <ion-label>Vinculo con Jefe de Hogar</ion-label>
-        <ion-select [(ngModel)]="integrante.vinculoJefeHogar" multiple="false">
+        <ion-select [(ngModel)]="integrante.vinculoConJefeHogar" multiple="false">
             <ion-option *ngFor="let prov of relacionesJefe" [value]="prov">{{prov}}</ion-option>
         </ion-select>
     </ion-item>
@@ -73,14 +73,14 @@
 
     <ion-item>
         <ion-label>Nivel Educacional</ion-label>
-        <ion-select [(ngModel)]="integrante.nivelEducacional" multiple="false">
+        <ion-select [(ngModel)]="integrante.nivelEducativo" multiple="false">
             <ion-option *ngFor="let prov of nivelesEducacion" [value]="prov">{{prov}}</ion-option>
         </ion-select>
     </ion-item>
 
     <ion-item>
         <ion-label>Estado Cursada</ion-label>
-        <ion-select [(ngModel)]="integrante.estadoCursada" multiple="false">
+        <ion-select [(ngModel)]="integrante.nivelEducativoEstado" multiple="false">
             <ion-option *ngFor="let prov of estadosCursoEducacion" [value]="prov">{{prov}}</ion-option>
         </ion-select>
     </ion-item>
@@ -98,7 +98,7 @@
 
     <ion-item>
         <ion-label>Embarazo</ion-label>
-        <ion-toggle [(ngModel)]="integrante.embarazo" color="primary"></ion-toggle>
+        <ion-toggle [(ngModel)]="integrante.embarazada" color="primary"></ion-toggle>
     </ion-item>
     <ion-item>
         <ion-label>Esq. de Vacunación</ion-label>

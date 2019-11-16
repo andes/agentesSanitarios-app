@@ -35,7 +35,7 @@ export class HogarListPage {
         this.navCtrl.push(HogarEditPage, {viviendaId: this.viviendaId});
     }
 
-    listadoIntegrante(hogar) {
+    listadoIntegrantes(hogar) {
         this.navCtrl.push(IntegranteListPage, { hogarId: hogar['id'] });
     }
 }

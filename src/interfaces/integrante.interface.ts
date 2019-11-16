@@ -29,6 +29,7 @@ export class IIntegrante {
     esquemaVacunacion: Boolean;
     coberturaSalud: String;
     lugarAtencion: String;
+    lugarAtencionOtro: String;
     discapacidad: String;
     certificadoDiscapacidad: Boolean;
     cudNumero: String;

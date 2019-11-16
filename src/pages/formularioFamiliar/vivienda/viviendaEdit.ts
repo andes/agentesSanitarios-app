@@ -96,6 +96,7 @@ export class ViviendaEditPage {
             return await this.agentesSanitariosProvider.insertVivienda(this.vivienda);
         } else {
             await this.agentesSanitariosProvider.updateVivienda(this.vivienda);
+            console.log(await this.agentesSanitariosProvider.getViviendasByparcelaId(this.vivienda.parcelaId))
             return this.vivienda.id;
         }
     }

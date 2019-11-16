@@ -14,75 +14,10 @@
         <ion-label>Equipo Nucleo de Ref.</ion-label>
         <ion-input [(ngModel)]="vivienda.equipoNucleoReferencia" type="string"></ion-input>
     </ion-item>
-    <ion-item>
-        <ion-label>Nro. Formulario</ion-label>
-        <ion-input [(ngModel)]="vivienda.nroFormulario" type="number"></ion-input>
-    </ion-item>
-    <ion-item>
-        <ion-label>Nro. Planilla</ion-label>
-        <ion-input [(ngModel)]="vivienda.nroPlanilla" type="number"></ion-input>
-    </ion-item>
-    <ion-item>
-        <ion-label>Nro. Parcela</ion-label>
-        <ion-input [(ngModel)]="vivienda.nroParcela" type="number"></ion-input>
-    </ion-item>
-    <ion-item>
-        <ion-label>Nro. Vivienda</ion-label>
-        <ion-input [(ngModel)]="vivienda.nroVivienda" type="number"></ion-input>
-    </ion-item>
-    <ion-item>
-        <ion-label>Nro. Hogar</ion-label>
-        <ion-input [(ngModel)]="vivienda.nroHogar" type="number"></ion-input>
-    </ion-item>
-    <ion-item>
-        <ion-label>Fecha visita 1</ion-label>
-        <ion-datetime [(ngModel)]="vivienda.fechaVisita" displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY">
-        </ion-datetime>
-    </ion-item>
-    <ion-item>
-        <ion-label>Fecha visita 2</ion-label>
-        <ion-datetime [(ngModel)]="vivienda.fechaVisita1" displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY">
-        </ion-datetime>
-    </ion-item>
-    <ion-item>
-        <ion-label>Fecha visita 3</ion-label>
-        <ion-datetime [(ngModel)]="vivienda.fechaVisita2" displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY">
-        </ion-datetime>
-    </ion-item>
-
-    <ion-item>
-        <ion-label>Provincia</ion-label>
-        <ion-select [(ngModel)]="vivienda.provincia" multiple="false" disabled>
-            <ion-option *ngFor="let prov of provincias" [value]="prov">{{prov}}</ion-option>
-        </ion-select>
-    </ion-item>
-
-    <ion-item>
-        <ion-label flaoating>Municipio</ion-label>
-        <ion-select [(ngModel)]="vivienda.municipio" multiple="false">
-            <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
-        </ion-select>
-    </ion-item>
-
-    <ion-item>
-        <ion-label>Localidad</ion-label>
-        <ion-input [(ngModel)]="vivienda.localidad" type="string"></ion-input>
-    </ion-item>
-
-    <ion-item>
-        <ion-label>Barrio</ion-label>
-        <ion-input [(ngModel)]="vivienda.barrio" type="string"></ion-input>
-    </ion-item>
-    <ion-item>
+    <!-- <ion-item>
         <ion-label>Dirección</ion-label>
         <ion-input [(ngModel)]="vivienda.direccion" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-        <ion-label>Etnia</ion-label>
-        <ion-select [(ngModel)]="vivienda.etnia" multiple="false">
-            <ion-option *ngFor="let loc of provincias" [value]="loc">{{loc}}</ion-option>
-        </ion-select>
-    </ion-item>
+    </ion-item> -->
 
     <!-- <ion-item>
         <ion-label>Tipo de Zona</ion-label> -->
@@ -182,5 +117,50 @@
     <ion-item>
         <ion-label>Domésticos</ion-label>
         <ion-toggle [(ngModel)]="vivienda.tieneAnimalesDomesticos" color="primary"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Desparasitados</ion-label>
+        <ion-toggle [(ngModel)]="vivienda.animalesDomesticosDesparasitados" color="primary"></ion-toggle>
+    </ion-item>
+    
+    <ion-item>
+        <ion-label>Internet</ion-label>
+        <ion-toggle [(ngModel)]="vivienda.internet" color="primary"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>TV Cable</ion-label>
+        <ion-toggle [(ngModel)]="vivienda.tvCable" color="primary"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Dtv</ion-label>
+        <ion-toggle [(ngModel)]="vivienda.dtv" color="primary"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Automovil</ion-label>
+        <ion-toggle [(ngModel)]="vivienda.automovil" color="primary"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Moto</ion-label>
+        <ion-toggle [(ngModel)]="vivienda.moto" color="primary"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Linea Teléfono</ion-label>
+        <ion-toggle [(ngModel)]="vivienda.lineaTelefono" color="primary"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Celular Sin Internet</ion-label>
+        <ion-toggle [(ngModel)]="vivienda.celularSinInternet" color="primary"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Celular Con Internet</ion-label>
+        <ion-toggle [(ngModel)]="vivienda.celularConInternet" color="primary"></ion-toggle>
     </ion-item>
 </ion-content>

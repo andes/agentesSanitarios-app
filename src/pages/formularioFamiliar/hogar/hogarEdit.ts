@@ -24,7 +24,6 @@ export class HogarEditPage {
     idUsuarioCreacion;
     idUsuarioActualizacion;
     hogar: IHogar;
-    hogarId;
 
     constructor(
         public navCtrl: NavController,
@@ -53,9 +52,9 @@ export class HogarEditPage {
 
     async gotoIntegrante() {
         console.log(this.hogar);
-        this.hogarId = await this.guardar();
+        this.hogar.id = await this.guardar();
         console.log('se guardo!');
-        this.navCtrl.push(IntegranteListPage, { hogarId: this.hogarId });
+        this.navCtrl.push(IntegranteListPage, { hogarId: this.hogar.id });
     }
 
     async guardar() {
