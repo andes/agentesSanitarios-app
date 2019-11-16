@@ -5,36 +5,36 @@
 </ion-header>
 
 <ion-content home background="white" padding>
-        <ul class="andes-list" *ngIf="viviendas?.length > 0">
-                <li *ngFor="let vivienda of viviendas">
-                    <div class="andes-container">
-                        <div class="andes-wraper">
-                            <h2 class="andes-list-title">
-                                Vivienda ID: <strong>{{vivienda.id}}</strong>
-                            </h2>
-                            <div class="andes-list-content">
-                                <div class="columna">
-                                    <span class="andes-list-subtitle">Ultima visita:
-                                        {{vivienda.fechaCreacion | date: "d/MM/yyyy" }} </span>
-                                </div>
-                            </div>
+    <ul class="andes-list" *ngIf="viviendas?.length > 0">
+        <li *ngFor="let vivienda of viviendas">
+            <div class="andes-container">
+                <div class="andes-wraper">
+                    <h2 class="andes-list-title">
+                        Vivienda ID: <strong>{{vivienda.id}}</strong>
+                    </h2>
+                    <div class="andes-list-content">
+                        <div class="columna">
+                            <span class="andes-list-subtitle">Ultima visita:
+                                {{vivienda.fechaCreacion | date: "d/MM/yyyy" }} </span>
                         </div>
-                        <button ion-button item-end color="primary" (click)="editarVivienda(vivienda)" >
-                            <ion-icon name="create"></ion-icon>
-                        </button>
-                        <button ion-button item-end color="primary" (click)="listadoHogares(parcela)" >
-                            <ion-icon name="arrow-round-forward"></ion-icon>
-                        </button>
                     </div>
-                </li>
-            </ul>
-            <br>
-            <br>
-            <br>
-            <br>
-            <ion-fab right bottom>
-                <button ion-fab color="dark" (click)="nuevaVivienda()">
-                    <ion-icon name="add"></ion-icon>
+                </div>
+                <button ion-button item-end color="primary" (click)="editarVivienda(vivienda)">
+                    <ion-icon name="create"></ion-icon>
                 </button>
-            </ion-fab>
+                <button ion-button item-end color="primary" (click)="listadoHogares(parcela)">
+                    <ion-icon name="arrow-round-forward"></ion-icon>
+                </button>
+            </div>
+        </li>
+    </ul>
+    <br>
+    <br>
+    <br>
+    <br>
+    <ion-fab right bottom>
+        <button ion-fab color="dark" (click)="nuevaVivienda()">
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-fab>
 </ion-content>
