@@ -1,4 +1,5 @@
 import { ViviendaEditPage } from './viviendaEdit';
+import { HogarListPage } from './../hogar/hogarList';
 import { AgentesSanitariosProvider } from './../../../providers/agentes-sanitarios/agendes-sanitarios';
 import { NavController, NavParams } from 'ionic-angular';
 import { Component } from '@angular/core';
@@ -27,14 +28,17 @@ export class ViviendaListPage {
         this.navCtrl.push(ViviendaEditPage, { parcelaId: this.parcelaId} );
     }
 
-    clickVivienda(vivienda) {
+    editarVivienda(vivienda) {
         this.navCtrl.push(ViviendaEditPage, { vivienda: vivienda} );
+    }
+
+    listadoHogares(vivienda) {
+        this.navCtrl.push(HogarListPage, { viviendaId: vivienda['id'] });
     }
 
     async ionViewWillEnter() {
         this.parcelaId = this.navParams.get('parcelaId');
         this.viviendas = await this.agentesSanitariosProvider.getViviendasByparcelaId(this.parcelaId);
         console.log(this.viviendas)
-
     }
 }

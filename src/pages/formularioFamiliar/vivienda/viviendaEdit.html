@@ -1,8 +1,13 @@
-<ion-header home>
-    <page-navbar [menu]="true">
-        <ion-title>Vivienda</ion-title>
-    </page-navbar>
-</ion-header>
+<ion-header background="dark">
+        <ion-navbar>
+            <ion-title>Creación de Vivienda</ion-title>
+            <ion-buttons end>
+                <button ion-button round outline color="light" (click)="gotoHogar()">
+                    <!-- <ion-icon name="checkmark"></ion-icon> Guardar -->Guardar
+                </button>
+            </ion-buttons>
+        </ion-navbar>
+    </ion-header>
 
 <ion-content home background="white" padding>    
     <ion-item>
@@ -174,11 +179,5 @@
     <ion-item>
         <ion-label>Domésticos</ion-label>
         <ion-toggle [(ngModel)]="vivienda.tieneAnimalesDomesticos" color="primary"></ion-toggle>
-    </ion-item>
-
-    <ion-item>
-        <button ion-button icon-only class="outline primary" [disabled]="disableArbol" (click)="gotoHogar()">
-            Registrar Hogar
-        </button>
     </ion-item>
 </ion-content>

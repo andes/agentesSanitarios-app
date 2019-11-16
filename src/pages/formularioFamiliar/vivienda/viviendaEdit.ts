@@ -73,7 +73,7 @@ export class ViviendaEditPage {
             this.vivienda.parcelaId = this.parcelaId;
         } else if (this.navParams.get('vivienda')) {
             this.vivienda = this.navParams.get('vivienda');
-            console.log('this.vivienda')
+            console.log(this.vivienda)
         }
     }
 
