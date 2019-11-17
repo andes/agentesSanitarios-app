@@ -1,14 +1,47 @@
 <ion-header background="dark">
-        <ion-navbar>
-            <ion-title>Creación de Hogar</ion-title>
-            <ion-buttons end>
-                <button ion-button round outline color="light" (click)="gotoIntegrante()">
-                    <!-- <ion-icon name="checkmark"></ion-icon> Guardar -->Guardar
-                </button>
-            </ion-buttons>
-        </ion-navbar>
-    </ion-header>
+    <ion-navbar>
+        <ion-title>Creación de Hogar</ion-title>
+        <ion-buttons end>
+            <button ion-button round outline color="light" (click)="gotoIntegrante()">
+                <!-- <ion-icon name="checkmark"></ion-icon> Guardar -->Guardar
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
 
 <ion-content home background="white" padding>
-    Formulario aquí
+    <ion-item>
+        <ion-label>Fecha visita 1</ion-label>
+        <ion-datetime [(ngModel)]="hogar.fechaVisita1" displayFormat="DD MM YY" placeholder="Seleccione...">
+        </ion-datetime>
+    </ion-item>
+    <ion-item *ngIf="hogar.fechaVisita1">
+        <ion-label>Fecha visita 2</ion-label>
+        <ion-datetime [(ngModel)]="hogar.fechaVisita2" displayFormat="DD MM YY" placeholder="Seleccione...">
+        </ion-datetime>
+    </ion-item>
+    <ion-item *ngIf="hogar.fechaVisita2">
+        <ion-label>Fecha visita 3</ion-label>
+        <ion-datetime [(ngModel)]="hogar.fechaVisita3" displayFormat="DD MM YY" placeholder="Seleccione...">
+        </ion-datetime>
+    </ion-item>
+    <ion-item>
+        <ion-label>Muerte niños < 5 años Últimos 12 meses </ion-label> 
+        <ion-toggle [(ngModel)]="hogar.muerteNinoMenor5" color="primary"> </ion-toggle>
+    </ion-item>
+    <ion-item *ngIf='hogar.muerteNinoMenor5'>
+        <ion-label>Causa de Muerte</ion-label>
+        <ion-select [(ngModel)]="hogar.muerteNinoMenor5Causa" multiple="false">
+            <ion-option *ngFor="let e of causasMuerte" [value]="e">{{e}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item *ngIf='hogar.muerteNinoMenor5 === "Otras" '>
+        <ion-label>Otra Causa de Muerte</ion-label>
+        <ion-input [(ngModel)]="hogar.muerteNinoMenor5CausaOtro" type="string"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Menor de 5 años con signo de
+            enfermedad grave</ion-label>
+        <ion-toggle [(ngModel)]="hogar.menor5ConEnfermedadGrave" color="primary"></ion-toggle>
+    </ion-item>
 </ion-content>

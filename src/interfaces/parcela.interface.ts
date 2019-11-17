@@ -14,9 +14,6 @@ export class IParcela {
     nroHogar: Number;
     nombreEncuestador: String;
     apellidoEncuestador: String;
-    fechaVisita: Date;
-    fechaVisita1: Date;
-    fechaVisita2: Date;
     provincia: String;
     municipio: String;
     localidad: String;

@@ -1,3 +1,4 @@
+import { CausasMuerte } from './../../../assets/files/causas-muerte';
 import { IntegranteListPage } from './../integrante/integranteList';
 // LIB
 import { NavController, NavParams } from 'ionic-angular';
@@ -24,13 +25,13 @@ export class HogarEditPage {
     idUsuarioCreacion;
     idUsuarioActualizacion;
     hogar: IHogar;
+    causasMuerte = CausasMuerte;
 
     constructor(
         public navCtrl: NavController,
         public agentesSanitariosProvider: AgentesSanitariosProvider,
         public navParams: NavParams
         ) {
-
         this.nuevaHogar();
     }
 
@@ -51,9 +52,7 @@ export class HogarEditPage {
     }
 
     async gotoIntegrante() {
-        console.log(this.hogar);
         this.hogar.id = await this.guardar();
-        console.log('se guardo!');
         this.navCtrl.push(IntegranteListPage, { hogarId: this.hogar.id });
     }
 

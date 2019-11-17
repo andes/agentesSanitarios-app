@@ -45,8 +45,8 @@
 
     <ion-item>
         <ion-label flaoating>Zona</ion-label>
-        <ion-select [(ngModel)]="parcela.zonaUbicacion" multiple="false" interface="popover">
-            <ion-option *ngFor="let zona of zonasUbicacion" [value]="zona">{{zona}}</ion-option>
+        <ion-select [(ngModel)]="parcela.tipoZona" multiple="false" interface="popover">
+            <ion-option *ngFor="let zona of tipoZonas" [value]="zona">{{zona}}</ion-option>
         </ion-select>
     </ion-item>
 </ion-content>

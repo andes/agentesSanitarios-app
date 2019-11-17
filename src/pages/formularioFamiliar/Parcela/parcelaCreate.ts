@@ -25,7 +25,7 @@ export class ParcelaCreatePage {
     showMpi = false;
     provincias;
     municipios;
-    zonasUbicacion;
+    tipoZonas;
     idUsuarioCreacion;
     idUsuarioActualizacion;
     parcela: IParcela;
@@ -38,7 +38,7 @@ export class ParcelaCreatePage {
 
         this.provincias = Provincias;
         this.municipios = Municipios;
-        this.zonasUbicacion = ZonasUbicacion;
+        this.tipoZonas = ZonasUbicacion;
         this.nuevaParcela();
     }
 
