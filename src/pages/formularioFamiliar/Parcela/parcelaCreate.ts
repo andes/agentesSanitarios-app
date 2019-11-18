@@ -1,5 +1,4 @@
-import { ViviendaListPage } from './../vivienda/viviendaList';
-import { ViviendaEditPage } from './../vivienda/viviendaEdit';
+import { ParcelaListPage } from './parcelaList';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 // LIB
@@ -59,9 +58,9 @@ export class ParcelaCreatePage {
         this.parcela.provincia = 'San Juan';
     }
 
-    async gotoParcelaList() {
-        let parcelaId = await this.guardar();
-        this.navCtrl.push(ViviendaListPage, { parcelaId: parcelaId });
+    async onClickGuardar() {
+        await this.guardar();
+        this.navCtrl.push(ParcelaListPage);
     }
 
     async guardar() {

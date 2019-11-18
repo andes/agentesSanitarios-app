@@ -1,3 +1,4 @@
+import { IntegranteListPage } from './integranteList';
 import { AgentesSanitariosProvider } from './../../../providers/agentes-sanitarios/agendes-sanitarios';
 import { IIntegrante } from './../../../interfaces/integrante.interface';
 import { Ocupaciones } from './../../../assets/files/ocupaciones';
@@ -17,7 +18,7 @@ import { CertificadosDiscapacidad } from './../../../assets/files/certificados-d
 import { BeneficiosSociales } from './../../../assets/files/beneficios-sociales';
 import { TiposDocumento } from './../../../assets/files/tipos-documento';
 import { Component } from '@angular/core';
-import { NavParams } from 'ionic-angular';
+import { NavParams, NavController } from 'ionic-angular';
 
 @Component({
     selector: 'integranteEdit',
@@ -50,7 +51,8 @@ export class IntegranteEditPage {
 
     constructor(
         public agentesSanitariosProvider: AgentesSanitariosProvider,
-        public navParams: NavParams
+        public navParams: NavParams,
+        public navCtrl: NavController
         ) {
         this.nuevoIntegrante();
     }
@@ -68,12 +70,11 @@ export class IntegranteEditPage {
     }
 
     async guardar() {
-        console.log('this.integrante.id', this.integrante.id)
         if (!this.integrante.id) {
             return this.integrante.id = (await this.agentesSanitariosProvider.insertIntegrante(this.integrante));
         } else {
-            console.log('this.integrante', this.integrante)
-            return await this.agentesSanitariosProvider.updateIntegrante(this.integrante);
+            await this.agentesSanitariosProvider.updateIntegrante(this.integrante);
+            return this.navCtrl.push(IntegranteListPage, { hogarId: this.integrante.hogarId });
         }
     }
 }

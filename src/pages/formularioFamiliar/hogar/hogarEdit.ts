@@ -1,5 +1,4 @@
 import { CausasMuerte } from './../../../assets/files/causas-muerte';
-import { IntegranteListPage } from './../integrante/integranteList';
 // LIB
 import { NavController, NavParams } from 'ionic-angular';
 import { Component } from '@angular/core';
@@ -8,6 +7,7 @@ import { Component } from '@angular/core';
 import { AgentesSanitariosProvider } from '../../../providers/agentes-sanitarios/agendes-sanitarios';
 // INTERFACES
 import { IHogar } from '../../../interfaces/hogar.interface';
+import { HogarListPage } from './hogarList';
 
 
 @Component({
@@ -53,7 +53,7 @@ export class HogarEditPage {
 
     async gotoIntegrante() {
         this.hogar.id = await this.guardar();
-        this.navCtrl.push(IntegranteListPage, { hogarId: this.hogar.id });
+        this.navCtrl.push(HogarListPage, { viviendaId: this.hogar.viviendaId });
     }
 
     async guardar() {

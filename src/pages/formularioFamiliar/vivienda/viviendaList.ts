@@ -1,14 +1,18 @@
+import { ParcelaListPage } from './../parcela/parcelaList';
+import { Storage } from '@ionic/storage';
 import { ViviendaEditPage } from './viviendaEdit';
 import { HogarListPage } from './../hogar/hogarList';
 import { AgentesSanitariosProvider } from './../../../providers/agentes-sanitarios/agendes-sanitarios';
-import { NavController, NavParams } from 'ionic-angular';
-import { Component } from '@angular/core';
+import { NavController, Navbar } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
 
 @Component({
     selector: 'viviendaList',
     templateUrl: 'viviendaList.html'
 })
 export class ViviendaListPage {
+    @ViewChild(Navbar) navBar: Navbar;
+
     started = false;
     user: any;
     showMpi = false;
@@ -19,9 +23,16 @@ export class ViviendaListPage {
     constructor(
         public navCtrl: NavController,
         public agentesSanitariosProvider: AgentesSanitariosProvider,
-        public navParams: NavParams
-        ) {
-            this.parcelaId = this.navParams.get('parcelaId');
+        private storage: Storage
+    ) {}
+
+    async ionViewWillEnter() {
+        this.parcelaId = await this.storage.get('parcelaId');
+        this.viviendas = await this.agentesSanitariosProvider.getViviendasByparcelaId(this.parcelaId);
+    }
+
+    ionViewDidLoad() {
+        this.navBar.backButtonClick = () => this.navCtrl.push(ParcelaListPage, {parcelaId: this.parcelaId});
     }
 
     nuevaVivienda() {
@@ -32,13 +43,8 @@ export class ViviendaListPage {
         this.navCtrl.push(ViviendaEditPage, { vivienda: vivienda} );
     }
 
-    listadoHogares(vivienda) {
-        this.navCtrl.push(HogarListPage, { viviendaId: vivienda['id'] });
-    }
-
-    async ionViewWillEnter() {
-        this.parcelaId = this.navParams.get('parcelaId');
-        this.viviendas = await this.agentesSanitariosProvider.getViviendasByparcelaId(this.parcelaId);
-        console.log(this.viviendas)
+    async listadoHogares(vivienda) {
+        this.storage.set('viviendaId', vivienda.id);
+        this.navCtrl.push(HogarListPage);
     }
 }

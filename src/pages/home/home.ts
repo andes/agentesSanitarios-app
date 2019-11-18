@@ -39,19 +39,14 @@ export class HomePage {
 
     async ionViewDidLoad() {
         await this.createDatabase();
-        console.log('gonna  create tables')
         await this.agentesSanitariosProvider.createTables();
-        console.log('tables created')
         await this.testInserts();
-        setTimeout(() => {
-            this.started = true;
-        }, 50);
+        setTimeout(() => this.started = true, 50);
     }
 
     async reset() {
         await this.agentesSanitariosProvider.dropTables();
         await this.agentesSanitariosProvider.createTables();
-        return await this.agentesSanitariosProvider.testQueries();
     }
     async testInserts() {
         return this.agentesSanitariosProvider.testQueries();
@@ -65,8 +60,6 @@ export class HomePage {
             })
             await this.agentesSanitariosProvider.setDatabase(db);
         } catch (err) {
-            console.log('error al crear base de datos');
-            console.log(err);
             return (err);
         }
     }

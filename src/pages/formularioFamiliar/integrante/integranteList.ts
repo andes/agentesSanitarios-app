@@ -1,5 +1,7 @@
-import { NavController, NavParams } from 'ionic-angular';
-import { Component, ɵConsole } from '@angular/core';
+import { Storage } from '@ionic/storage';
+import { HogarListPage } from './../hogar/hogarList';
+import { NavController, Navbar } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
 import { AgentesSanitariosProvider } from '../../../providers/agentes-sanitarios/agendes-sanitarios';
 import { IntegranteEditPage } from './integranteEdit';
 
@@ -7,26 +9,29 @@ import { IntegranteEditPage } from './integranteEdit';
     selector: 'integranteList',
     templateUrl: 'integranteList.html'
 })
+
 export class IntegranteListPage {
+    @ViewChild(Navbar) navBar: Navbar;
     integrantes;
     hogarId;
 
     constructor(
         public navCtrl: NavController,
         public agentesSanitariosProvider: AgentesSanitariosProvider,
-        public navParams: NavParams
+        private storage: Storage
         ) {
     }
 
+    ionViewDidLoad() {
+        this.navBar.backButtonClick = async () => this.navCtrl.push(HogarListPage, { viviendaId: await this.storage.get('viviendaId')} );
+    }
+
     async ionViewWillEnter() {
-        this.hogarId = this.navParams.get('hogarId');
-        console.log('this.hogarId', this.hogarId)
+        this.hogarId = await this.storage.get('hogarId');
         this.integrantes = await this.agentesSanitariosProvider.getIntegrantesByHogarId(this.hogarId);
-        console.log('integrantes', this.integrantes);
     }
 
     async nuevoIntegrante() {
-        // let insertId = (await this.agentesSanitariosProvider.insertEncuesta(this.encuesta)).insertId;
         this.navCtrl.push(IntegranteEditPage, {hogarId: this.hogarId});
     }
 

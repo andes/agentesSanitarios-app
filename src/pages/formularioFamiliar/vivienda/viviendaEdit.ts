@@ -4,7 +4,6 @@ import { MaterialesTecho } from './../../../assets/files/material-techo';
 import { MaterialesPiso } from './../../../assets/files/material-piso';
 import { MaterialesPared } from './../../../assets/files/material-pared';
 import { FuentesAgua } from './../../../assets/files/fuentas-agua';
-import { HogarListPage } from './../hogar/hogarList';
 // LIB
 import { NavController, NavParams } from 'ionic-angular';
 import { Component } from '@angular/core';
@@ -19,6 +18,7 @@ import { ZonasUbicacion } from '../../../assets/files/zonasUbicacion';
 
 // INTERFACES
 import { IVivienda } from '../../../interfaces/vivienda.interface';
+import { ViviendaListPage } from './viviendaList';
 
 
 @Component({
@@ -73,7 +73,6 @@ export class ViviendaEditPage {
             this.vivienda.parcelaId = this.parcelaId;
         } else if (this.navParams.get('vivienda')) {
             this.vivienda = this.navParams.get('vivienda');
-            console.log(this.vivienda)
         }
     }
 
@@ -86,9 +85,9 @@ export class ViviendaEditPage {
         // this.vivienda.fechaActualizacion = new Date();
     }
 
-    async gotoHogar() {
-        let viviendaId = await this.guardar();
-        this.navCtrl.push(HogarListPage, { viviendaId: viviendaId });
+    async onClickGuardar() {
+        await this.guardar();
+        this.navCtrl.push(ViviendaListPage, { parcelaId: this.vivienda.parcelaId });
     }
 
     async guardar() {
@@ -96,7 +95,6 @@ export class ViviendaEditPage {
             return await this.agentesSanitariosProvider.insertVivienda(this.vivienda);
         } else {
             await this.agentesSanitariosProvider.updateVivienda(this.vivienda);
-            console.log(await this.agentesSanitariosProvider.getViviendasByparcelaId(this.vivienda.parcelaId))
             return this.vivienda.id;
         }
     }
