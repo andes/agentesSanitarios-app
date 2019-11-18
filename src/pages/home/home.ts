@@ -11,6 +11,7 @@ import { DeviceProvider } from '../../providers/auth/device';
 import { ErrorReporterProvider } from '../../providers/errorReporter';
 import { ParcelaCreatePage } from '../formularioFamiliar/parcela/parcelaCreate';
 import { ParcelaListPage } from '../formularioFamiliar/parcela/parcelaList';
+import { EscanerDniPage } from '../registro/escaner-dni/escaner-dni';
 
 @Component({
     selector: 'page-home',
@@ -40,7 +41,7 @@ export class HomePage {
     async ionViewDidLoad() {
         await this.createDatabase();
         await this.agentesSanitariosProvider.createTables();
-        await this.testInserts();
+        // await this.testInserts();
         setTimeout(() => this.started = true, 50);
     }
 
@@ -77,6 +78,12 @@ export class HomePage {
     listarParcela() {
         if (this.isLogin()) {
             this.navCtrl.push(ParcelaListPage);
+        }
+    }
+
+    scanDocumento() {
+        if (this.isLogin()) {
+            this.navCtrl.push(EscanerDniPage);
         }
     }
 

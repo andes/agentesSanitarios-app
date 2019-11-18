@@ -18,7 +18,7 @@ import { AgmCoreModule } from '@agm/core';
 // // Pages
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-// import { EscanerDniPage } from '../pages/registro/escaner-dni/escaner-dni';
+import { EscanerDniPage } from '../pages/registro/escaner-dni/escaner-dni';
 // import { RegistroPersonalDataPage } from '../pages/registro/personal-data/personal-data';
 // import { RegistroUserDataPage } from '../pages/registro/user-data/user-data';
 import { LoginPage } from '../pages/login/login';
@@ -57,7 +57,7 @@ import { AgentesSanitariosProvider } from './../providers/agentes-sanitarios/age
     declarations: [
         MyApp,
         HomePage,
-//         EscanerDniPage,
+        EscanerDniPage,
 //         RegistroPersonalDataPage,
 //         RegistroUserDataPage,
         LoginPage,
@@ -92,7 +92,7 @@ import { AgentesSanitariosProvider } from './../providers/agentes-sanitarios/age
     entryComponents: [
         MyApp,
         HomePage,
-//         EscanerDniPage,
+        EscanerDniPage,
 //         RegistroPersonalDataPage,
 //         RegistroUserDataPage,
         LoginPage,

@@ -1,10 +1,10 @@
 export const Nacionalidades = [
-    'Argentino',
-    'Paraguayo',
-    'Boliviano',
-    'Uruguayo',
-    'Brasilero',
-    'Chileno',
-    'Peruano',
+    'Argentino/a',
+    'Paraguayo/a',
+    'Boliviano/a',
+    'Uruguayo/a',
+    'Brasilero/a',
+    'Chileno/a',
+    'Peruano/a',
     'Otro'
 ];

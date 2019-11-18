@@ -19,6 +19,7 @@ import { BeneficiosSociales } from './../../../assets/files/beneficios-sociales'
 import { TiposDocumento } from './../../../assets/files/tipos-documento';
 import { Component } from '@angular/core';
 import { NavParams, NavController } from 'ionic-angular';
+import { dateDataSortValue } from 'ionic-angular/umd/util/datetime-util';
 
 @Component({
     selector: 'integranteEdit',
@@ -48,6 +49,7 @@ export class IntegranteEditPage {
     ocupaciones = Ocupaciones;
 
     integrante: IIntegrante;
+    datosPersona: any;
 
     constructor(
         public agentesSanitariosProvider: AgentesSanitariosProvider,
@@ -60,8 +62,23 @@ export class IntegranteEditPage {
     async ionViewWillEnter() {
         if (this.navParams.get('hogarId')) {
             this.integrante.hogarId = this.navParams.get('hogarId');
+            if (this.navParams.get('datosPersona')) {
+                this.datosPersona = this.navParams.get('datosPersona');
+                console.log(this.datosPersona);
+                this.integrante.tipoDocumento = 'D.N.I.'
+                this.integrante.numeroDocumento = this.datosPersona.documento;
+                this.integrante.nombre = this.datosPersona.nombre;
+                this.integrante.apellido = this.datosPersona.apellido;
+                this.integrante.nacionalidad = 'Argentino/a';
+                this.integrante.sexo = this.datosPersona.sexo;
+                this.integrante.genero = this.datosPersona.sexo;
+                let dateParts: any = this.datosPersona.fechaNacimiento.split('/');
+                this.integrante.fechaNacimientoString = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]).toISOString();
+            }
         } else if (this.navParams.get('integrante')) {
             this.integrante = this.navParams.get('integrante');
+            console.log(this.integrante);
+            this.integrante.fechaNacimientoString = new Date(this.integrante.fechaNacimiento).toISOString();
         }
     }
 
@@ -70,6 +87,8 @@ export class IntegranteEditPage {
     }
 
     async guardar() {
+        this.integrante.fechaNacimiento = new Date(this.integrante.fechaNacimientoString.toString());
+        console.log(this.integrante.fechaNacimiento);
         if (!this.integrante.id) {
             return this.integrante.id = (await this.agentesSanitariosProvider.insertIntegrante(this.integrante));
         } else {

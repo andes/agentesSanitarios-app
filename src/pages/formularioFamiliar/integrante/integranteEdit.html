@@ -12,7 +12,7 @@
 <ion-content home background="white" padding>
     <ion-item>
         <ion-label>Tipo Documento</ion-label>
-        <ion-select [(ngModel)]="integrante.tipoDocumento" multiple="false">
+        <ion-select [(ngModel)]="integrante.tipoDocumento" interface="popover" multiple="false">
             <ion-option *ngFor="let e of tiposDocumento" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>
@@ -30,25 +30,25 @@
     </ion-item>
     <ion-item>
         <ion-label>Nacionalidad</ion-label>
-        <ion-select [(ngModel)]="integrante.nacionalidad" multiple="false">
+        <ion-select [(ngModel)]="integrante.nacionalidad" interface="popover" multiple="false">
             <ion-option *ngFor="let e of nacionalidades" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item>
         <ion-label>Sexo</ion-label>
-        <ion-select [(ngModel)]="integrante.sexo" multiple="false">
+        <ion-select [(ngModel)]="integrante.sexo" interface="popover" multiple="false">
             <ion-option *ngFor="let e of sexos" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item>
         <ion-label>Genero</ion-label>
-        <ion-select [(ngModel)]="integrante.genero" multiple="false">
+        <ion-select [(ngModel)]="integrante.genero" interface="popover" multiple="false">
             <ion-option *ngFor="let e of generos" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item>
         <ion-label>Fecha de nacimiento</ion-label>
-        <ion-datetime [(ngModel)]="integrante.fechaNacimiento" displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY">
+        <ion-datetime [(ngModel)]="integrante.fechaNacimientoString" displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY">
         </ion-datetime>
     </ion-item>
     <ion-item>
@@ -63,31 +63,31 @@
     </ion-item>
     <ion-item>
         <ion-label>Ocupación</ion-label>
-        <ion-select [(ngModel)]="integrante.ocupacion" multiple="false">
+        <ion-select [(ngModel)]="integrante.ocupacion" interface="popover" multiple="false">
             <ion-option *ngFor="let e of ocupaciones" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item>
         <ion-label>Beneficio Social</ion-label>
-        <ion-select [(ngModel)]="integrante.beneficioSocial" multiple="false">
+        <ion-select [(ngModel)]="integrante.beneficioSocial" interface="popover" multiple="false">
             <ion-option *ngFor="let e of beneficiosSociales" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item>
         <ion-label>Nivel Educacional</ion-label>
-        <ion-select [(ngModel)]="integrante.nivelEducativo" multiple="false">
+        <ion-select [(ngModel)]="integrante.nivelEducativo" interface="popover" multiple="false">
             <ion-option *ngFor="let e of nivelesEducacion" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item>
         <ion-label>Estado Cursada</ion-label>
-        <ion-select [(ngModel)]="integrante.nivelEducativoEstado" multiple="false">
+        <ion-select [(ngModel)]="integrante.nivelEducativoEstado" interface="popover" multiple="false">
             <ion-option *ngFor="let e of estadosCursoEducacion" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item>
         <ion-label>Enfermedades Cronicas</ion-label>
-        <ion-select [(ngModel)]="integrante.enfermedadesCronicas" multiple="false">
+        <ion-select [(ngModel)]="integrante.enfermedadesCronicas" multiple="true">
             <ion-option *ngFor="let e of enfermedadesCronicas" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>
@@ -105,25 +105,25 @@
     </ion-item>
     <ion-item>
         <ion-label>Cobertura de Salud</ion-label>
-        <ion-select [(ngModel)]="integrante.coberturaSalud" multiple="false">
+        <ion-select [(ngModel)]="integrante.coberturaSalud" interface="popover" multiple="false">
             <ion-option *ngFor="let loc of coberturas" [value]="loc">{{loc}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item>
         <ion-label>Lugar de Atención</ion-label>
-        <ion-select [(ngModel)]="integrante.lugarAtencion" multiple="false">
+        <ion-select [(ngModel)]="integrante.lugarAtencion" interface="popover" multiple="false">
             <ion-option *ngFor="let loc of lugaresAtencion" [value]="loc">{{loc}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item >
         <ion-label>Discapacidad</ion-label>
-        <ion-select [(ngModel)]="integrante.discapacidad" multiple="false">
+        <ion-select [(ngModel)]="integrante.discapacidad" interface="popover" multiple="false">
             <ion-option *ngFor="let loc of discapacidades" [value]="loc">{{loc}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item *ngIf="integrante.discapacidad">
         <ion-label>Cert. Discapacidad</ion-label>
-        <ion-select [(ngModel)]="integrante.certificadoDiscapacidad" multiple="false">
+        <ion-select [(ngModel)]="integrante.certificadoDiscapacidad" interface="popover" multiple="false">
             <ion-option *ngFor="let loc of certificadosDiscapacidad" [value]="loc">{{loc}}</ion-option>
         </ion-select>
     </ion-item>

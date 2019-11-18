@@ -1,4 +1,4 @@
 export const Sexos = [
-    'Hombre',
-    'Mujer'
+    'Masculino',
+    'Femenino'
 ];

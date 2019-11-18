@@ -4,6 +4,7 @@ import { NavController, Navbar } from 'ionic-angular';
 import { Component, ViewChild } from '@angular/core';
 import { AgentesSanitariosProvider } from '../../../providers/agentes-sanitarios/agendes-sanitarios';
 import { IntegranteEditPage } from './integranteEdit';
+import { EscanerDniPage } from '../../registro/escaner-dni/escaner-dni';
 
 @Component({
     selector: 'integranteList',
@@ -32,7 +33,7 @@ export class IntegranteListPage {
     }
 
     async nuevoIntegrante() {
-        this.navCtrl.push(IntegranteEditPage, {hogarId: this.hogarId});
+        this.navCtrl.push(EscanerDniPage, {hogarId: this.hogarId});
     }
 
     editarIntegrante(integrante) {

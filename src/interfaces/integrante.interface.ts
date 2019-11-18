@@ -16,6 +16,7 @@ export class IIntegrante {
     etnia: String;
     vinculoConJefeHogar: String;
     fechaNacimiento: Date;
+    fechaNacimientoString: String;
     ocupacion: String;
     beneficioSocial: String;
     nivelEducativo: String;

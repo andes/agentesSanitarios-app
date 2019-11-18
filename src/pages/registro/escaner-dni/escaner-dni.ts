@@ -9,7 +9,7 @@ import { DocumentoEscaneados } from '../regex-documento-scan';
 import { AuthProvider } from '../../../providers/auth/auth';
 
 // pages
-import { RegistroPersonalDataPage } from '../personal-data/personal-data';
+import { IntegranteEditPage } from '../../formularioFamiliar/integrante/integranteEdit';
 /**
  * Generated class for the EscanerDniPage page.
  *
@@ -23,11 +23,10 @@ import { RegistroPersonalDataPage } from '../personal-data/personal-data';
 export class EscanerDniPage implements OnInit {
 
   loading: any;
-  modelo: any = {};
+  datosPersona: any = {};
   info: any;
 
-  email: string;
-  code: string;
+  hogarId: any;
 
   public textoLibre: string = null;
 
@@ -45,12 +44,11 @@ export class EscanerDniPage implements OnInit {
   }
 
   ionViewDidLoad() {
-    this.email = this.navParams.get('email');
-    this.code = this.navParams.get('code');
+    this.hogarId = this.navParams.get('hogarId');
   }
 
-  toDatos() {
-    this.navCtrl.push(RegistroPersonalDataPage, { email: this.email, code: this.code });
+  goToNuevoIntegrante() {
+    this.navCtrl.push(IntegranteEditPage, { hogarId: this.hogarId });
   }
 
   private comprobarDocumentoEscaneado(documento): any {
@@ -74,7 +72,7 @@ export class EscanerDniPage implements OnInit {
       sexo = (datos[documento.grupoSexo].toUpperCase() === 'F') ? 'Femenino' : 'Masculino';
     }
 
-    this.modelo = {
+    this.datosPersona = {
       'nombre': datos[documento.grupoNombre],
       'apellido': datos[documento.grupoApellido],
       'documento': datos[documento.grupoNumeroDocumento].replace(/\D/g, ''),
@@ -84,8 +82,8 @@ export class EscanerDniPage implements OnInit {
       'telefono': null
     };
 
-    this.storage.set('barscancode', this.modelo);
-    this.navCtrl.push(RegistroPersonalDataPage, { user: this.modelo, email: this.email, code: this.code });
+    this.storage.set('barscancode', this.datosPersona);
+    this.navCtrl.push(IntegranteEditPage, { hogarId: this.hogarId, datosPersona: this.datosPersona });
   }
 
   scanner() {
