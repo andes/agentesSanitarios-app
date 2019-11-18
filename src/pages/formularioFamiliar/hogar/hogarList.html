@@ -7,7 +7,7 @@
 
 <ion-content home background="white" padding>
     <ul class="andes-list" *ngIf="hogares?.length > 0">
-        <li *ngFor="let hogar of hogares">
+        <li *ngFor="let hogar of hogares" (click)="listadoIntegrantes(hogar)">
             <div class="andes-container">
                 <div class="andes-wraper">
                     <h2 class="andes-list-title">

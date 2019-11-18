@@ -6,7 +6,7 @@
 
 <ion-content home background="white" padding>
     <ul class="andes-list" *ngIf="parcelas?.length > 0">
-        <li *ngFor="let parcela of parcelas">
+        <li *ngFor="let parcela of parcelas" (click)="listadoViviendas(parcela)">
             <div class="andes-container">
                 <div class="andes-wraper">
                     <h2 class="andes-list-title">
