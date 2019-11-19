@@ -9,7 +9,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 import { LoginPage } from '../login/login';
 import { DeviceProvider } from '../../providers/auth/device';
 import { ErrorReporterProvider } from '../../providers/errorReporter';
-import { ParcelaCreatePage } from '../formularioFamiliar/parcela/parcelaCreate';
+import { ParcelaEditPage } from '../formularioFamiliar/parcela/parcelaEdit';
 import { ParcelaListPage } from '../formularioFamiliar/parcela/parcelaList';
 
 @Component({
@@ -71,7 +71,7 @@ export class HomePage {
 
     crearParcela() {
         if (this.isLogin()) {
-            this.navCtrl.push(ParcelaCreatePage);
+            this.navCtrl.push(ParcelaEditPage);
         }
     }
     listarParcela() {

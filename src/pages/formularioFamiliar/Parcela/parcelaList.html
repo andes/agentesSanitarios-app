@@ -6,16 +6,27 @@
 
 <ion-content home background="white" padding>
     <ul class="andes-list" *ngIf="parcelas?.length > 0">
-        <li *ngFor="let parcela of parcelas" (click)="listadoViviendas(parcela)">
+        <li *ngFor="let parcela of parcelas">
             <div class="andes-container">
-                <div class="andes-wraper">
+                <div class="andes-wraper" (click)="listadoViviendas(parcela)">
                     <h2 class="andes-list-title">
                         Parcela Nro.: <strong>{{parcela.nroParcela}}</strong>
                     </h2>
                     <div class="andes-list-content">
                         <div class="columna">
-                            <span class="andes-list-subtitle">Ultima visita:
-                                {{parcela.fechaCreacion | date: "d/MM/yyyy" }} </span>
+                            <span class="andes-list-subtitle">Fecha creación:
+                                {{parcela.fechaCreacion | date: "dd/MM/yyyy - H:mm" }}hs.
+                            </span>
+                            <br>
+                            <span class="andes-list-subtitle">Última actualización:
+                                {{parcela.fechaActualizacion | date: "dd/MM/yyyy - H:mm" }}hs.
+                            </span>
+                            <br>
+                            <span class="andes-list-subtitle">Ubicación:
+                                {{(parcela.provincia !== null) ? (parcela.provincia) : ""}}
+                                {{(parcela.municipio !== null) ? ('- ' + parcela.municipio) : ""}}
+                                {{(parcela.localidad !== null) ? ('- ' + parcela.localidad) : ""}}
+                            </span>
                         </div>
                     </div>
                 </div>

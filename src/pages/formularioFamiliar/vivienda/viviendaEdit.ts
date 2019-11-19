@@ -81,8 +81,8 @@ export class ViviendaEditPage {
         this.idUsuarioCreacion = 23
         this.idUsuarioActualizacion = 23;
         this.vivienda.parcelaId = this.parcelaId;
-        // this.vivienda.fechaCreacion = new Date();
-        // this.vivienda.fechaActualizacion = new Date();
+        this.vivienda.fechaCreacion = new Date();
+        this.vivienda.fechaActualizacion = new Date();
     }
 
     async onClickGuardar() {
@@ -94,6 +94,8 @@ export class ViviendaEditPage {
         if (!this.vivienda.id) {
             return await this.agentesSanitariosProvider.insertVivienda(this.vivienda);
         } else {
+            this.vivienda.idUsuarioActualizacion = 23;
+            this.vivienda.fechaActualizacion = new Date();
             await this.agentesSanitariosProvider.updateVivienda(this.vivienda);
             return this.vivienda.id;
         }

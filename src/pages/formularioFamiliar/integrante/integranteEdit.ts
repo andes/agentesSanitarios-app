@@ -73,6 +73,8 @@ export class IntegranteEditPage {
         if (!this.integrante.id) {
             return this.integrante.id = (await this.agentesSanitariosProvider.insertIntegrante(this.integrante));
         } else {
+            this.integrante.idUsuarioActualizacion = 23;
+            this.integrante.fechaActualizacion = new Date();
             await this.agentesSanitariosProvider.updateIntegrante(this.integrante);
             return this.navCtrl.push(IntegranteListPage, { hogarId: this.integrante.hogarId });
         }

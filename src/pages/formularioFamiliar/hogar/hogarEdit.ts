@@ -47,8 +47,8 @@ export class HogarEditPage {
         this.hogar = new IHogar();
         this.idUsuarioCreacion = 23
         this.idUsuarioActualizacion = 23;
-        // this.hogar.fechaCreacion = new Date();
-        // this.hogar.fechaActualizacion = new Date();
+        this.hogar.fechaCreacion = new Date();
+        this.hogar.fechaActualizacion = new Date();
     }
 
     async gotoIntegrante() {
@@ -60,6 +60,8 @@ export class HogarEditPage {
         if (!this.hogar.id) {
             return await this.agentesSanitariosProvider.insertHogar(this.hogar);
         } else {
+            this.hogar.idUsuarioActualizacion = 23;
+            this.hogar.fechaActualizacion = new Date();
             await this.agentesSanitariosProvider.updateHogar(this.hogar);
             return this.hogar.id;
         }

@@ -3,7 +3,7 @@ import { Storage } from '@ionic/storage';
 import { NavController, Navbar } from 'ionic-angular';
 import { Component, ViewChild } from '@angular/core';
 import { AgentesSanitariosProvider } from '../../../providers/agentes-sanitarios/agendes-sanitarios';
-import { ParcelaCreatePage } from './parcelaCreate';
+import { ParcelaEditPage } from './parcelaEdit';
 import { ViviendaListPage } from '../vivienda/viviendaList';
 
 @Component({
@@ -30,11 +30,11 @@ export class ParcelaListPage {
     }
 
     crearParcela() {
-        this.navCtrl.push(ParcelaCreatePage);
+        this.navCtrl.push(ParcelaEditPage);
     }
 
     editarParcela(parcela) {
-        this.navCtrl.push(ParcelaCreatePage, { parcela: parcela});
+        this.navCtrl.push(ParcelaEditPage, { parcela: parcela});
     }
 
     async listadoViviendas(parcela) {
