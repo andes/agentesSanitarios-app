@@ -14,11 +14,11 @@ import { IParcela } from '../../../interfaces/parcela.interface';
 
 
 @Component({
-    selector: 'parcelaCreate',
-    templateUrl: 'parcelaCreate.html'
+    selector: 'parcelaEdit',
+    templateUrl: 'parcelaEdit.html'
 })
 
-export class ParcelaCreatePage {
+export class ParcelaEditPage {
     started = false;
     user: any;
     showMpi = false;
@@ -51,8 +51,8 @@ export class ParcelaCreatePage {
 
     nuevaParcela() {
         this.parcela = new IParcela();
-        this.idUsuarioCreacion = 23
-        this.idUsuarioActualizacion = 23;
+        this.parcela.idUsuarioCreacion = 23
+        this.parcela.idUsuarioActualizacion = 23;
         this.parcela.fechaCreacion = new Date();
         this.parcela.fechaActualizacion = new Date();
         this.parcela.provincia = 'San Juan';
@@ -67,6 +67,8 @@ export class ParcelaCreatePage {
         if (!this.parcela.id) {
             return await this.agentesSanitariosProvider.insertParcela(this.parcela);
         } else {
+            this.parcela.idUsuarioActualizacion = 23;
+            this.parcela.fechaActualizacion = new Date();
             await this.agentesSanitariosProvider.updateParcela(this.parcela);
             return this.parcela.id;
         }

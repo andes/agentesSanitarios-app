@@ -14,4 +14,6 @@ export class IHogar {
     muerteNinoMenor5Causa: String;
     muerteNinoMenor5CausaOtro: String;
     menor5ConEnfermedadGrave: Boolean;
+    jefeDeHogar: IIntegrante[];
+    integrantes: IIntegrante[]
 }

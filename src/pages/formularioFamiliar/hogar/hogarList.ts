@@ -5,6 +5,7 @@ import { IntegranteListPage } from './../integrante/integranteList';
 import { NavController, Navbar } from 'ionic-angular';
 import { Component, ViewChild } from '@angular/core';
 import { AgentesSanitariosProvider } from '../../../providers/agentes-sanitarios/agendes-sanitarios';
+import { IHogar } from 'interfaces/hogar.interface';
 
 @Component({
     selector: 'hogarList',
@@ -13,9 +14,8 @@ import { AgentesSanitariosProvider } from '../../../providers/agentes-sanitarios
 
 export class HogarListPage {
     @ViewChild(Navbar) navBar: Navbar;
-    hogares;
+    hogares: IHogar[];
     viviendaId;
-
     constructor(
         public navCtrl: NavController,
         public agentesSanitariosProvider: AgentesSanitariosProvider,
@@ -24,13 +24,16 @@ export class HogarListPage {
     }
 
     ionViewDidLoad() {
-        this.navBar.backButtonClick = async() => this.navCtrl.push(ViviendaListPage, {parcelaId:await this.storage.get('parcelaId')});
+        this.navBar.backButtonClick = async() => this.navCtrl.push(ViviendaListPage, {parcelaId: await this.storage.get('parcelaId')});
     }
 
     async ionViewWillEnter() {
         this.viviendaId = await this.storage.get('viviendaId');
         this.hogares = await this.agentesSanitariosProvider.getHogaresByViviendaId(this.viviendaId);
-
+        for ( let i = 0;  i < this.hogares.length; i++) {
+            this.hogares[i].integrantes = await this.agentesSanitariosProvider.getIntegrantesByHogarId(this.hogares[i].id);
+            this.hogares[i].jefeDeHogar = await this.agentesSanitariosProvider.getJefeDeHogarByHogarId(this.hogares[i].id);
+        }
     }
 
     editarHogar(hogar) {

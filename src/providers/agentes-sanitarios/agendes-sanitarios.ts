@@ -340,7 +340,7 @@ export class AgentesSanitariosProvider {
                 vivienda.id
             ]);
         } catch (err) {
-            console.log('err',err);
+            console.log('err', err);
             return err;
         }
     }
@@ -704,7 +704,22 @@ export class AgentesSanitariosProvider {
             let integrantes = []
             let rows = (await this.db.executeSql(sql, []) as any).rows;
             for (let i = 0; i < rows.length; i++) {
-                integrantes.push(rows.item(i) as IHogar);
+                integrantes.push(rows.item(i) as IIntegrante);
+            }
+            return integrantes;
+        } catch (err) {
+            return err;
+        }
+    }
+
+    async getJefeDeHogarByHogarId(hogarId) {
+        try {
+            let sql = `SELECT * FROM integrante
+                 WHERE hogarId = ${hogarId} and esJefeHogar = 'true'`;
+            let integrantes = []
+            let rows = (await this.db.executeSql(sql, []) as any).rows;
+            for (let i = 0; i < rows.length; i++) {
+                integrantes.push(rows.item(i) as IIntegrante);
             }
             return integrantes;
         } catch (err) {

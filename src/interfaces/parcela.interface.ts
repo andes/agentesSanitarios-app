@@ -6,14 +6,7 @@ export class IParcela {
     idUsuarioActualizacion: Number;
     fechaCreacion: Date;
     fechaActualizacion: Date;
-    equipoNucleoReferencia: String;
-    nroFormulario: Number;
-    nroPlanilla: Number;
     nroParcela: Number;
-    nroVivienda: Number;
-    nroHogar: Number;
-    nombreEncuestador: String;
-    apellidoEncuestador: String;
     provincia: String;
     municipio: String;
     localidad: String;

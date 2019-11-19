@@ -8,14 +8,19 @@
     <ul class="andes-list" *ngIf="viviendas?.length > 0">
         <li *ngFor="let vivienda of viviendas">
             <div class="andes-container">
-                <div class="andes-wraper">
+                <div class="andes-wraper" (click)="listadoHogares(vivienda)">
                     <h2 class="andes-list-title">
-                        Vivienda ID: <strong>{{vivienda.id}}</strong>
+                        Vivienda N°: <strong>{{vivienda.id}}</strong>
                     </h2>
                     <div class="andes-list-content">
                         <div class="columna">
-                            <span class="andes-list-subtitle">Ultima visita:
-                                {{vivienda.fechaCreacion | date: "d/MM/yyyy" }} </span>
+                            <span class="andes-list-subtitle">Fecha creación:
+                                {{vivienda.fechaCreacion | date: "dd/MM/yyyy - H:mm" }}hs.
+                            </span>
+                            <br>
+                            <span class="andes-list-subtitle">Última actualización:
+                                {{vivienda.fechaActualizacion | date: "dd/MM/yyyy - H:mm" }}hs.
+                            </span>
                         </div>
                     </div>
                 </div>
