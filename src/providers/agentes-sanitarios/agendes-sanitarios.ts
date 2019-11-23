@@ -1,3 +1,5 @@
+import { SelectIntegrantesByHogarQuery, UpdateIntegranteQuery, InsertIntegranteQuery, CreateIntegranteQuery } from './queries/integrante.queries';
+import { CreateParcelaQuery, InsertParcelaQuery, UpdateParcelaQuery, SelectParcelaQuery, SelectParcelaByDniQuery } from './queries/parcela.queries';
 import { IIntegrante } from './../../interfaces/integrante.interface';
 import { Injectable } from '@angular/core';
 import { SQLiteObject } from '@ionic-native/sqlite';
@@ -6,6 +8,8 @@ import { IParcela } from './../../interfaces/parcela.interface';
 import { IHogar } from './../../interfaces/hogar.interface';
 import { IVivienda } from './../../interfaces/vivienda.interface';
 import { IIntegranteEnfermedadCronica } from './../../interfaces/integranteEnfermedadCronica.interface';
+import { UpdateViviendaQuery, SelectViviendaByParcelaQuery, CreateViviendaQuery, InsertViviendaQuery, SelectViviendaQuery } from './queries/vivienda.queries';
+import { CreateHogarQuery, InsertHogarQuery, UpdateHogarQuery, SelectHogarQuery, SelectHogarByViviendaQuery } from './queries/hogar.queries';
 
 @Injectable()
 export class AgentesSanitariosProvider {
@@ -44,22 +48,7 @@ export class AgentesSanitariosProvider {
     // ***********************PARCELA
     createTableParcelas() {
         try {
-            console.log('createTableParcelas')
-            let sql = `CREATE TABLE IF NOT EXISTS parcela(
-                id INTEGER NOT NULL PRIMARY KEY,
-                idUsuarioCreacion INTEGER,
-                idUsuarioActualizacion INTEGER,
-                fechaCreacion DATETIME,
-                fechaActualizacion DATETIME,
-                nroParcela INTEGER,
-                provincia VARCHAR(100),
-                municipio VARCHAR(100),
-                localidad VARCHAR(100),
-                barrio VARCHAR(100),
-                direccion VARCHAR(100),
-                tipoZona VARCHAR(100)
-                )`;
-            return this.db.executeSql(sql, []);
+            return this.db.executeSql(CreateParcelaQuery, []);
         } catch (err) {
             console.log('Error!', err)
             return (err);
@@ -68,21 +57,7 @@ export class AgentesSanitariosProvider {
 
     async insertParcela(parcela: IParcela) {
         try {
-            let sql = `INSERT INTO parcela(
-                idUsuarioCreacion,
-                idUsuarioActualizacion,
-                fechaCreacion,
-                fechaActualizacion,
-                nroParcela,
-                provincia,
-                municipio,
-                localidad,
-                barrio,
-                direccion,
-                tipoZona)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-
-            return (await this.db.executeSql(sql, [
+            return (await this.db.executeSql(InsertParcelaQuery, [
                 parcela.idUsuarioCreacion,
                 parcela.idUsuarioActualizacion,
                 parcela.fechaCreacion,
@@ -102,21 +77,7 @@ export class AgentesSanitariosProvider {
 
     updateParcela(parcela: IParcela) {
         try {
-            let sql = `UPDATE parcela SET
-                idUsuarioCreacion=?,
-                idUsuarioActualizacion=?,
-                fechaCreacion=?,
-                fechaActualizacion=?,
-                nroParcela=?,
-                provincia=?,
-                municipio=?,
-                localidad=?,
-                barrio=?,
-                direccion=?,
-                tipoZona=?
-            WHERE id=?`;
-
-            return this.db.executeSql(sql, [
+            return this.db.executeSql(UpdateParcelaQuery, [
                 parcela.idUsuarioCreacion,
                 parcela.idUsuarioActualizacion,
                 parcela.fechaCreacion,
@@ -136,14 +97,8 @@ export class AgentesSanitariosProvider {
     }
 
     async getParcelaByDni(numeroDocumento) {
-        console.log('getParcelaByDni xxx', numeroDocumento);
         try {
-            let sql = `SELECT p.* FROM parcela p
-                JOIN vivienda v on v.parcelaId = p.id
-                JOIN hogar h on h.viviendaId = v.id
-                JOIN integrante i on i.hogarId = h.id
-                WHERE i.numeroDocumento = '${numeroDocumento}'`;
-            return (await this.db.executeSql(sql, [])).rows.item(0);
+            return (await this.db.executeSql(`${SelectParcelaByDniQuery}${numeroDocumento}`, [])).rows.item(0);
         } catch (err) {
             return err;
         }
@@ -151,9 +106,7 @@ export class AgentesSanitariosProvider {
     async getParcelaById(id) {
         console.log('getParcelaById xxx', id);
         try {
-            let sql = `SELECT p.* FROM parcela p
-                WHERE p.id = '${id}'`;
-            return (await this.db.executeSql(sql, [])).rows.item(0);
+            return (await this.db.executeSql(`${SelectParcelaQuery}${id}`, [])).rows.item(0);
         } catch (err) {
             return err;
         }
@@ -162,39 +115,7 @@ export class AgentesSanitariosProvider {
     createTableViviendas() {
         console.log('createTableViviendas')
         try {
-            let sql = `CREATE TABLE IF NOT EXISTS vivienda(
-                id INTEGER NOT NULL PRIMARY KEY,
-                parcelaId INTEGER,
-                idUsuarioCreacion INTEGER,
-                idUsuarioActualizacion INTEGER,
-                fechaCreacion DATETIME,
-                fechaActualizacion DATETIME,
-                materialPiso VARCHAR(100),
-                materialPared VARCHAR(100),
-                materialTecho VARCHAR(100),
-                cantidadHabitacionesSinServicio VARCHAR(100),
-                tipoCasa VARCHAR(100),
-                fuenteAgua VARCHAR(100),
-                tipoBano VARCHAR(100),
-                tieneInstalacionesElectricas VARCHAR(100),
-                tieneTratamientoBasura BOOLEAN,
-                tieneAnimalesConsumo BOOLEAN,
-                animalesConsumoVacunados BOOLEAN,
-                animalesConsumoDesparasitados BOOLEAN,
-                tieneAnimalesDomesticos BOOLEAN,
-                animalesDomesticosVacunados BOOLEAN,
-                animalesDomesticosDesparasitados BOOLEAN,
-                internet BOOLEAN,
-                tvCable BOOLEAN,
-                dtv BOOLEAN,
-                automovil BOOLEAN,
-                moto BOOLEAN,
-                lineaTelefono BOOLEAN,
-                celularSinInternet BOOLEAN,
-                celularConInternet BOOLEAN,
-                otrosDatos VARCHAR(100)
-                )`;
-            return this.db.executeSql(sql, []);
+            return this.db.executeSql(CreateViviendaQuery, []);
         } catch (err) {
             console.log('err', err)
             return (err);
@@ -202,41 +123,8 @@ export class AgentesSanitariosProvider {
     }
 
     async insertVivienda(vivienda: IVivienda) {
-        console.log('insertVivienda')
         try {
-            let sql = `INSERT INTO vivienda(
-                parcelaId,
-                idUsuarioCreacion,
-                idUsuarioActualizacion,
-                fechaCreacion,
-                fechaActualizacion,
-                materialPiso,
-                materialPared,
-                materialTecho,
-                cantidadHabitacionesSinServicio,
-                tipoCasa,
-                fuenteAgua,
-                tipoBano,
-                tieneInstalacionesElectricas,
-                tieneTratamientoBasura,
-                tieneAnimalesConsumo,
-                animalesConsumoVacunados,
-                animalesConsumoDesparasitados,
-                tieneAnimalesDomesticos,
-                animalesDomesticosVacunados,
-                animalesDomesticosDesparasitados,
-                internet,
-                tvCable,
-                dtv,
-                automovil,
-                moto,
-                lineaTelefono,
-                celularSinInternet,
-                celularConInternet,
-                otrosDatos )
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
-
-            return (await this.db.executeSql(sql, [
+            return (await this.db.executeSql(InsertViviendaQuery, [
                 vivienda.parcelaId,
                 vivienda.idUsuarioCreacion,
                 vivienda.idUsuarioActualizacion,
@@ -275,39 +163,7 @@ export class AgentesSanitariosProvider {
     updateVivienda(vivienda: IVivienda) {
         console.log('updateVivienda', vivienda)
         try {
-            let sql = `UPDATE vivienda SET
-                parcelaId=?,
-                idUsuarioCreacion=?,
-                idUsuarioActualizacion=?,
-                fechaCreacion=?,
-                fechaActualizacion=?,
-                materialPiso=?,
-                materialPared=?,
-                materialTecho=?,
-                cantidadHabitacionesSinServicio=?,
-                tipoCasa=?,
-                fuenteAgua=?,
-                tipoBano=?,
-                tieneInstalacionesElectricas=?,
-                tieneTratamientoBasura=?,
-                tieneAnimalesConsumo=?,
-                animalesConsumoVacunados=?,
-                animalesConsumoDesparasitados=?,
-                tieneAnimalesDomesticos=?,
-                animalesDomesticosVacunados=?,
-                animalesDomesticosDesparasitados=?,
-                internet=?,
-                tvCable=?,
-                dtv=?,
-                automovil=?,
-                moto=?,
-                lineaTelefono=?,
-                celularSinInternet=?,
-                celularConInternet=?,
-                otrosDatos=?
-            WHERE id=?`;
-
-            return this.db.executeSql(sql, [
+            return this.db.executeSql(UpdateViviendaQuery, [
                 vivienda.parcelaId,
                 vivienda.idUsuarioCreacion,
                 vivienda.idUsuarioActualizacion,
@@ -346,76 +202,41 @@ export class AgentesSanitariosProvider {
     }
 
     async getViviendasByparcelaId(parcelaId) {
-        console.log('getViviendasByparcelaId xxx', parcelaId);
         try {
-            let sql = `SELECT * FROM vivienda
-                WHERE parcelaId = ${parcelaId}`;
-
             let viviendas = []
-            let rows = (await this.db.executeSql(sql, []) as any).rows;
+            let rows = (await this.db.executeSql(`${SelectViviendaByParcelaQuery}${parcelaId}`, []) as any).rows;
             for (let i = 0; i < rows.length; i++) {
-                console.log('rows.item(i)', rows.item(i))
                 viviendas.push(rows.item(i) as IParcela);
             }
             return viviendas;
         } catch (err) {
+            console.log('error', err);
             return err;
         }
     }
 
     async getViviendaById(id) {
-        console.log('getViviendaById xxx', id);
         try {
-            let sql = `SELECT v.* FROM vivienda v
-                WHERE v.id = '${id}'`;
-            return (await this.db.executeSql(sql, [])).rows.item(0);
+            return (await this.db.executeSql(`${SelectViviendaQuery}${id}`, [])).rows.item(0);
         } catch (err) {
+            console.log('error', err);
             return err;
         }
     }
     // ***********************HOGAR
     createTableHogares() {
-        console.log('createTableHogares')
         try {
-            let sql = `CREATE TABLE IF NOT EXISTS hogar(
-                id INTEGER NOT NULL PRIMARY KEY,
-                viviendaId INTEGER,
-                idUsuarioCreacion INTEGER,
-                idUsuarioActualizacion INTEGER,
-                fechaCreacion DATETIME,
-                fechaActualizacion DATETIME,
-                fechaVisita1 DATETIME,
-                fechaVisita2 DATETIME,
-                fechaVisita3 DATETIME,
-                muerteNinoMenor5 BOOLEAN,
-                muerteNinoMenor5Causa VARCHAR(100),
-                muerteNinoMenor5CausaOtro VARCHAR(100),
-                menor5ConEnfermedadGrave INTEGER
-                )`;
+            let sql = CreateHogarQuery;
             return this.db.executeSql(sql, []);
         } catch (err) {
+            console.log('error', err);
             return (err);
         }
     }
 
     async insertHogar(hogar: IHogar) {
-        let sql = `INSERT INTO hogar(
-            viviendaId,
-            idUsuarioCreacion,
-            idUsuarioActualizacion,
-            fechaCreacion,
-            fechaActualizacion,
-            fechaVisita1,
-            fechaVisita2,
-            fechaVisita3,
-            muerteNinoMenor5,
-            muerteNinoMenor5Causa,
-            muerteNinoMenor5CausaOtro,
-            menor5ConEnfermedadGrave)
-             VALUES(?,?,?,?,?,?,?,?,?,?,?,?)`;
-
         try {
-            return (await this.db.executeSql(sql, [
+            return (await this.db.executeSql(InsertHogarQuery, [
                 hogar.viviendaId,
                 hogar.idUsuarioCreacion,
                 hogar.idUsuarioActualizacion,
@@ -430,29 +251,14 @@ export class AgentesSanitariosProvider {
                 hogar.menor5ConEnfermedadGrave
             ])).insertId;
         } catch (err) {
-            console.log('insert hogar', err)
+            console.log('insert hogar', err);
             return (err);
         }
     }
 
     updateHogar(hogar: IHogar) {
-        let sql = `UPDATE hogar SET
-            viviendaId=?,
-            idUsuarioCreacion=?,
-            idUsuarioActualizacion=?,
-            fechaCreacion=?,
-            fechaActualizacion=?,
-            fechaVisita1=?,
-            fechaVisita2=?,
-            fechaVisita3=?,
-            muerteNinoMenor5=?,
-            muerteNinoMenor5Causa=?,
-            muerteNinoMenor5CausaOtro=?,
-            menor5ConEnfermedadGrave=?
-            WHERE id =?`;
-
         try {
-            return this.db.executeSql(sql, [
+            return this.db.executeSql(UpdateHogarQuery, [
                 hogar.viviendaId,
                 hogar.idUsuarioCreacion,
                 hogar.idUsuarioActualizacion,
@@ -474,8 +280,7 @@ export class AgentesSanitariosProvider {
 
     async getHogaresByViviendaId(viviendaId) {
         try {
-            let sql = `SELECT * FROM hogar
-                WHERE viviendaId = ${viviendaId}`;
+            let sql = `${SelectHogarByViviendaQuery}${viviendaId}`;
             let hogares = []
             let rows = (await this.db.executeSql(sql, []) as any).rows;
             for (let i = 0; i < rows.length; i++) {
@@ -488,10 +293,8 @@ export class AgentesSanitariosProvider {
     }
 
     async getHogarById(id) {
-        console.log('getHogarById xxx', id);
         try {
-            let sql = `SELECT h.* FROM hogar h
-                WHERE h.id = '${id}'`;
+            let sql = `${SelectHogarQuery}${id}`;
             return (await this.db.executeSql(sql, [])).rows.item(0);
         } catch (err) {
             return err;
@@ -501,86 +304,15 @@ export class AgentesSanitariosProvider {
     createTableIntegrantes() {
         console.log('createTableIntegrantes')
         try {
-            let sql = `CREATE TABLE IF NOT EXISTS integrante(
-                id INTEGER NOT NULL PRIMARY KEY,
-                hogarId INTEGER,
-                idUsuarioCreacion INTEGER,
-                idUsuarioActualizacion  INTEGER,
-                fechaCreacion DATETIME,
-                fechaActualizacion DATETIME,
-                esJefeHogar BOOLEAN,
-                apellido VARCHAR(100),
-                nombre VARCHAR(100),
-                tipoDocumento VARCHAR(100),
-                numeroDocumento VARCHAR(100),
-                nacionalidad VARCHAR(100),
-                sexo VARCHAR(100),
-                genero VARCHAR(100),
-                etnia VARCHAR(100),
-                vinculoConJefeHogar VARCHAR(100),
-                fechaNacimiento DATETIME,
-                ocupacion VARCHAR(100),
-                beneficioSocial VARCHAR(100),
-                nivelEducativo VARCHAR(100),
-                nivelEducativoEstado VARCHAR(100),
-                asistenciaAlimentaria BOOLEAN,
-                embarazada BOOLEAN,
-                embarzadaEstado VARCHAR(100),
-                antitetanica BOOLEAN,
-                esquemaVacunacion BOOLEAN,
-                coberturaSalud VARCHAR(100),
-                lugarAtencion VARCHAR(100),
-                lugarAtencionOtro VARCHAR(100),
-                discapacidad VARCHAR(100),
-                certificadoDiscapacidad VARCHAR(100),
-                cudNumero VARCHAR(100),
-                cudVigencia DATETIME
-                )`;
-            return this.db.executeSql(sql, []);
+            return this.db.executeSql(CreateIntegranteQuery, []);
         } catch (err) {
             return (err);
         }
     }
 
     async insertIntegrante(integrante: IIntegrante) {
-        let sql = `INSERT INTO integrante(
-                hogarId,
-                idUsuarioCreacion,
-                idUsuarioActualizacion,
-                fechaCreacion,
-                fechaActualizacion,
-                esJefeHogar,
-                apellido,
-                nombre,
-                tipoDocumento,
-                numeroDocumento,
-                nacionalidad,
-                sexo,
-                genero,
-                etnia,
-                vinculoConJefeHogar,
-                fechaNacimiento,
-                ocupacion,
-                beneficioSocial,
-                nivelEducativo,
-                nivelEducativoEstado,
-                asistenciaAlimentaria,
-                embarazada,
-                embarzadaEstado,
-                antitetanica,
-                esquemaVacunacion,
-                coberturaSalud,
-                lugarAtencion,
-                lugarAtencionOtro,
-                discapacidad,
-                certificadoDiscapacidad,
-                cudNumero,
-                cudVigencia
-            )
-            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
-
         try {
-            return (await this.db.executeSql(sql, [
+            return (await this.db.executeSql(InsertIntegranteQuery, [
                 integrante.hogarId,
                 integrante.idUsuarioCreacion,
                 integrante.idUsuarioActualizacion,
@@ -619,44 +351,8 @@ export class AgentesSanitariosProvider {
     }
 
     updateIntegrante(integrante: IIntegrante) {
-        console.log('updateIntegrante', integrante);
-        let sql = `UPDATE integrante SET
-                hogarId=?,
-                idUsuarioCreacion=?,
-                idUsuarioActualizacion=?,
-                fechaCreacion=?,
-                fechaActualizacion=?,
-                esJefeHogar=?,
-                apellido=?,
-                nombre=?,
-                tipoDocumento=?,
-                numeroDocumento=?,
-                nacionalidad=?,
-                sexo=?,
-                genero=?,
-                etnia=?,
-                vinculoConJefeHogar=?,
-                fechaNacimiento=?,
-                ocupacion=?,
-                beneficioSocial=?,
-                nivelEducativo=?,
-                nivelEducativoEstado=?,
-                asistenciaAlimentaria=?,
-                embarazada=?,
-                embarzadaEstado=?,
-                antitetanica=?,
-                esquemaVacunacion=?,
-                coberturaSalud=?,
-                lugarAtencion=?,
-                lugarAtencionOtro=?,
-                discapacidad=?,
-                certificadoDiscapacidad=?,
-                cudNumero=?,
-                cudVigencia=?
-            WHERE id =?`;
-
         try {
-            return this.db.executeSql(sql, [
+            return this.db.executeSql(UpdateIntegranteQuery, [
                 integrante.hogarId,
                 integrante.idUsuarioCreacion,
                 integrante.idUsuarioActualizacion,
@@ -699,8 +395,7 @@ export class AgentesSanitariosProvider {
 
     async getIntegrantesByHogarId(hogarId) {
         try {
-            let sql = `SELECT * FROM integrante
-                 WHERE hogarId = ${hogarId}`;
+            let sql = `${SelectIntegrantesByHogarQuery}${hogarId}`;
             let integrantes = []
             let rows = (await this.db.executeSql(sql, []) as any).rows;
             for (let i = 0; i < rows.length; i++) {
