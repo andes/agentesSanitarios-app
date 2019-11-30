@@ -11,12 +11,32 @@
             <div class="andes-container">
                 <div class="andes-wraper">
                     <h2 class="andes-list-title">
-                        Integrante Nro.: <strong>{{integrante.id}}</strong>
+                        <span class="andes-list-subtitle" *ngIf="integrante.esJefeHogar == 'true';else second">
+                            <strong>Jefe de Hogar</strong>
+                        </span>
+                        <ng-template #second>
+                            <ng-container *ngIf="integrante.vinculoConJefeHogar != null && integrante.vinculoConJefeHogar !='' ;else third">
+                                <span class="andes-list-subtitle">
+                                    <strong>{{integrante.vinculoConJefeHogar }}</strong>
+                                </span>
+                            </ng-container>
+                        </ng-template>
+                        <br>
+                        <strong>{{integrante.nombre + ', ' + integrante.apellido}}</strong>
                     </h2>
                     <div class="andes-list-content">
                         <div class="columna">
-                            <span class="andes-list-subtitle">Ultima visita:
-                                {{integrante.fechaCreacion | date: "d/MM/yyyy" }} </span>
+                            <span class="andes-list-subtitle">{{integrante.tipoDocumento + ': ' + integrante.numeroDocumento }} </span>
+                        </div>
+                    </div>
+                    <div class="andes-list-content">
+                        <div class="columna">
+                            <span class="andes-list-subtitle">{{integrante.nacionalidad + ', ' + integrante.sexo }} </span>
+                        </div>
+                    </div>
+                    <div class="andes-list-content">
+                        <div class="columna">
+                            <span class="andes-list-subtitle">Fecha de nacimiento: {{ integrante.fechaNacimiento | date: "dd/MM/yyyy" }} </span>
                         </div>
                     </div>
                 </div>
