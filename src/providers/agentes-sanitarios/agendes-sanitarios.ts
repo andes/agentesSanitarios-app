@@ -700,7 +700,7 @@ export class AgentesSanitariosProvider {
     async getIntegrantesByHogarId(hogarId) {
         try {
             let sql = `SELECT * FROM integrante
-                 WHERE hogarId = ${hogarId}`;
+                 WHERE hogarId = ${hogarId} order by esJefeHogar desc`;
             let integrantes = []
             let rows = (await this.db.executeSql(sql, []) as any).rows;
             for (let i = 0; i < rows.length; i++) {
