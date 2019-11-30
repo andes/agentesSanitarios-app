@@ -12,7 +12,6 @@ import { ErrorReporterProvider } from '../../providers/errorReporter';
 import { ParcelaEditPage } from '../formularioFamiliar/parcela/parcelaEdit';
 import { ParcelaListPage } from '../formularioFamiliar/parcela/parcelaList';
 import { EscanerDniPage } from '../registro/escaner-dni/escaner-dni';
-import { NetworkProvider } from '../../providers/network';
 
 @Component({
     selector: 'page-home',
@@ -30,8 +29,7 @@ export class HomePage {
         public navCtrl: NavController,
         public menuCtrl: MenuController,
         public reporter: ErrorReporterProvider,
-        public agentesSanitariosProvider: AgentesSanitariosProvider,
-        public network: NetworkProvider) {
+        public agentesSanitariosProvider: AgentesSanitariosProvider) {
 
         this.user = this.authService.user;
     }
@@ -91,16 +89,6 @@ export class HomePage {
 
     isProfesional() {
         return this.authService.user && this.authService.user.profesionalId != null;
-    }
-
-    async sincronizar() {
-        let resultado
-
-        let estadoDispositivo = this.network.getCurrentNetworkStatus();
-        if (resultado && estadoDispositivo === 'online') {
-            // let data: any = await this.agentesSanitariosProvider.postMongo(...);
-            // this.agentesSanitariosProvider.updateBaseLocal(data);
-        }
     }
 
     login() {
