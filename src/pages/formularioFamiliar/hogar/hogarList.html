@@ -36,24 +36,22 @@
                                     <ng-container *ngIf="hogar.fechaVisita1 != null">
                                         Última visita: {{hogar.fechaVisita1 | date: "dd/MM/yyyy" }}
                                     </ng-container>
-                                </ng-template>                                
+                                </ng-template>
                             </span>
                             <br>
                             <span class="andes-list-subtitle" *ngIf="hogar.jefeDeHogar?.length > 0">Jefe de Hogar:
                                 {{hogar.jefeDeHogar[0].apellido + ", " + hogar.jefeDeHogar[0].nombre}}
                             </span>
                             <br>
-                            <span class="andes-list-subtitle" *ngIf="hogar.integrantes?.length > 0">Cantidad de integrantes:
+                            <span class="andes-list-subtitle" *ngIf="hogar.integrantes?.length > 0">Cantidad de
+                                integrantes:
                                 {{hogar.integrantes.length}}
                             </span>
                         </div>
                     </div>
                 </div>
-                <button ion-button item-end color="primary" (click)="editarHogar(hogar)">
+                <button ion-button large icon-only item-end color="primary" (click)="editarHogar(hogar)">
                     <ion-icon name="create"></ion-icon>
-                </button>
-                <button ion-button item-end color="primary" (click)="listadoIntegrantes(hogar)">
-                    <ion-icon name="arrow-round-forward"></ion-icon>
                 </button>
             </div>
         </li>
