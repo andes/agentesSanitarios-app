@@ -94,7 +94,7 @@
         "ionicons": "3.0.0",
         "moment": "^2.18.1",
         "node-sass": "^4.11.0",
-        "phonegap-plugin-barcodescanner": "^7.1.2",
+        "phonegap-plugin-barcodescanner": "^8.1.0",
         "phonegap-plugin-push": "^2.2.3",
         "rxjs": "6.2.2",
         "rxjs-compat": "6.2.2",
@@ -132,10 +132,6 @@
             "cordova.plugins.diagnostic": {
                 "ANDROID_SUPPORT_VERSION": "28.+"
             },
-            "phonegap-plugin-barcodescanner": {
-                "CAMERA_USAGE_DESCRIPTION": " ",
-                "ANDROID_SUPPORT_V4_VERSION": "27.+"
-            },
             "cordova-plugin-camera": {
                 "CAMERA_USAGE_DESCRIPTION": " ",
                 "PHOTOLIBRARY_USAGE_DESCRIPTION": " "
@@ -154,7 +150,10 @@
                 "ANDROID_SUPPORT_VERSION": "27.+"
             },
             "cordova-plugin-nativestorage": {},
-            "cordova-sqlite-storage": {}
+            "cordova-sqlite-storage": {},
+            "phonegap-plugin-barcodescanner": {
+                "ANDROID_SUPPORT_V4_VERSION": "27.+"
+            }
         },
         "platforms": []
     }
