@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="org.andes.mobile" ios-CFBundleIdentifier="ar.gob.andes.mobile" version="3.4.6" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Andes Neuquén</name>
-    <description>Andes Neuquén Mobile App</description>
+<widget id="org.andes.rondassanitarias" ios-CFBundleIdentifier="ar.gob.andes.rondassanitarias" version="3.4.6" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Andes Rondas Sanitarias</name>
+    <description>Andes Rondas Sanitarias App</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
     <content src="index.html" />
     <access origin="*" />
