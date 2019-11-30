@@ -1,3 +1,4 @@
+import { ViviendaLetras } from './../../../assets/files/vivienda-letras';
 import { TiposCasa } from './../../../assets/files/tipos-casa';
 import { TiposBano } from './../../../assets/files/tipos-baño';
 import { MaterialesTecho } from './../../../assets/files/material-techo';
@@ -39,6 +40,7 @@ export class ViviendaEditPage {
     idUsuarioActualizacion;
     vivienda: IVivienda;
 
+    viviendaLetras;
     fuentesAgua;
     materialesPared;
     materialesPiso;
@@ -57,6 +59,7 @@ export class ViviendaEditPage {
         this.zonasUbicacion = ZonasUbicacion;
 
         this.provincias = Provincias;
+        this.viviendaLetras = ViviendaLetras;
         this.fuentesAgua = FuentesAgua;
         this.materialesPared = MaterialesPared;
         this.materialesPiso = MaterialesPiso;

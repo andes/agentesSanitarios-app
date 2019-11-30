@@ -3,131 +3,124 @@
         <ion-title>Creación de Vivienda</ion-title>
         <ion-buttons end>
             <button ion-button round outline color="light" (click)="onClickGuardar()">
-                <!-- <ion-icon name="checkmark"></ion-icon> Guardar -->Guardar
+                Guardar
             </button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
-
 <ion-content home background="white" padding>
+    <ion-item>
+        <ion-label>Letra:</ion-label>
+        <ion-select [(ngModel)]="vivienda.viviendaLetra" multiple="false">
+                <ion-option *ngFor="let e of viviendaLetras" [value]="e">{{e}}</ion-option>
+            </ion-select>
+    </ion-item>
     <ion-item>
         <ion-label>Equipo Nucleo de Ref.</ion-label>
         <ion-input [(ngModel)]="vivienda.equipoNucleoReferencia" type="string"></ion-input>
     </ion-item>
-
     <ion-item>
         <ion-label>Piso</ion-label>
         <ion-select [(ngModel)]="vivienda.materialPiso" multiple="false">
             <ion-option *ngFor="let e of materialesPiso" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>
-
     <ion-item>
         <ion-label>Pared</ion-label>
         <ion-select [(ngModel)]="vivienda.materialPared" multiple="false">
             <ion-option *ngFor="let e of materialesPared" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>
-
     <ion-item>
         <ion-label>Techo</ion-label>
         <ion-select [(ngModel)]="vivienda.materialTecho" multiple="false">
             <ion-option *ngFor="let e of materialesTecho" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>
-
     <ion-item>
         <ion-label>Hab s/baño s/cocina</ion-label>
         <ion-input [(ngModel)]="vivienda.cantidadHabitacionesSinServicio" type="number"></ion-input>
     </ion-item>
-
     <ion-item>
         <ion-label>Inst. Eléctrica</ion-label>
         <ion-toggle [(ngModel)]="vivienda.tieneInstalacionesElectricas" color="primary"></ion-toggle>
     </ion-item>
-
     <ion-item>
         <ion-label>Trat. Basura</ion-label>
         <ion-toggle [(ngModel)]="vivienda.tieneTratamientoBasura" color="primary"></ion-toggle>
     </ion-item>
-
     <ion-item>
         <ion-label>Tipo de casa</ion-label>
         <ion-select [(ngModel)]="vivienda.tipoCasa" multiple="false">
             <ion-option *ngFor="let e of tiposCasa" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>
-
     <ion-item>
         <ion-label>Fuente de agua</ion-label>
         <ion-select [(ngModel)]="vivienda.fuenteAgua" multiple="false">
             <ion-option *ngFor="let e of fuentesAgua" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>
-
     <ion-item>
         <ion-label>Baño</ion-label>
         <ion-select [(ngModel)]="vivienda.tipoBano" multiple="false">
             <ion-option *ngFor="let e of tiposBano" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>
-
-    <ion-item>
-        <ion-label>Animales</ion-label>
-    </ion-item>
-
-    <ion-item>
-        <ion-label>De Consumo</ion-label>
-        <ion-toggle [(ngModel)]="vivienda.tieneAnimalesConsumo" color="primary"></ion-toggle>
-    </ion-item>
-
-    <ion-item>
-        <ion-label>Domésticos</ion-label>
-        <ion-toggle [(ngModel)]="vivienda.tieneAnimalesDomesticos" color="primary"></ion-toggle>
-    </ion-item>
-
-    <ion-item>
-        <ion-label>Desparasitados</ion-label>
-        <ion-toggle [(ngModel)]="vivienda.animalesDomesticosDesparasitados" color="primary"></ion-toggle>
-    </ion-item>
-    
     <ion-item>
         <ion-label>Internet</ion-label>
         <ion-toggle [(ngModel)]="vivienda.internet" color="primary"></ion-toggle>
     </ion-item>
-
     <ion-item>
         <ion-label>TV Cable</ion-label>
         <ion-toggle [(ngModel)]="vivienda.tvCable" color="primary"></ion-toggle>
     </ion-item>
-
     <ion-item>
         <ion-label>Dtv</ion-label>
         <ion-toggle [(ngModel)]="vivienda.dtv" color="primary"></ion-toggle>
     </ion-item>
-
     <ion-item>
         <ion-label>Automovil</ion-label>
         <ion-toggle [(ngModel)]="vivienda.automovil" color="primary"></ion-toggle>
     </ion-item>
-
     <ion-item>
         <ion-label>Moto</ion-label>
         <ion-toggle [(ngModel)]="vivienda.moto" color="primary"></ion-toggle>
     </ion-item>
-
     <ion-item>
         <ion-label>Linea Teléfono</ion-label>
         <ion-toggle [(ngModel)]="vivienda.lineaTelefono" color="primary"></ion-toggle>
     </ion-item>
-
     <ion-item>
         <ion-label>Celular Sin Internet</ion-label>
         <ion-toggle [(ngModel)]="vivienda.celularSinInternet" color="primary"></ion-toggle>
     </ion-item>
-
     <ion-item>
         <ion-label>Celular Con Internet</ion-label>
         <ion-toggle [(ngModel)]="vivienda.celularConInternet" color="primary"></ion-toggle>
+    </ion-item>
+    <ion-item>
+        <ion-label>Tiene animales de Consumo?</ion-label>
+        <ion-checkbox [(ngModel)]="vivienda.tieneAnimalesConsumo" color="primary"></ion-checkbox>
+    </ion-item>
+    <ion-item class="sub-item" *ngIf="vivienda.tieneAnimalesConsumo">
+        <ion-label>Los animales de consumo están vacunados?</ion-label>
+        <ion-checkbox [(ngModel)]="vivienda.animalesConsumoVacunados" color="primary"></ion-checkbox>
+    </ion-item>
+    <ion-item class="sub-item" *ngIf="vivienda.tieneAnimalesConsumo">
+        <ion-label>Los animales de consumo Están desparasitados?</ion-label>
+        <ion-checkbox [(ngModel)]="vivienda.animalesConsumoDesparasitados" color="primary"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+        <ion-label>Tiene animales de domésticos?</ion-label>
+        <ion-checkbox [(ngModel)]="vivienda.tieneAnimalesDomesticos" color="primary"></ion-checkbox>
+    </ion-item>
+    <ion-item class="sub-item" *ngIf="vivienda.tieneAnimalesDomesticos">
+        <ion-label>Los animales de domésticos están vacunados?</ion-label>
+        <ion-checkbox [(ngModel)]="vivienda.animalesDomesticosVacunados" color="primary"></ion-checkbox>
+    </ion-item>
+    <ion-item class="sub-item" *ngIf="vivienda.tieneAnimalesDomesticos">
+        <ion-label>Los animales de domésticos están desparasitados?</ion-label>
+        <ion-checkbox [(ngModel)]="vivienda.animalesDomesticosDesparasitados" color="primary"></ion-checkbox>
     </ion-item>
 </ion-content>

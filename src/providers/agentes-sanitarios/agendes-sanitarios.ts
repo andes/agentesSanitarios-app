@@ -169,6 +169,7 @@ export class AgentesSanitariosProvider {
                 idUsuarioActualizacion INTEGER,
                 fechaCreacion DATETIME,
                 fechaActualizacion DATETIME,
+                viviendaLetra VARCHAR(100),
                 materialPiso VARCHAR(100),
                 materialPared VARCHAR(100),
                 materialTecho VARCHAR(100),
@@ -210,6 +211,7 @@ export class AgentesSanitariosProvider {
                 idUsuarioActualizacion,
                 fechaCreacion,
                 fechaActualizacion,
+                viviendaLetra,
                 materialPiso,
                 materialPared,
                 materialTecho,
@@ -234,7 +236,7 @@ export class AgentesSanitariosProvider {
                 celularSinInternet,
                 celularConInternet,
                 otrosDatos )
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
             return (await this.db.executeSql(sql, [
                 vivienda.parcelaId,
@@ -242,6 +244,7 @@ export class AgentesSanitariosProvider {
                 vivienda.idUsuarioActualizacion,
                 vivienda.fechaCreacion,
                 vivienda.fechaActualizacion,
+                vivienda.viviendaLetra,
                 vivienda.materialPiso,
                 vivienda.materialPared,
                 vivienda.materialTecho,
@@ -281,6 +284,7 @@ export class AgentesSanitariosProvider {
                 idUsuarioActualizacion=?,
                 fechaCreacion=?,
                 fechaActualizacion=?,
+                viviendaLetra=?,
                 materialPiso=?,
                 materialPared=?,
                 materialTecho=?,
@@ -313,6 +317,7 @@ export class AgentesSanitariosProvider {
                 vivienda.idUsuarioActualizacion,
                 vivienda.fechaCreacion,
                 vivienda.fechaActualizacion,
+                vivienda.viviendaLetra,
                 vivienda.materialPiso,
                 vivienda.materialPared,
                 vivienda.materialTecho,
@@ -349,7 +354,7 @@ export class AgentesSanitariosProvider {
         console.log('getViviendasByparcelaId xxx', parcelaId);
         try {
             let sql = `SELECT * FROM vivienda
-                WHERE parcelaId = ${parcelaId}`;
+                WHERE parcelaId = ${parcelaId} order by viviendaLetra asc`;
 
             let viviendas = []
             let rows = (await this.db.executeSql(sql, []) as any).rows;
