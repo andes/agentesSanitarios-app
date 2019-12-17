@@ -1,3 +1,5 @@
+import { Storage } from '@ionic/storage';
+import { EnfermedadesCronicasPage } from './enfermedadesCronicas/enfermedadCronicaEdit';
 import { IntegranteListPage } from './integranteList';
 import { AgentesSanitariosProvider } from './../../../providers/agentes-sanitarios/agendes-sanitarios';
 import { IIntegrante } from './../../../interfaces/integrante.interface';
@@ -17,17 +19,20 @@ import { Coberturas } from './../../../assets/files/coberturas';
 import { CertificadosDiscapacidad } from './../../../assets/files/certificados-discapacidad';
 import { BeneficiosSociales } from './../../../assets/files/beneficios-sociales';
 import { TiposDocumento } from './../../../assets/files/tipos-documento';
-import { Component } from '@angular/core';
-import { NavParams, NavController } from 'ionic-angular';
-import { dateDataSortValue } from 'ionic-angular/umd/util/datetime-util';
+import { Component, ViewChild } from '@angular/core';
+import { NavParams, NavController, Navbar } from 'ionic-angular';
 
 @Component({
     selector: 'integranteEdit',
-    templateUrl: 'integranteEdit.html'
+    templateUrl: 'integranteEdit.html',
+    styles: ['.button-md { box-shadow: none; }',
+        'ion-select { max-width: none; }',
+        '.button-md-light { color: #999999; background-color: #fff; }',
+        '.button-md-primary { color: #999999; background-color: #fff; }']
 })
 export class IntegranteEditPage {
+    @ViewChild(Navbar) navBar: Navbar;
     encuestaId;
-
     started = false;
     user: any;
     showMpi = false;
@@ -54,7 +59,8 @@ export class IntegranteEditPage {
     constructor(
         public agentesSanitariosProvider: AgentesSanitariosProvider,
         public navParams: NavParams,
-        public navCtrl: NavController
+        public navCtrl: NavController,
+        private storage: Storage
         ) {
         this.nuevoIntegrante();
     }
@@ -64,7 +70,6 @@ export class IntegranteEditPage {
             this.integrante.hogarId = this.navParams.get('hogarId');
             if (this.navParams.get('datosPersona')) {
                 this.datosPersona = this.navParams.get('datosPersona');
-                console.log(this.datosPersona);
                 this.integrante.tipoDocumento = 'D.N.I.'
                 this.integrante.numeroDocumento = this.datosPersona.documento;
                 this.integrante.nombre = this.datosPersona.nombre;
@@ -77,18 +82,21 @@ export class IntegranteEditPage {
             }
         } else if (this.navParams.get('integrante')) {
             this.integrante = this.navParams.get('integrante');
-            console.log(this.integrante);
             this.integrante.fechaNacimientoString = new Date(this.integrante.fechaNacimiento).toISOString();
         }
+    }
+
+    ionViewDidLoad() {
+        this.navBar.backButtonClick = async () => this.navCtrl.push(IntegranteListPage, {hogarId: await this.storage.get('hogarId') });
     }
 
     nuevoIntegrante() {
         this.integrante = new IIntegrante();
     }
 
-    async guardar() {
+    async onClickGuardar() {
         this.integrante.fechaNacimiento = new Date(this.integrante.fechaNacimientoString.toString());
-        console.log(this.integrante.fechaNacimiento);
+
         if (!this.integrante.id) {
             return this.integrante.id = (await this.agentesSanitariosProvider.insertIntegrante(this.integrante));
         } else {
@@ -97,5 +105,23 @@ export class IntegranteEditPage {
             await this.agentesSanitariosProvider.updateIntegrante(this.integrante);
             return this.navCtrl.push(IntegranteListPage, { hogarId: this.integrante.hogarId });
         }
+    }
+
+    async guardar() {
+        this.integrante.fechaNacimiento = new Date(this.integrante.fechaNacimientoString.toString());        
+        if (!this.integrante.id) {
+            return await this.agentesSanitariosProvider.insertIntegrante(this.integrante);
+        } else {
+            this.integrante.idUsuarioActualizacion = 23;
+            this.integrante.fechaActualizacion = new Date();
+            await this.agentesSanitariosProvider.updateIntegrante(this.integrante);
+            return this.integrante.id;
+        }
+    }
+
+    async abrirEnfermedadesCronicas() {
+        await this.guardar();
+        await this.storage.set('integranteId', this.integrante.id);
+        return this.navCtrl.push(EnfermedadesCronicasPage, { integrante: this.integrante });
     }
 }

@@ -2,7 +2,7 @@
     <ion-navbar>
         <ion-title>Creación de Integrante</ion-title>
         <ion-buttons end>
-            <button ion-button round outline color="light" (click)="guardar()">
+            <button ion-button round outline color="light" (click)="onClickGuardar()">
                 <!-- <ion-icon name="checkmark"></ion-icon> Guardar -->Guardar
             </button>
         </ion-buttons>
@@ -85,11 +85,11 @@
             <ion-option *ngFor="let e of estadosCursoEducacion" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>
-    <ion-item>
-        <ion-label>Enfermedades Cronicas</ion-label>
-        <ion-select [(ngModel)]="integrante.enfermedadesCronicas" multiple="true">
-            <ion-option *ngFor="let e of enfermedadesCronicas" [value]="e">{{e}}</ion-option>
-        </ion-select>
+    <ion-item (click)="abrirEnfermedadesCronicas()">
+        <ion-label>Enfermedades Crónicas</ion-label>
+        <button ion-button icon-only item-end color="light">
+            <ion-icon name="arrow-dropright"></ion-icon>
+        </button>
     </ion-item>
     <ion-item>
         <ion-label>Asist. Alimentaria</ion-label>

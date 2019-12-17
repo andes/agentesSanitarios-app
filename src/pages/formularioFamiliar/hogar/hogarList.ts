@@ -45,7 +45,7 @@ export class HogarListPage {
     }
 
     async listadoIntegrantes(hogar) {
-       await this.storage.set('hogarId', hogar.id);
+        await this.storage.set('hogarId', hogar.id);
         this.navCtrl.push(IntegranteListPage, { hogarId: hogar.id});
     }
 }

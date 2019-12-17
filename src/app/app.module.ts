@@ -1,5 +1,6 @@
 import { IntegranteEditPage } from './../pages/formularioFamiliar/integrante/integranteEdit';
 import { IntegranteListPage } from './../pages/formularioFamiliar/integrante/integranteList';
+import { EnfermedadesCronicasPage } from './../pages/formularioFamiliar/integrante/enfermedadesCronicas/enfermedadCronicaEdit';
 import { HogarListPage } from './../pages/formularioFamiliar/hogar/hogarList';
 import { HogarEditPage } from './../pages/formularioFamiliar/hogar/hogarEdit';
 import { ViviendaListPage } from './../pages/formularioFamiliar/vivienda/viviendaList';
@@ -70,7 +71,8 @@ import { AgentesSanitariosProvider } from './../providers/agentes-sanitarios/age
         HogarEditPage,
         HogarListPage,
         IntegranteEditPage,
-        IntegranteListPage
+        IntegranteListPage,
+        EnfermedadesCronicasPage
     ],
     imports: [
         BrowserModule,
@@ -104,7 +106,8 @@ import { AgentesSanitariosProvider } from './../providers/agentes-sanitarios/age
         HogarEditPage,
         HogarListPage,
         IntegranteEditPage,
-        IntegranteListPage
+        IntegranteListPage,
+        EnfermedadesCronicasPage
     ],
     providers: [
         StatusBar,

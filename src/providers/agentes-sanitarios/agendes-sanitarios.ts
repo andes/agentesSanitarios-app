@@ -16,7 +16,7 @@ export class AgentesSanitariosProvider {
     constructor(public network: NetworkProvider) { }
 
     setDatabase(db: SQLiteObject) {
-        if (this.db === null) {
+        if (!this.db) {
             this.db = db;
         }
     }
@@ -27,6 +27,7 @@ export class AgentesSanitariosProvider {
             await this.db.executeSql('DROP TABLE IF EXISTS vivienda', []);
             await this.db.executeSql('DROP TABLE IF EXISTS hogar', []);
             await this.db.executeSql('DROP TABLE IF EXISTS integrante', []);
+            await this.db.executeSql('DROP TABLE IF EXISTS integranteEnfermedadCronica', []);
         } catch (e) {
             return e;
         }
@@ -44,7 +45,6 @@ export class AgentesSanitariosProvider {
     // ***********************PARCELA
     createTableParcelas() {
         try {
-            console.log('createTableParcelas')
             let sql = `CREATE TABLE IF NOT EXISTS parcela(
                 id INTEGER NOT NULL PRIMARY KEY,
                 idUsuarioCreacion INTEGER,
@@ -733,7 +733,6 @@ export class AgentesSanitariosProvider {
     }
 
     async getIntegranteById(id) {
-        console.log('getIntegranteById xxx', id);
         try {
             let sql = `SELECT i.* FROM integrante i
                 WHERE i.id = '${id}'`;
@@ -744,10 +743,8 @@ export class AgentesSanitariosProvider {
     }
     // ***********************INTEGRANTES/ENFERMEDAD CRONICA
     createTableIntegrantesEnfermedadesCronicas() {
-        console.log('createTableIntegrantesEnfermedadesCronicas')
         try {
             let sql = `CREATE TABLE IF NOT EXISTS integranteEnfermedadCronica(
-                id INTEGER NOT NULL PRIMARY KEY,
                 idUsuarioCreacion INTEGER,
                 idUsuarioActualizacion  INTEGER,
                 fechaCreacion DATETIME,
@@ -763,7 +760,6 @@ export class AgentesSanitariosProvider {
     }
 
     async insertIntegranteEnfermedadesCronicas(integranteEnfermedadCronica: IIntegranteEnfermedadCronica) {
-        console.log('insertIntegranteEnfermedadCronica');
         let sql = `INSERT INTO integranteEnfermedadCronica(
                 idUsuarioCreacion,
                 idUsuarioActualizacion,
@@ -792,7 +788,6 @@ export class AgentesSanitariosProvider {
     }
 
     updateIntegranteEnfermedadCronica(integranteEnfermedadCronica: IIntegranteEnfermedadCronica) {
-        console.log('updateintegranteEnfermedadCronica');
         let sql = `UPDATE integranteEnfermedadCronica SET
                 idUsuarioCreacion=?,
                 idUsuarioActualizacion=?,
@@ -820,7 +815,6 @@ export class AgentesSanitariosProvider {
     }
 
     async getIntegranteEnfermedadesCronicasByIntegranteId(integranteId) {
-        console.log('getIntegranteEnfermedadesCronicasByIntegranteId xxx', integranteId);
         try {
             let sql = `SELECT * FROM integranteEnfermedadCronica
                 WHERE integranteId = ${integranteId}`;
@@ -836,7 +830,6 @@ export class AgentesSanitariosProvider {
     }
 
     async getIntegranteEnfermedadesCronicasById(id) {
-        console.log('getIntegranteEnfermedadesCronicasById xxx', id);
         try {
             let sql = `SELECT e.* FROM integranteEnfermedadCronica e
                 WHERE e.id = '${id}'`;
@@ -913,9 +906,40 @@ export class AgentesSanitariosProvider {
                 for (let index = 0; index < response.rows.length; index++) {
                     datos.push(response.rows.item(index));
                 }
-                console.log(datos);
                 return Promise.resolve(datos);
             })
             .catch(error => error);
+    }
+
+    async saveEnfermedadesCronicas(enfermedadesCronicas, integranteId) {
+        try {
+            await this.db.executeSql(`DELETE FROM integranteEnfermedadCronica
+                WHERE integranteId = ${integranteId};`, []);
+
+            let sql = `
+            INSERT INTO 'integranteEnfermedadCronica'
+            SELECT '${enfermedadesCronicas[0].idUsuarioCreacion}' AS 'idUsuarioCreacion',
+            '${enfermedadesCronicas[0].idUsuarioActualizacion}' AS 'idUsuarioActualizacion',
+            '${enfermedadesCronicas[0].fechaCreacion}' AS 'fechaCreacion',
+            '${enfermedadesCronicas[0].fechaActualizacion}' AS 'fechaActualizacion',
+            '${enfermedadesCronicas[0].integranteId}' AS 'integranteId',
+            '${enfermedadesCronicas[0].enfermedadCronica}' AS 'enfermedadCronica',
+            '${enfermedadesCronicas[0].enfermedadCronicaEstado}' AS 'enfermedadCronicaEstado'`;
+
+            enfermedadesCronicas.slice(1).forEach(e =>
+                sql += ` UNION ALL SELECT 
+                '${e.idUsuarioCreacion}', 
+                '${e.idUsuarioActualizacion}', 
+                '${e.fechaCreacion}', 
+                '${e.fechaActualizacion}', 
+                '${e.integranteId}', 
+                '${e.enfermedadCronica}', 
+                '${e.enfermedadCronicaEstado}'`
+            );
+
+            return await this.db.executeSql(sql, []);
+        } catch (e) {
+            console.log('error', e)
+        }
     }
 }
