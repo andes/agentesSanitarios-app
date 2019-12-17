@@ -19,6 +19,7 @@ import { Coberturas } from './../../../assets/files/coberturas';
 import { CertificadosDiscapacidad } from './../../../assets/files/certificados-discapacidad';
 import { BeneficiosSociales } from './../../../assets/files/beneficios-sociales';
 import { TiposDocumento } from './../../../assets/files/tipos-documento';
+import { Etnias } from './../../../assets/files/etnias';
 import { Component, ViewChild } from '@angular/core';
 import { NavParams, NavController, Navbar } from 'ionic-angular';
 
@@ -37,6 +38,7 @@ export class IntegranteEditPage {
     user: any;
     showMpi = false;
     tiposDocumento = TiposDocumento;
+    etnias = Etnias.map(e => e.nombre);
     beneficiosSociales = BeneficiosSociales;
     certificadosDiscapacidad = CertificadosDiscapacidad;
     coberturas = Coberturas;

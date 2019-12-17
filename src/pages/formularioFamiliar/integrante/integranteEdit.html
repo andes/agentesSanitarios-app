@@ -35,6 +35,12 @@
         </ion-select>
     </ion-item>
     <ion-item>
+        <ion-label>Etnia</ion-label>
+        <ion-select [(ngModel)]="integrante.etnia" interface="popover" multiple="false">
+            <ion-option *ngFor="let e of etnias" [value]="e">{{e}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
         <ion-label>Sexo</ion-label>
         <ion-select [(ngModel)]="integrante.sexo" interface="popover" multiple="false">
             <ion-option *ngFor="let e of sexos" [value]="e">{{e}}</ion-option>
