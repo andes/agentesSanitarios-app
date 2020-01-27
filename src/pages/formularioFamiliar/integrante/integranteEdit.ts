@@ -96,21 +96,21 @@ export class IntegranteEditPage {
         this.integrante = new IIntegrante();
     }
 
-    async onClickGuardar() {
+    async onClickSiguiente() {
         this.integrante.fechaNacimiento = new Date(this.integrante.fechaNacimientoString.toString());
 
         if (!this.integrante.id) {
-            return this.integrante.id = (await this.agentesSanitariosProvider.insertIntegrante(this.integrante));
+            this.integrante.id = (await this.agentesSanitariosProvider.insertIntegrante(this.integrante));
         } else {
             this.integrante.idUsuarioActualizacion = 23;
             this.integrante.fechaActualizacion = new Date();
             await this.agentesSanitariosProvider.updateIntegrante(this.integrante);
-            return this.navCtrl.push(IntegranteListPage, { hogarId: this.integrante.hogarId });
         }
+        this.navCtrl.push(EnfermedadesCronicasPage, { integrante: this.integrante });
     }
 
     async guardar() {
-        this.integrante.fechaNacimiento = new Date(this.integrante.fechaNacimientoString.toString());        
+        this.integrante.fechaNacimiento = new Date(this.integrante.fechaNacimientoString.toString());
         if (!this.integrante.id) {
             return await this.agentesSanitariosProvider.insertIntegrante(this.integrante);
         } else {
@@ -119,11 +119,5 @@ export class IntegranteEditPage {
             await this.agentesSanitariosProvider.updateIntegrante(this.integrante);
             return this.integrante.id;
         }
-    }
-
-    async abrirEnfermedadesCronicas() {
-        await this.guardar();
-        await this.storage.set('integranteId', this.integrante.id);
-        return this.navCtrl.push(EnfermedadesCronicasPage, { integrante: this.integrante });
     }
 }
