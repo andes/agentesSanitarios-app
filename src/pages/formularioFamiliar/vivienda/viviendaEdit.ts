@@ -90,7 +90,7 @@ export class ViviendaEditPage {
 
     async onClickGuardar() {
         await this.guardar();
-        this.navCtrl.push(ViviendaListPage, { parcelaId: this.vivienda.parcelaId });
+        this.navCtrl.pop();
     }
 
     async guardar() {

@@ -1,4 +1,3 @@
-import { ParcelaListPage } from './parcelaList';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 // LIB
@@ -60,7 +59,7 @@ export class ParcelaEditPage {
 
     async onClickGuardar() {
         await this.guardar();
-        this.navCtrl.push(ParcelaListPage);
+        this.navCtrl.pop();
     }
 
     async guardar() {

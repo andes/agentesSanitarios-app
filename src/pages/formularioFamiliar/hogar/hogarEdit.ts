@@ -53,7 +53,7 @@ export class HogarEditPage {
 
     async gotoIntegrante() {
         this.hogar.id = await this.guardar();
-        this.navCtrl.push(HogarListPage, { viviendaId: this.hogar.viviendaId });
+        this.navCtrl.pop();
     }
 
     async guardar() {
