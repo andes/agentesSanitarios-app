@@ -31,7 +31,7 @@
     </ion-item>
     <ion-item *ngIf='hogar.muerteNinoMenor5'>
         <ion-label>Causa de Muerte</ion-label>
-        <ion-select [(ngModel)]="hogar.muerteNinoMenor5Causa" multiple="false">
+        <ion-select [(ngModel)]="hogar.muerteNinoMenor5Causa" multiple="false" interface="popover">
             <ion-option *ngFor="let e of causasMuerte" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>

@@ -57,6 +57,8 @@ export class IntegranteEditPage {
 
     integrante: IIntegrante;
     datosPersona: any;
+    scanStatus: boolean;
+    editStatus: boolean;
 
     constructor(
         public agentesSanitariosProvider: AgentesSanitariosProvider,
@@ -71,8 +73,10 @@ export class IntegranteEditPage {
         if (this.navParams.get('hogarId')) {
             this.integrante.hogarId = this.navParams.get('hogarId');
             if (this.navParams.get('datosPersona')) {
+                this.scanStatus = true;
+                this.editStatus = false;
                 this.datosPersona = this.navParams.get('datosPersona');
-                this.integrante.tipoDocumento = 'D.N.I.'
+                this.integrante.tipoDocumento = 'D.N.I.';
                 this.integrante.numeroDocumento = this.datosPersona.documento;
                 this.integrante.nombre = this.datosPersona.nombre;
                 this.integrante.apellido = this.datosPersona.apellido;
@@ -81,11 +85,20 @@ export class IntegranteEditPage {
                 this.integrante.genero = this.datosPersona.sexo;
                 let dateParts: any = this.datosPersona.fechaNacimiento.split('/');
                 this.integrante.fechaNacimientoString = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]).toISOString();
+            } else {
+                this.scanStatus = true;
+                this.editStatus = true;
             }
         } else if (this.navParams.get('integrante')) {
+            this.scanStatus = false;
+            this.editStatus = false;
             this.integrante = this.navParams.get('integrante');
             this.integrante.fechaNacimientoString = new Date(this.integrante.fechaNacimiento).toISOString();
+        } else {
+            this.scanStatus = false;
+            this.editStatus = true;
         }
+
     }
 
     ionViewDidLoad() {
@@ -106,7 +119,7 @@ export class IntegranteEditPage {
             this.integrante.fechaActualizacion = new Date();
             await this.agentesSanitariosProvider.updateIntegrante(this.integrante);
         }
-        this.navCtrl.push(EnfermedadesCronicasPage, { integrante: this.integrante });
+        this.navCtrl.push(EnfermedadesCronicasPage, { integrante: this.integrante, scanStatus: this.scanStatus });
     }
 
     async guardar() {

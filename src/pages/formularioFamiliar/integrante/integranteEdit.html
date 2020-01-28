@@ -12,13 +12,13 @@
 <ion-content home background="white" padding>
     <ion-item>
         <ion-label>Tipo Documento</ion-label>
-        <ion-select [(ngModel)]="integrante.tipoDocumento" interface="popover" multiple="false">
+        <ion-select [(ngModel)]="integrante.tipoDocumento" interface="popover" multiple="false" disabled="{{!editStatus}}">
             <ion-option *ngFor="let e of tiposDocumento" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item>
         <ion-label>Nro. Documento</ion-label>
-        <ion-input [(ngModel)]="integrante.numeroDocumento" type="number" name="title"></ion-input>
+        <ion-input [(ngModel)]="integrante.numeroDocumento" type="number" name="title" disabled="{{!editStatus}}"></ion-input>
     </ion-item>
     <ion-item>
         <ion-label>Nombres</ion-label>
@@ -30,19 +30,18 @@
     </ion-item>
     <ion-item>
         <ion-label>Nacionalidad</ion-label>
-        <ion-select [(ngModel)]="integrante.nacionalidad" interface="popover" multiple="false">
+        <ion-select [(ngModel)]="integrante.nacionalidad" interface="popover" multiple="false" disabled="{{!editStatus}}">
             <ion-option *ngFor="let e of nacionalidades" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item>
-        <ion-label>Etnia</ion-label>
-        <ion-select [(ngModel)]="integrante.etnia" interface="popover" multiple="false">
-            <ion-option *ngFor="let e of etnias" [value]="e">{{e}}</ion-option>
-        </ion-select>
+        <ion-label>Fecha de nacimiento</ion-label>
+        <ion-datetime [(ngModel)]="integrante.fechaNacimientoString" displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY" disabled="{{!editStatus}}">
+        </ion-datetime>
     </ion-item>
     <ion-item>
         <ion-label>Sexo</ion-label>
-        <ion-select [(ngModel)]="integrante.sexo" interface="popover" multiple="false">
+        <ion-select [(ngModel)]="integrante.sexo" interface="popover" multiple="false" disabled="{{!editStatus}}">
             <ion-option *ngFor="let e of sexos" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>
@@ -53,9 +52,10 @@
         </ion-select>
     </ion-item>
     <ion-item>
-        <ion-label>Fecha de nacimiento</ion-label>
-        <ion-datetime [(ngModel)]="integrante.fechaNacimientoString" displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY">
-        </ion-datetime>
+        <ion-label>Etnia</ion-label>
+        <ion-select [(ngModel)]="integrante.etnia" interface="popover" multiple="false">
+            <ion-option *ngFor="let e of etnias" [value]="e">{{e}}</ion-option>
+        </ion-select>
     </ion-item>
     <ion-item>
             <ion-label>Es Jefe/a de hogar:</ion-label>
@@ -63,7 +63,7 @@
     </ion-item>
     <ion-item *ngIf="!integrante.esJefeHogar">
         <ion-label>Vinculo con Jefe de Hogar</ion-label>
-        <ion-select *ngIf="!integrante.esJefeHogar" [(ngModel)]="integrante.vinculoConJefeHogar" multiple="false">
+        <ion-select *ngIf="!integrante.esJefeHogar" [(ngModel)]="integrante.vinculoConJefeHogar" multiple="false" interface="popover">
             <ion-option *ngFor="let e of relacionesJefe" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>

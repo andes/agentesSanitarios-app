@@ -22,17 +22,19 @@ export class EnfermedadesCronicasPage {
     enfermedadesCronicasOpciones = EnfermedadesCronicas;
     enfermedadesCronicas = [];
     integranteId;
+    scanStatus;
 
 
     constructor(
         public agentesSanitariosProvider: AgentesSanitariosProvider,
         public navParams: NavParams,
         public navCtrl: NavController,
-        ) {
+    ) {
     }
 
     async ionViewWillEnter() {
         this.integranteId = (await this.navParams.get('integrante')).id;
+        this.scanStatus = await this.navParams.get('scanStatus');
         this.enfermedadesCronicas = await this.agentesSanitariosProvider.getIntegranteEnfermedadesCronicasByIntegranteId(this.integranteId);
     }
 
@@ -44,7 +46,11 @@ export class EnfermedadesCronicasPage {
         await this.agentesSanitariosProvider.saveEnfermedadesCronicas(this.enfermedadesCronicas, this.integranteId);
         // return this.navCtrl.push(IntegranteListPage, { hogarId: await this.navParams.get('integrante').hogarId});
         // Te moves para atrás X-1 veces.
-        this.navCtrl.popTo(this.navCtrl.getByIndex(this.navCtrl.length() - 4 ));
+        if (this.scanStatus) {
+            this.navCtrl.popTo(this.navCtrl.getByIndex(this.navCtrl.length() - 4));
+        } else {
+            this.navCtrl.popTo(this.navCtrl.getByIndex(this.navCtrl.length() - 3));
+        }
     }
 
     addEnfermedadCronica() {

@@ -11,7 +11,7 @@
 <ion-content home background="white" padding>
     <ion-item>
         <ion-label>Letra:</ion-label>
-        <ion-select [(ngModel)]="vivienda.viviendaLetra" multiple="false">
+        <ion-select [(ngModel)]="vivienda.viviendaLetra" multiple="false" interface="popover">
                 <ion-option *ngFor="let e of viviendaLetras" [value]="e">{{e}}</ion-option>
             </ion-select>
     </ion-item>
@@ -21,19 +21,19 @@
     </ion-item>
     <ion-item>
         <ion-label>Piso</ion-label>
-        <ion-select [(ngModel)]="vivienda.materialPiso" multiple="false">
+        <ion-select [(ngModel)]="vivienda.materialPiso" multiple="false" interface="popover">
             <ion-option *ngFor="let e of materialesPiso" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item>
         <ion-label>Pared</ion-label>
-        <ion-select [(ngModel)]="vivienda.materialPared" multiple="false">
+        <ion-select [(ngModel)]="vivienda.materialPared" multiple="false" interface="popover">
             <ion-option *ngFor="let e of materialesPared" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item>
         <ion-label>Techo</ion-label>
-        <ion-select [(ngModel)]="vivienda.materialTecho" multiple="false">
+        <ion-select [(ngModel)]="vivienda.materialTecho" multiple="false" interface="popover">
             <ion-option *ngFor="let e of materialesTecho" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>
@@ -51,19 +51,19 @@
     </ion-item>
     <ion-item>
         <ion-label>Tipo de casa</ion-label>
-        <ion-select [(ngModel)]="vivienda.tipoCasa" multiple="false">
+        <ion-select [(ngModel)]="vivienda.tipoCasa" multiple="false" interface="popover">
             <ion-option *ngFor="let e of tiposCasa" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item>
         <ion-label>Fuente de agua</ion-label>
-        <ion-select [(ngModel)]="vivienda.fuenteAgua" multiple="false">
+        <ion-select [(ngModel)]="vivienda.fuenteAgua" multiple="false" interface="popover">
             <ion-option *ngFor="let e of fuentesAgua" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item>
         <ion-label>Baño</ion-label>
-        <ion-select [(ngModel)]="vivienda.tipoBano" multiple="false">
+        <ion-select [(ngModel)]="vivienda.tipoBano" multiple="false" interface="popover">
             <ion-option *ngFor="let e of tiposBano" [value]="e">{{e}}</ion-option>
         </ion-select>
     </ion-item>
