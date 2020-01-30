@@ -10,43 +10,46 @@
 </ion-header>
 
 <ion-content home background="white" padding>
-    <ion-item>
-        <ion-label>Nro. Parcela</ion-label>
-        <ion-input [(ngModel)]="parcela.nroParcela" type="number"></ion-input>
-    </ion-item>
-    <ion-item>
-        <ion-label>Provincia</ion-label>
-        <ion-select [(ngModel)]="parcela.provincia" multiple="false" disabled>
-            <ion-option *ngFor="let prov of provincias" [value]="prov">{{prov}}</ion-option>
-        </ion-select>
-    </ion-item>
+    <form [formGroup]="FormGroupParcela" (ngSubmit)="onClickGuardar()">
+        <ion-item>
+            <ion-label>Nro. Parcela</ion-label>
+            <ion-input [(ngModel)]="parcela.nroParcela" formControlName="nroParcela" type="number"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Provincia</ion-label>
+            <ion-select [(ngModel)]="parcela.provincia" formControlName="NoRequired" multiple="false" disabled>
+                <ion-option *ngFor="let prov of provincias" [value]="prov">{{prov}}</ion-option>
+            </ion-select>
+        </ion-item>
 
-    <ion-item>
-        <ion-label flaoating>Municipio</ion-label>
-        <ion-select [(ngModel)]="parcela.municipio" interface="popover">
-            <ion-option *ngFor="let mun of municipios" [value]="mun">{{mun}}</ion-option>
-        </ion-select>
-    </ion-item>
+        <ion-item>
+            <ion-label flaoating>Municipio</ion-label>
+            <ion-select [(ngModel)]="parcela.municipio" formControlName="municipio" interface="popover">
+                <ion-option *ngFor="let mun of municipios" [value]="mun">{{mun}}</ion-option>
+            </ion-select>
+        </ion-item>
 
-    <ion-item>
-        <ion-label>Localidad</ion-label>
-        <ion-input [(ngModel)]="parcela.localidad" type="string"></ion-input>
-    </ion-item>
+        <ion-item>
+            <ion-label>Localidad</ion-label>
+            <ion-input [(ngModel)]="parcela.localidad" formControlName="localidad" type="string"></ion-input>
+        </ion-item>
 
-    <ion-item>
-        <ion-label>Barrio</ion-label>
-        <ion-input [(ngModel)]="parcela.barrio" type="string"></ion-input>
-    </ion-item>
+        <ion-item>
+            <ion-label>Barrio</ion-label>
+            <ion-input [(ngModel)]="parcela.barrio" formControlName="barrio" type="string"></ion-input>
+        </ion-item>
 
-    <ion-item>
-        <ion-label>Dirección</ion-label>
-        <ion-input [(ngModel)]="parcela.direccion" type="text"></ion-input>
-    </ion-item>
+        <ion-item>
+            <ion-label>Dirección</ion-label>
+            <ion-input [(ngModel)]="parcela.direccion" formControlName="direccion" type="text"></ion-input>
+        </ion-item>
 
-    <ion-item>
-        <ion-label flaoating>Zona</ion-label>
-        <ion-select [(ngModel)]="parcela.tipoZona" multiple="false" interface="popover">
-            <ion-option *ngFor="let zona of tipoZonas" [value]="zona">{{zona}}</ion-option>
-        </ion-select>
-    </ion-item>
+        <ion-item>
+            <ion-label flaoating>Zona</ion-label>
+            <ion-select [(ngModel)]="parcela.tipoZona" formControlName="tipoZona" multiple="false" interface="popover">
+                <ion-option *ngFor="let zona of tipoZonas" [value]="zona">{{zona}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <button ion-button type="submit" >Submit</button>
+    </form>
 </ion-content>

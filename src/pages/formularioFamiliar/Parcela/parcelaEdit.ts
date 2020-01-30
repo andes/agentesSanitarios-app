@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 // LIB
 // COMPONENTS
 // PROVIDERS
@@ -27,13 +28,23 @@ export class ParcelaEditPage {
     idUsuarioCreacion;
     idUsuarioActualizacion;
     parcela: IParcela;
+    private FormGroupParcela: FormGroup;
 
     constructor(
         public navCtrl: NavController,
         public agentesSanitariosProvider: AgentesSanitariosProvider,
-        public navParams: NavParams
-        ) {
-
+        public navParams: NavParams,
+        private formBuilder: FormBuilder
+    ) {
+        this.FormGroupParcela = this.formBuilder.group({
+            nroParcela: ['', Validators.required],
+            localidad: ['', Validators.required],
+            municipio: ['', Validators.required],
+            barrio: ['', Validators.required],
+            direccion: ['', Validators.required],
+            tipoZona: ['', Validators.required],
+            NoRequired: ['']
+        });
         this.provincias = Provincias;
         this.municipios = Municipios;
         this.tipoZonas = ZonasUbicacion;
@@ -58,8 +69,30 @@ export class ParcelaEditPage {
     }
 
     async onClickGuardar() {
-        await this.guardar();
-        this.navCtrl.pop();
+        let error: string = this.validarFormulario()
+        if (error === '') {
+            await this.guardar();
+            this.navCtrl.pop();
+        } else {
+            alert(error);
+        }
+    }
+
+    validarFormulario() {
+        let rslt = '';
+        if (this.parcela.nroParcela === undefined) {
+            rslt += '- Número de Parcela es obligatorio!';
+        }
+        if (this.parcela.municipio === undefined) {
+            rslt += '\n\n- Municipio es obligatorio!';
+        }
+        if (this.parcela.direccion === undefined) {
+            rslt += '\n\n- Dirección es obligatorio!';
+        }
+        if (this.parcela.tipoZona === undefined) {
+            rslt += '\n\n- Zona es obligatorio!';
+        }
+        return rslt;
     }
 
     async guardar() {
@@ -72,5 +105,4 @@ export class ParcelaEditPage {
             return this.parcela.id;
         }
     }
-
 }
