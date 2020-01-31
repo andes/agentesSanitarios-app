@@ -92,6 +92,7 @@ export class IntegranteEditPage {
         } else if (this.navParams.get('integrante')) {
             this.scanStatus = false;
             this.editStatus = false;
+            console.log(this.navParams.get('integrante'));
             this.integrante = this.navParams.get('integrante');
             this.integrante.fechaNacimientoString = new Date(this.integrante.fechaNacimiento).toISOString();
         } else {

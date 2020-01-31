@@ -37,7 +37,12 @@ export class ParcelaEditPage {
         private formBuilder: FormBuilder
     ) {
         this.FormGroupParcela = this.formBuilder.group({
-            nroParcela: ['', Validators.required],
+            nroParcela: ['',
+            Validators.compose([
+              Validators.required,
+              Validators.min(1000),
+              Validators.max(10000)
+            ])],
             localidad: ['', Validators.required],
             municipio: ['', Validators.required],
             barrio: ['', Validators.required],

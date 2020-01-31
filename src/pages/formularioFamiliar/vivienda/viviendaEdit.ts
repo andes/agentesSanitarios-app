@@ -89,8 +89,24 @@ export class ViviendaEditPage {
     }
 
     async onClickGuardar() {
-        await this.guardar();
-        this.navCtrl.pop();
+        let error: string = this.validarFormulario()
+        if (error === '') {
+            await this.guardar();
+            this.navCtrl.pop();
+        } else {
+            alert(error);
+        }
+    }
+
+    validarFormulario() {
+        let rslt = '';
+        if (this.vivienda.viviendaLetra === undefined) {
+            rslt += '- Número de Parcela es obligatorio!';
+        }
+        if (this.vivienda.equipoNucleoReferencia === undefined) {
+            rslt += '\n\n- Municipio es obligatorio!';
+        }
+        return rslt;
     }
 
     async guardar() {
