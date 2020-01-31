@@ -65,7 +65,7 @@ export class IntegranteEditPage {
         public navParams: NavParams,
         public navCtrl: NavController,
         private storage: Storage
-        ) {
+    ) {
         this.nuevoIntegrante();
     }
 
@@ -92,7 +92,6 @@ export class IntegranteEditPage {
         } else if (this.navParams.get('integrante')) {
             this.scanStatus = false;
             this.editStatus = false;
-            console.log(this.navParams.get('integrante'));
             this.integrante = this.navParams.get('integrante');
             this.integrante.fechaNacimientoString = new Date(this.integrante.fechaNacimiento).toISOString();
         } else {
@@ -103,7 +102,7 @@ export class IntegranteEditPage {
     }
 
     ionViewDidLoad() {
-        this.navBar.backButtonClick = async () => this.navCtrl.push(IntegranteListPage, {hogarId: await this.storage.get('hogarId') });
+        this.navBar.backButtonClick = async () => this.navCtrl.push(IntegranteListPage, { hogarId: await this.storage.get('hogarId') });
     }
 
     nuevoIntegrante() {
@@ -111,16 +110,49 @@ export class IntegranteEditPage {
     }
 
     async onClickSiguiente() {
-        this.integrante.fechaNacimiento = new Date(this.integrante.fechaNacimientoString.toString());
-
-        if (!this.integrante.id) {
-            this.integrante.id = (await this.agentesSanitariosProvider.insertIntegrante(this.integrante));
+        let error: string = this.validarFormulario()
+        if (error === '') {
+            this.integrante.fechaNacimiento = new Date(this.integrante.fechaNacimientoString.toString());
+            if (!this.integrante.id) {
+                this.integrante.id = (await this.agentesSanitariosProvider.insertIntegrante(this.integrante));
+            } else {
+                this.integrante.idUsuarioActualizacion = 23;
+                this.integrante.fechaActualizacion = new Date();
+                await this.agentesSanitariosProvider.updateIntegrante(this.integrante);
+            }
+            this.navCtrl.push(EnfermedadesCronicasPage, { integrante: this.integrante, scanStatus: this.scanStatus });
         } else {
-            this.integrante.idUsuarioActualizacion = 23;
-            this.integrante.fechaActualizacion = new Date();
-            await this.agentesSanitariosProvider.updateIntegrante(this.integrante);
+            alert(error);
         }
-        this.navCtrl.push(EnfermedadesCronicasPage, { integrante: this.integrante, scanStatus: this.scanStatus });
+    }
+
+    validarFormulario() {
+        let rslt = '';
+        if (this.integrante.tipoDocumento === undefined) {
+            rslt += '- Número de Parcela es obligatorio!';
+        }
+        if (this.integrante.numeroDocumento === undefined) {
+            rslt += '\n\n- DNI es obligatorio!';
+        }
+        if (this.integrante.apellido === undefined) {
+            rslt += '\n\n- Apellid es obligatorio!';
+        }
+        if (this.integrante.nombre === undefined) {
+            rslt += '\n\n- Nombre es obligatorio!';
+        }
+        if (this.integrante.nacionalidad === undefined) {
+            rslt += '\n\n- Nacionalidad es obligatorio!';
+        }
+        if (this.integrante.fechaNacimientoString === undefined) {
+            rslt += '\n\n- Fecha de Nacimiento es obligatorio!';
+        }
+        if (this.integrante.sexo === undefined) {
+            rslt += '\n\n- Sexo es obligatorio!';
+        }
+        if (this.integrante.genero === undefined) {
+            rslt += '\n\n- Género es obligatorio!';
+        }
+        return rslt;
     }
 
     async guardar() {

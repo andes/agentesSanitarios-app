@@ -1,7 +1,7 @@
 export const CausasMuerte = [
     'Externa',
     'Mal. Cong',
-    'Desnutr.',
+    'Desnutrición',
     'Inf. Resp.',
     'Tumores',
     'Otras'

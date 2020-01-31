@@ -1,13 +1,13 @@
 export const NivelesEducacion = [
     'Ninguno',
-    'Prim. Incomp.',
-    'Prim. Comp.',
-    'Sec. Incomp.',
-    'Sec. Comp.',
-    'Terc. Incomp.',
-    'Terc. Comp.',
-    'Univ. Incomp.',
-    'Univ. Comp.',
+    'Primario Incompleto',
+    'Primario Completo',
+    'Secundario Incompleto',
+    'Secundario Completo',
+    'Terciario Incompleto',
+    'Terciario Completo',
+    'Universitario Incompleto',
+    'Universitario Completo',
     'Lee/Escribe',
     'NS/NC'
 ];
