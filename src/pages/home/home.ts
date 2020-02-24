@@ -2,6 +2,8 @@ import { SQLite } from '@ionic-native/sqlite';
 import { AgentesSanitariosProvider } from './../../providers/agentes-sanitarios/agendes-sanitarios';
 import { Component } from '@angular/core';
 import { NavController, MenuController } from 'ionic-angular';
+// import { NetworkProvider } from '../../providers/network';
+// import { ToastProvider } from '../../providers/toast';
 
 import { AuthProvider } from '../../providers/auth/auth';
 
@@ -29,7 +31,10 @@ export class HomePage {
         public navCtrl: NavController,
         public menuCtrl: MenuController,
         public reporter: ErrorReporterProvider,
-        public agentesSanitariosProvider: AgentesSanitariosProvider) {
+        public agentesSanitariosProvider: AgentesSanitariosProvider,
+        // public toastProvider: ToastProvider,
+        // public network: NetworkProvider
+        ) {
 
         this.user = this.authService.user;
     }
@@ -41,7 +46,6 @@ export class HomePage {
     async ionViewDidLoad() {
         await this.createDatabase();
         await this.agentesSanitariosProvider.createTables();
-        // await this.testInserts();
         setTimeout(() => this.started = true, 50);
     }
 
@@ -66,8 +70,7 @@ export class HomePage {
     }
 
     isLogin() {
-        // return this.authService.user != null;
-        return true;
+        return this.authService.user != null;
     }
 
     crearParcela() {
@@ -87,10 +90,6 @@ export class HomePage {
         }
     }
 
-    isProfesional() {
-        return this.authService.user && this.authService.user.profesionalId != null;
-    }
-
     login() {
         if (!this.isLogin()) {
             this.navCtrl.push(LoginPage);
@@ -98,5 +97,43 @@ export class HomePage {
             //   this.reporter.report();
         }
     }
+
+    // async sincronizar() {
+    //     try {
+    //         let estadoDispositivo = this.network.getCurrentNetworkStatus(); // online-offline
+
+    //         if (estadoDispositivo === 'online') {
+    //             // if (actualizar || actualizarProf || act) {
+    //             //     this.actualizando = true;
+    //             //     // if (estadoDispositivo === 'online') {
+    //                 let params: any = {};
+    //                 if (this.authService.user != null) {
+    //                     params.usuario = {
+    //                         email: this.authService.user.email,
+    //                         password: this.authService.user.password
+    //                     }
+    //                 }
+
+    //                 let body = {
+    //                     idRegistro: 'XXX'
+    //                 }
+    //                 let migro = await this.agentesSanitariosProvider.sincronizarDatos(params, body);
+    //             //     if (migro) {
+    //             //         this.ultimaActualizacion = new Date();
+    //             //         this.ultimaActualizacionProf = new Date();
+
+    //             //     }
+    //             //     this.actualizando = false;
+    //             // }
+    //         } else {
+    //             this.toastProvider.danger('No hay conexión a internet.');
+    //         }
+    //         // this.periodo = await this.datosGestion.maxPeriodo();
+    //         // this.perDesdeMort = await this.datosGestion.desdePeriodoMortalidad();
+    //         // this.perHastaMort = await this.datosGestion.hastaPeriodoMortalidad();
+    //     } catch (error) {
+    //         return (error);
+    //     }
+    // }
 
 }

@@ -4,9 +4,8 @@
 <ion-menu [content]="content" type="overlay" side="right" [ngClass]="{ 'ion-menu-ios' : platform.is('ios') }">
     <ion-content>
         <div class="profile-content">
-            <button class="outline circular" [ngClass]="{profesional: isProfesional(), paciente: !isProfesional(), opacity: !isLoged() }">
-                <span class="circular" name="andes-paciente" *ngIf="!isProfesional()"></span>
-                <span class="circular" name="andes-profesional" *ngIf="isProfesional()"></span>
+            <button class="outline circular" [ngClass]="{paciente: true, opacity: !isLoged() }">
+                <span class="circular" name="andes-paciente"></span>
             </button>
             <div class="profile-name" *ngIf="isLoged()">
                 {{authProvider.user.nombre}} {{authProvider.user.apellido}}

@@ -17,7 +17,9 @@ export enum ConnectionStatus {
 @Injectable()
 export class NetworkProvider {
     private token: string = null;
-    private baseUrl = ENV.API_URL;
+    // private baseUrl = ENV.API_URL;
+    private baseUrl = 'http://192.168.1.10:3002/api/';
+    // private baseUrl = 'https://demo.andes.gob.ar/api/';
     private ApiMobileUrl = ENV.API_MOBILE_URL;
     private status: BehaviorSubject<ConnectionStatus> = new BehaviorSubject(ConnectionStatus.Offline);
 

@@ -9,7 +9,7 @@ import { IIntegranteEnfermedadCronica } from './../../interfaces/integranteEnfer
 
 @Injectable()
 export class AgentesSanitariosProvider {
-    // private baseUrl = 'modules/mobileApp/encuestas';
+    private baseUrl = 'modules/reporteSociosanitario/';
 
     db: SQLiteObject = null;
 
@@ -943,5 +943,87 @@ export class AgentesSanitariosProvider {
         } catch (e) {
             console.log('error', e)
         }
+    }
+
+    async sincronizarDatos(params, body) {
+        this.syncAppToAndes(params, body);
+        this.syncAndesToApp();
+    }
+
+    async syncAppToAndes(integrante, body) {
+        let element = this.generatePrestacion(body);
+        await this.postMongo(element);
+    }
+
+    generatePrestacion(integrante: IIntegrante) {
+        return {
+            'paciente': {
+                'nombre': integrante.nombre,
+                'apellido': integrante.apellido,
+                'documento': integrante.numeroDocumento,
+                'sexo': integrante.sexo,
+                'fechaNacimiento': integrante.fechaNacimiento
+            },
+            'estados': [{'tipo': 'pendiente'}],
+            'solicitud': {
+                'fecha': new Date()
+            },
+            'ejecucion': {
+                'organizacion': {
+                    'id': '57e9670e52df311059bc8964',
+                    'nombre': 'HOSPITAL PROVINCIAL NEUQUEN - DR. EDUARDO CASTRO RENDON'
+                },
+                'registros': [
+                    {
+                        'privacy': {
+                            'scope': 'public'
+                        },
+                        'destacado': false,
+                        'esSolicitud': false,
+                        'esDiagnosticoPrincipal': false,
+                        'relacionadoCon': [],
+                        'registros': [],
+                        '_id': '5e4d6a2906cd0445c4b676bd',
+                        'nombre': 'informe del encuentro',
+                        'concepto': {
+                            'refsetIds': [],
+                            'conceptId': '371531000',
+                            'term': 'informe del encuentro',
+                            'fsn': 'informe del encuentro (elemento de registro)',
+                            'semanticTag': 'elemento de registro'
+                        },
+                        'valor': '',
+                        'elementoRUP': '5a27dbce291f463c1b982d99',
+                        'id': '5e4d6a2906cd0445c4b676bd'
+                    }
+                ],
+                'fecha': '2019-03-21T17:53:06.595Z'
+            }
+        }
+    }
+
+    async syncAndesToApp() {
+        try {
+            // let listado: any = await this.getMongo();
+            // if (listado) {
+            //     for (let index = 0; index < listado.length; index++) {
+            //         const element = listado[index];
+            //         // inserta en dispositivo local
+            //         if (!element.idApp || ! await this.existe(element.idApp)) {
+            //             this.insert(element, element.origen, 0, element.id)
+            //         }
+            //     }
+            // }
+        } catch (err) {
+            return (err);
+        }
+    }
+
+    async postMongo(body) {
+        return this.network.post(this.baseUrl, body);
+    }
+
+    getMongo() {
+        return this.network.get(this.baseUrl, {});
     }
 }

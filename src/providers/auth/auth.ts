@@ -24,8 +24,8 @@ export class AuthProvider {
     public permisos;
     public esGestion;
     public mantenerSesion;
-    private authUrl = 'modules/mobileApp';
-    private authV2Url = 'modules/mobileApp/v2';
+    private authUrl = 'modules/rondasSanitariasApp';
+    private authV2Url = 'modules/rondasSanitariasApp/v2';
 
     private appUrl = 'auth';
 

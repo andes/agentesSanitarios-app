@@ -89,8 +89,7 @@ export class LoginPage {
                 };
                 // this.navCtrl.setRoot(OrganizacionesPage);
 
-                
-                this.navCtrl.setRoot(PrincipalPage);
+                this.navCtrl.setRoot(HomePage);
             }).catch(() => {
                 this.inProgress = false;
                 this.toastCtrl.danger('Credenciales incorrectas');

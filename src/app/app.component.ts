@@ -122,10 +122,6 @@ export class MyApp {
         return this.authProvider.user !== null;
     }
 
-    isProfesional() {
-        return this.authProvider.user && this.authProvider.user.profesionalId;
-    }
-
     getMenu() {
         if (this.authProvider.user) {
             return this.authProvider.user.profesionalId ? this.profesionalMenu : this.pacienteMenu;
@@ -206,20 +202,5 @@ export class MyApp {
         });
         alert.present();
     }
-
-    // private async createDatabase() {
-
-    //     this.sqlite.create({
-    //         name: 'data.db',
-    //         location: 'default' // the location field is required
-    //     })
-    //         .then((db) => {
-    //             this.agentesSanitariosProvider.setDatabase(db);
-    //         }).catch(error => {
-    //             return (error);
-    //         });
-
-
-    // }
 
 }

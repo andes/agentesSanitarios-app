@@ -17,7 +17,7 @@ export class DeviceProvider {
     public currentDevice: any;
     public registrationId: string = null;
     public navCtrl: NavController;
-    private baseUrl = 'modules/mobileApp';
+    private baseUrl = 'modules/rondasSanitariasApp';
 
     public navigateTo: any = null;
     public notification: Observable<any>;
