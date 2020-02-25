@@ -9,7 +9,7 @@ import { IIntegranteEnfermedadCronica } from './../../interfaces/integranteEnfer
 
 @Injectable()
 export class AgentesSanitariosProvider {
-    private baseUrl = 'modules/reporteSociosanitario/';
+    private baseUrl = 'modules/rondasSanitariasApp/reporteSociosanitario/';
 
     db: SQLiteObject = null;
 
@@ -704,6 +704,20 @@ export class AgentesSanitariosProvider {
         }
     }
 
+    async getIntegrantes() {
+        try {
+            let sql = `SELECT * FROM integrante`;
+            let integrantes = []
+            let rows = (await this.db.executeSql(sql, []) as any).rows;
+            for (let i = 0; i < rows.length; i++) {
+                integrantes.push(rows.item(i) as IIntegrante);
+            }
+            return integrantes;
+        } catch (err) {
+            return err;
+        }
+    }
+
     async getIntegrantesByHogarId(hogarId) {
         try {
             let sql = `SELECT * FROM integrante
@@ -945,61 +959,13 @@ export class AgentesSanitariosProvider {
         }
     }
 
-    async sincronizarDatos(params, body) {
-        this.syncAppToAndes(params, body);
+    async sincronizarDatos() {
+        this.syncAppToAndes();
         this.syncAndesToApp();
     }
 
-    async syncAppToAndes(integrante, body) {
-        let element = this.generatePrestacion(body);
-        await this.postMongo(element);
-    }
-
-    generatePrestacion(integrante: IIntegrante) {
-        return {
-            'paciente': {
-                'nombre': integrante.nombre,
-                'apellido': integrante.apellido,
-                'documento': integrante.numeroDocumento,
-                'sexo': integrante.sexo,
-                'fechaNacimiento': integrante.fechaNacimiento
-            },
-            'estados': [{'tipo': 'pendiente'}],
-            'solicitud': {
-                'fecha': new Date()
-            },
-            'ejecucion': {
-                'organizacion': {
-                    'id': '57e9670e52df311059bc8964',
-                    'nombre': 'HOSPITAL PROVINCIAL NEUQUEN - DR. EDUARDO CASTRO RENDON'
-                },
-                'registros': [
-                    {
-                        'privacy': {
-                            'scope': 'public'
-                        },
-                        'destacado': false,
-                        'esSolicitud': false,
-                        'esDiagnosticoPrincipal': false,
-                        'relacionadoCon': [],
-                        'registros': [],
-                        '_id': '5e4d6a2906cd0445c4b676bd',
-                        'nombre': 'informe del encuentro',
-                        'concepto': {
-                            'refsetIds': [],
-                            'conceptId': '371531000',
-                            'term': 'informe del encuentro',
-                            'fsn': 'informe del encuentro (elemento de registro)',
-                            'semanticTag': 'elemento de registro'
-                        },
-                        'valor': '',
-                        'elementoRUP': '5a27dbce291f463c1b982d99',
-                        'id': '5e4d6a2906cd0445c4b676bd'
-                    }
-                ],
-                'fecha': '2019-03-21T17:53:06.595Z'
-            }
-        }
+    async syncAppToAndes() {
+        (await this.getReportes()).forEach(async r => await this.network.post(this.baseUrl, r));
     }
 
     async syncAndesToApp() {
@@ -1019,8 +985,22 @@ export class AgentesSanitariosProvider {
         }
     }
 
-    async postMongo(body) {
-        return this.network.post(this.baseUrl, body);
+    async getReportes() {
+        let reportes = [];
+        for (let i of await this.getIntegrantes()) {
+            reportes.push(await this.getReporteIntegrante(i));
+        }
+        return reportes;
+    }
+
+    async getReporteIntegrante(integrante) {
+        let reporteIntegrante: any = {
+            paciente: integrante,
+            hogar: await this.getHogarById(integrante.hogarId),
+        };
+        reporteIntegrante.vivienda = await this.getViviendaById(reporteIntegrante.hogar.viviendaId);
+        reporteIntegrante.parcela = await this.getParcelaById(reporteIntegrante.vivienda.parcelaId);
+        return reporteIntegrante;
     }
 
     getMongo() {
