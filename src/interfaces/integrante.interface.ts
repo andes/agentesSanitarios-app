@@ -5,6 +5,7 @@ export class IIntegrante {
     idUsuarioActualizacion: Number;
     fechaCreacion: Date;
     fechaActualizacion: Date;
+    validado: boolean;
     apellido: String;
     nombre: String;
     tipoDocumento: String;

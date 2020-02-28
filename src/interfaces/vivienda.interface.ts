@@ -6,7 +6,7 @@ export class IVivienda {
     idUsuarioActualizacion: Number;
     fechaCreacion: Date;
     fechaActualizacion: Date;
-    viviendaLetra: String;
+    viviendaNumero: String;
     equipoNucleoReferencia: string;
     parcelaId: Number;
     materialPiso: String;

@@ -72,10 +72,10 @@ export class IntegranteEditPage {
     async ionViewWillEnter() {
         if (this.navParams.get('hogarId')) {
             this.integrante.hogarId = this.navParams.get('hogarId');
-            if (this.navParams.get('datosPersona')) {
+            this.datosPersona = this.navParams.get('datosPersona');
+            if (this.datosPersona) {
                 this.scanStatus = true;
-                this.editStatus = false;
-                this.datosPersona = this.navParams.get('datosPersona');
+                this.editStatus = this.datosPersona.validado;
                 this.integrante.tipoDocumento = 'D.N.I.';
                 this.integrante.numeroDocumento = this.datosPersona.documento;
                 this.integrante.nombre = this.datosPersona.nombre;
@@ -90,10 +90,11 @@ export class IntegranteEditPage {
                 this.editStatus = true;
             }
         } else if (this.navParams.get('integrante')) {
+            console.log(this.navParams.get('integrante'));
             this.scanStatus = false;
-            this.editStatus = false;
             this.integrante = this.navParams.get('integrante');
             this.integrante.fechaNacimientoString = new Date(this.integrante.fechaNacimiento).toISOString();
+            this.editStatus = this.integrante.validado;
         } else {
             this.scanStatus = false;
             this.editStatus = true;
@@ -107,6 +108,7 @@ export class IntegranteEditPage {
 
     nuevoIntegrante() {
         this.integrante = new IIntegrante();
+        this.integrante.validado = false;
     }
 
     async onClickSiguiente() {

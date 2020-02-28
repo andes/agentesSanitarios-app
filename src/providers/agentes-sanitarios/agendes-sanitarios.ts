@@ -169,7 +169,8 @@ export class AgentesSanitariosProvider {
                 idUsuarioActualizacion INTEGER,
                 fechaCreacion DATETIME,
                 fechaActualizacion DATETIME,
-                viviendaLetra VARCHAR(100),
+                viviendaNumero INTEGER,
+                equipoNucleoReferencia VARCHAR(100),
                 materialPiso VARCHAR(100),
                 materialPared VARCHAR(100),
                 materialTecho VARCHAR(100),
@@ -211,7 +212,8 @@ export class AgentesSanitariosProvider {
                 idUsuarioActualizacion,
                 fechaCreacion,
                 fechaActualizacion,
-                viviendaLetra,
+                viviendaNumero,
+                equipoNucleoReferencia,
                 materialPiso,
                 materialPared,
                 materialTecho,
@@ -236,7 +238,7 @@ export class AgentesSanitariosProvider {
                 celularSinInternet,
                 celularConInternet,
                 otrosDatos )
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
             return (await this.db.executeSql(sql, [
                 vivienda.parcelaId,
@@ -244,7 +246,8 @@ export class AgentesSanitariosProvider {
                 vivienda.idUsuarioActualizacion,
                 vivienda.fechaCreacion,
                 vivienda.fechaActualizacion,
-                vivienda.viviendaLetra,
+                vivienda.viviendaNumero,
+                vivienda.equipoNucleoReferencia,
                 vivienda.materialPiso,
                 vivienda.materialPared,
                 vivienda.materialTecho,
@@ -284,7 +287,8 @@ export class AgentesSanitariosProvider {
                 idUsuarioActualizacion=?,
                 fechaCreacion=?,
                 fechaActualizacion=?,
-                viviendaLetra=?,
+                viviendaNumero=?,
+                equipoNucleoReferencia=?
                 materialPiso=?,
                 materialPared=?,
                 materialTecho=?,
@@ -317,7 +321,8 @@ export class AgentesSanitariosProvider {
                 vivienda.idUsuarioActualizacion,
                 vivienda.fechaCreacion,
                 vivienda.fechaActualizacion,
-                vivienda.viviendaLetra,
+                vivienda.viviendaNumero,
+                vivienda.equipoNucleoReferencia,
                 vivienda.materialPiso,
                 vivienda.materialPared,
                 vivienda.materialTecho,
@@ -354,7 +359,7 @@ export class AgentesSanitariosProvider {
         console.log('getViviendasByparcelaId xxx', parcelaId);
         try {
             let sql = `SELECT * FROM vivienda
-                WHERE parcelaId = ${parcelaId} order by viviendaLetra asc`;
+                WHERE parcelaId = ${parcelaId} order by viviendaNumero asc`;
 
             let viviendas = []
             let rows = (await this.db.executeSql(sql, []) as any).rows;
@@ -514,6 +519,7 @@ export class AgentesSanitariosProvider {
                 fechaCreacion DATETIME,
                 fechaActualizacion DATETIME,
                 esJefeHogar BOOLEAN,
+                validado BOOLEAN,
                 apellido VARCHAR(100),
                 nombre VARCHAR(100),
                 tipoDocumento VARCHAR(100),
@@ -555,6 +561,7 @@ export class AgentesSanitariosProvider {
                 fechaCreacion,
                 fechaActualizacion,
                 esJefeHogar,
+                validado,
                 apellido,
                 nombre,
                 tipoDocumento,
@@ -582,7 +589,7 @@ export class AgentesSanitariosProvider {
                 cudNumero,
                 cudVigencia
             )
-            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
         try {
             return (await this.db.executeSql(sql, [
@@ -592,6 +599,7 @@ export class AgentesSanitariosProvider {
                 integrante.fechaCreacion,
                 integrante.fechaActualizacion,
                 integrante.esJefeHogar,
+                integrante.validado,
                 integrante.apellido,
                 integrante.nombre,
                 integrante.tipoDocumento,
@@ -634,6 +642,7 @@ export class AgentesSanitariosProvider {
                 fechaCreacion=?,
                 fechaActualizacion=?,
                 esJefeHogar=?,
+                validado=?,
                 apellido=?,
                 nombre=?,
                 tipoDocumento=?,
@@ -670,6 +679,7 @@ export class AgentesSanitariosProvider {
                 integrante.fechaCreacion,
                 integrante.fechaActualizacion,
                 integrante.esJefeHogar,
+                integrante.validado,
                 integrante.apellido,
                 integrante.nombre,
                 integrante.tipoDocumento,
@@ -943,13 +953,13 @@ export class AgentesSanitariosProvider {
             '${enfermedadesCronicas[0].enfermedadCronicaEstado}' AS 'enfermedadCronicaEstado'`;
 
             enfermedadesCronicas.slice(1).forEach(e =>
-                sql += ` UNION ALL SELECT 
-                '${e.idUsuarioCreacion}', 
-                '${e.idUsuarioActualizacion}', 
-                '${e.fechaCreacion}', 
-                '${e.fechaActualizacion}', 
-                '${e.integranteId}', 
-                '${e.enfermedadCronica}', 
+                sql += ` UNION ALL SELECT
+                '${e.idUsuarioCreacion}',
+                '${e.idUsuarioActualizacion}',
+                '${e.fechaCreacion}',
+                '${e.fechaActualizacion}',
+                '${e.integranteId}',
+                '${e.enfermedadCronica}',
                 '${e.enfermedadCronicaEstado}'`
             );
 

@@ -1,4 +1,3 @@
-import { ViviendaLetras } from './../../../assets/files/vivienda-letras';
 import { TiposCasa } from './../../../assets/files/tipos-casa';
 import { TiposBano } from './../../../assets/files/tipos-baño';
 import { MaterialesTecho } from './../../../assets/files/material-techo';
@@ -40,7 +39,6 @@ export class ViviendaEditPage {
     idUsuarioActualizacion;
     vivienda: IVivienda;
 
-    viviendaLetras;
     fuentesAgua;
     materialesPared;
     materialesPiso;
@@ -59,7 +57,6 @@ export class ViviendaEditPage {
         this.zonasUbicacion = ZonasUbicacion;
 
         this.provincias = Provincias;
-        this.viviendaLetras = ViviendaLetras;
         this.fuentesAgua = FuentesAgua;
         this.materialesPared = MaterialesPared;
         this.materialesPiso = MaterialesPiso;
@@ -100,11 +97,11 @@ export class ViviendaEditPage {
 
     validarFormulario() {
         let rslt = '';
-        if (this.vivienda.viviendaLetra === undefined) {
-            rslt += '- Número de Parcela es obligatorio!';
+        if (this.vivienda.viviendaNumero === undefined) {
+            rslt += '- Número de Vivienda es obligatorio!';
         }
         if (this.vivienda.equipoNucleoReferencia === undefined) {
-            rslt += '\n\n- Municipio es obligatorio!';
+            rslt += '\n\n- Equipo Núcleo es obligatorio!';
         }
         return rslt;
     }

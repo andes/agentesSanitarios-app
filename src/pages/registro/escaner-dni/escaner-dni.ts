@@ -73,6 +73,7 @@ export class EscanerDniPage implements OnInit {
     }
 
     this.datosPersona = {
+      'validado': true,
       'nombre': datos[documento.grupoNombre],
       'apellido': datos[documento.grupoApellido],
       'documento': datos[documento.grupoNumeroDocumento].replace(/\D/g, ''),
