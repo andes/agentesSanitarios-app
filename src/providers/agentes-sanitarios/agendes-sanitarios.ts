@@ -493,7 +493,6 @@ export class AgentesSanitariosProvider {
     }
 
     async getHogarById(id) {
-        console.log('getHogarById xxx', id);
         try {
             let sql = `SELECT h.* FROM hogar h
                 WHERE h.id = '${id}'`;
@@ -504,10 +503,10 @@ export class AgentesSanitariosProvider {
     }
     // ***********************INTEGRANTE
     createTableIntegrantes() {
-        console.log('createTableIntegrantes')
         try {
             let sql = `CREATE TABLE IF NOT EXISTS integrante(
                 id INTEGER NOT NULL PRIMARY KEY,
+                escaneado BOOLEAN,
                 hogarId INTEGER,
                 idUsuarioCreacion INTEGER,
                 idUsuarioActualizacion  INTEGER,
@@ -580,9 +579,10 @@ export class AgentesSanitariosProvider {
                 discapacidad,
                 certificadoDiscapacidad,
                 cudNumero,
-                cudVigencia
+                cudVigencia,
+                escaneado
             )
-            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
         try {
             return (await this.db.executeSql(sql, [
@@ -617,7 +617,8 @@ export class AgentesSanitariosProvider {
                 integrante.discapacidad,
                 integrante.certificadoDiscapacidad,
                 integrante.cudNumero,
-                integrante.cudVigencia
+                integrante.cudVigencia,
+                integrante.escaneado ? integrante.escaneado : false
             ])).insertId;
         } catch (err) {
             console.log('err', err);
@@ -626,7 +627,6 @@ export class AgentesSanitariosProvider {
     }
 
     updateIntegrante(integrante: IIntegrante) {
-        console.log('updateIntegrante', integrante);
         let sql = `UPDATE integrante SET
                 hogarId=?,
                 idUsuarioCreacion=?,
@@ -704,9 +704,12 @@ export class AgentesSanitariosProvider {
         }
     }
 
-    async getIntegrantes() {
+    async getIntegrantes(escaneados) {
         try {
             let sql = `SELECT * FROM integrante`;
+            // if (escaneados) {
+            //     sql += ` WHERE escaneado = true`;
+            // }
             let integrantes = []
             let rows = (await this.db.executeSql(sql, []) as any).rows;
             for (let i = 0; i < rows.length; i++) {
@@ -987,7 +990,7 @@ export class AgentesSanitariosProvider {
 
     async getReportes() {
         let reportes = [];
-        for (let i of await this.getIntegrantes()) {
+        for (let i of await this.getIntegrantes(true)) {
             reportes.push(await this.getReporteIntegrante(i));
         }
         return reportes;

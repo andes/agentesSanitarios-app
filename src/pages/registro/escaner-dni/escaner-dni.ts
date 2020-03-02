@@ -79,7 +79,8 @@ export class EscanerDniPage implements OnInit {
       'fechaNacimiento': datos[documento.grupoFechaNacimiento],
       'sexo': sexo,
       'genero': sexo,
-      'telefono': null
+      'telefono': null,
+      'escaneado': true
     };
 
     this.storage.set('barscancode', this.datosPersona);

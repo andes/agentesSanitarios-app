@@ -104,7 +104,7 @@ export class ViviendaEditPage {
             rslt += '- Número de Parcela es obligatorio!';
         }
         if (this.vivienda.equipoNucleoReferencia === undefined) {
-            rslt += '\n\n- Municipio es obligatorio!';
+            rslt += '\n\n- Equipo Nucleo de referencia obligatorio!';
         }
         return rslt;
     }

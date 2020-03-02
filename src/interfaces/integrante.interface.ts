@@ -1,5 +1,6 @@
 export class IIntegrante {
     id: Number;
+    escaneado: boolean;
     hogarId: Number;
     idUsuarioCreacion: Number;
     idUsuarioActualizacion: Number;
