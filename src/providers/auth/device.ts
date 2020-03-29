@@ -101,7 +101,7 @@ export class DeviceProvider {
                 app_version: ENV.APP_VERSION
             };
 
-            this.network.post(this.baseUrl + '/devices/register', params).then((data) => {
+            this.network.post(this.baseUrl + '/devices/register', params, null, true).then((data) => {
                 this.currentDevice = data;
                 this.storage.set('current_device', this.currentDevice);
                 return resolve(this.currentDevice);

@@ -1,11 +1,11 @@
-import { IIntegrante } from './../../interfaces/integrante.interface';
+import { IIntegrante } from '../../interfaces/integrante.interface';
 import { Injectable } from '@angular/core';
 import { SQLiteObject } from '@ionic-native/sqlite';
 import { NetworkProvider } from '../network';
-import { IParcela } from './../../interfaces/parcela.interface';
-import { IHogar } from './../../interfaces/hogar.interface';
-import { IVivienda } from './../../interfaces/vivienda.interface';
-import { IIntegranteEnfermedadCronica } from './../../interfaces/integranteEnfermedadCronica.interface';
+import { IParcela } from '../../interfaces/parcela.interface';
+import { IHogar } from '../../interfaces/hogar.interface';
+import { IVivienda } from '../../interfaces/vivienda.interface';
+import { IIntegranteEnfermedadCronica } from '../../interfaces/integranteEnfermedadCronica.interface';
 
 @Injectable()
 export class AgentesSanitariosProvider {
@@ -16,6 +16,7 @@ export class AgentesSanitariosProvider {
     constructor(public network: NetworkProvider) { }
 
     setDatabase(db: SQLiteObject) {
+        console.log('setDatabase');
         if (!this.db) {
             this.db = db;
         }
@@ -960,6 +961,7 @@ export class AgentesSanitariosProvider {
     }
 
     async sincronizarDatos() {
+        console.log('sincronizarDatos');
         this.syncAppToAndes();
         this.syncAndesToApp();
     }

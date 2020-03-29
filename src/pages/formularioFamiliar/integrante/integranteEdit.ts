@@ -1,7 +1,7 @@
 import { Storage } from '@ionic/storage';
 import { EnfermedadesCronicasPage } from './enfermedadesCronicas/enfermedadCronicaEdit';
 import { IntegranteListPage } from './integranteList';
-import { AgentesSanitariosProvider } from './../../../providers/agentes-sanitarios/agendes-sanitarios';
+import { AgentesSanitariosProvider } from './../../../providers/agentes-sanitarios/agentes-sanitarios';
 import { IIntegrante } from './../../../interfaces/integrante.interface';
 import { Ocupaciones } from './../../../assets/files/ocupaciones';
 import { Sexos } from './../../../assets/files/sexos';
@@ -128,28 +128,28 @@ export class IntegranteEditPage {
 
     validarFormulario() {
         let rslt = '';
-        if (this.integrante.tipoDocumento === undefined) {
+        if (!this.integrante.tipoDocumento) {
             rslt += '- Número de Parcela es obligatorio!';
         }
-        if (this.integrante.numeroDocumento === undefined) {
+        if (!this.integrante.numeroDocumento) {
             rslt += '\n\n- DNI es obligatorio!';
         }
-        if (this.integrante.apellido === undefined) {
+        if (!this.integrante.apellido) {
             rslt += '\n\n- Apellid es obligatorio!';
         }
-        if (this.integrante.nombre === undefined) {
+        if (!this.integrante.nombre) {
             rslt += '\n\n- Nombre es obligatorio!';
         }
-        if (this.integrante.nacionalidad === undefined) {
+        if (!this.integrante.nacionalidad) {
             rslt += '\n\n- Nacionalidad es obligatorio!';
         }
-        if (this.integrante.fechaNacimientoString === undefined) {
+        if (!this.integrante.fechaNacimientoString) {
             rslt += '\n\n- Fecha de Nacimiento es obligatorio!';
         }
-        if (this.integrante.sexo === undefined) {
+        if (!this.integrante.sexo) {
             rslt += '\n\n- Sexo es obligatorio!';
         }
-        if (this.integrante.genero === undefined) {
+        if (!this.integrante.genero) {
             rslt += '\n\n- Género es obligatorio!';
         }
         return rslt;

@@ -1,9 +1,8 @@
-import { AgentesSanitariosProvider } from './../../../../providers/agentes-sanitarios/agendes-sanitarios';
+import { AgentesSanitariosProvider } from './../../../../providers/agentes-sanitarios/agentes-sanitarios';
 import { ControlesEnfermedadesCronicas } from './../../../../assets/files/controles-enfermedades-cronicas';
 import { Component } from '@angular/core';
 import { EnfermedadesCronicas } from './../../../../assets/files/enfermedades-cronicas';
 import { NavParams, NavController } from 'ionic-angular';
-import { IntegranteListPage } from './../integranteList';
 
 @Component({
     selector: 'integranteEdit',

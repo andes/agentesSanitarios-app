@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
 // COMPONENTS
 // import { ViviendaListPage } from './viviendaList';
 // PROVIDERS
-import { AgentesSanitariosProvider } from '../../../providers/agentes-sanitarios/agendes-sanitarios';
+import { AgentesSanitariosProvider } from '../../../providers/agentes-sanitarios/agentes-sanitarios';
 // ASSETS
 import { Provincias } from '../../../assets/files/provincias';
 import { Municipios } from '../../../assets/files/municipios';
@@ -19,12 +19,11 @@ import { ZonasUbicacion } from '../../../assets/files/zonasUbicacion';
 
 // INTERFACES
 import { IVivienda } from '../../../interfaces/vivienda.interface';
-import { ViviendaListPage } from './viviendaList';
 
 
 @Component({
     selector: 'viviendaEdit',
-    templateUrl: 'ViviendaEdit.html'
+    templateUrl: 'viviendaEdit.html'
 })
 
 export class ViviendaEditPage {
@@ -100,11 +99,11 @@ export class ViviendaEditPage {
 
     validarFormulario() {
         let rslt = '';
-        if (this.vivienda.viviendaLetra === undefined) {
+        if (!this.vivienda.viviendaLetra) {
             rslt += '- Número de Parcela es obligatorio!';
         }
-        if (this.vivienda.equipoNucleoReferencia === undefined) {
-            rslt += '\n\n- Municipio es obligatorio!';
+        if (!this.vivienda.equipoNucleoReferencia) {
+            rslt += '\n\n- Equipo nucleo de referencia es obligatorio!';
         }
         return rslt;
     }

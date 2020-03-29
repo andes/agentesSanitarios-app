@@ -4,7 +4,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Component } from '@angular/core';
 // COMPONENTS
 // PROVIDERS
-import { AgentesSanitariosProvider } from '../../../providers/agentes-sanitarios/agendes-sanitarios';
+import { AgentesSanitariosProvider } from '../../../providers/agentes-sanitarios/agentes-sanitarios';
 // INTERFACES
 import { IHogar } from '../../../interfaces/hogar.interface';
 import { HogarListPage } from './hogarList';

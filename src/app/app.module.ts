@@ -52,7 +52,7 @@ import { ErrorReporterProvider } from '../providers/errorReporter';
 import { ConnectivityProvider } from '../providers/connectivity/connectivity';
 import { DatePickerModule } from 'ion-datepicker';
 import { EmailComposer } from '@ionic-native/email-composer';
-import { AgentesSanitariosProvider } from './../providers/agentes-sanitarios/agendes-sanitarios';
+import { AgentesSanitariosProvider } from './../providers/agentes-sanitarios/agentes-sanitarios';
 
 @NgModule({
     declarations: [

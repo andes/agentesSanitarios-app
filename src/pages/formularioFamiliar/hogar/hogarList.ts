@@ -4,7 +4,7 @@ import { HogarEditPage } from './hogarEdit';
 import { IntegranteListPage } from './../integrante/integranteList';
 import { NavController, Navbar } from 'ionic-angular';
 import { Component, ViewChild } from '@angular/core';
-import { AgentesSanitariosProvider } from '../../../providers/agentes-sanitarios/agendes-sanitarios';
+import { AgentesSanitariosProvider } from '../../../providers/agentes-sanitarios/agentes-sanitarios';
 import { IHogar } from 'interfaces/hogar.interface';
 
 @Component({

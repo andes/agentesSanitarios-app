@@ -101,7 +101,7 @@ export class AuthProvider {
     }
 
     loginProfesional(credentials) {
-        return this.network.post(this.appUrl + '/login', credentials, {}).then((data: any) => {
+        return this.network.login(this.appUrl, credentials, {}).then((data: any) => {
             this.token = data.token;
             this.user = data.user;
             this.storage.set('token', data.token);

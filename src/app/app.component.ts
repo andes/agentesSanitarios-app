@@ -1,4 +1,4 @@
-import { AgentesSanitariosProvider } from './../providers/agentes-sanitarios/agendes-sanitarios';
+import { AgentesSanitariosProvider } from './../providers/agentes-sanitarios/agentes-sanitarios';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, AlertController, NavController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';

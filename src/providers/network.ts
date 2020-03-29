@@ -17,9 +17,8 @@ export enum ConnectionStatus {
 @Injectable()
 export class NetworkProvider {
     private token: string = null;
-    // private baseUrl = ENV.API_URL;
-    private baseUrl = 'http://192.168.1.10:3002/api/';
-    // private baseUrl = 'https://demo.andes.gob.ar/api/';
+    private baseUrl = ENV.API_URL;
+    private altBaseUrl  = ENV.API_ANDES_URL;
     private ApiMobileUrl = ENV.API_MOBILE_URL;
     private status: BehaviorSubject<ConnectionStatus> = new BehaviorSubject(ConnectionStatus.Offline);
 
@@ -51,14 +50,14 @@ export class NetworkProvider {
         return headers;
     }
 
-    request(url, data, options = null) {
+    request(url, data, options = null, useAltBase?) {
         return new Promise((resolve, reject) => {
             let headers = this.getHeaders();
             let config = {
                 ...data,
                 headers
             }
-            this.http.request(this.baseUrl + url, config)
+            this.http.request((useAltBase ? this.altBaseUrl : this.baseUrl) + url, config)
                 .subscribe(res => {
                     resolve(res.json());
                 }, (err) => {
@@ -116,6 +115,10 @@ export class NetworkProvider {
 
     post(url, body, params = {}, options = null) {
         return this.request(url, { body, params, method: 'POST' }, options);
+    }
+
+    login(url, body, params = {}, options = null) {
+        return this.request(url + '/login', { body, params, method: 'POST' }, options, true);
     }
 
     put(url, body, params = {}, options = null) {
