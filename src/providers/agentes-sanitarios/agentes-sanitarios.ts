@@ -16,7 +16,6 @@ export class AgentesSanitariosProvider {
     constructor(public network: NetworkProvider) { }
 
     setDatabase(db: SQLiteObject) {
-        console.log('setDatabase');
         if (!this.db) {
             this.db = db;
         }
@@ -62,7 +61,6 @@ export class AgentesSanitariosProvider {
                 )`;
             return this.db.executeSql(sql, []);
         } catch (err) {
-            console.log('Error!', err)
             return (err);
         }
     }
@@ -137,7 +135,6 @@ export class AgentesSanitariosProvider {
     }
 
     async getParcelaByDni(numeroDocumento) {
-        console.log('getParcelaByDni xxx', numeroDocumento);
         try {
             let sql = `SELECT p.* FROM parcela p
                 JOIN vivienda v on v.parcelaId = p.id
@@ -150,7 +147,6 @@ export class AgentesSanitariosProvider {
         }
     }
     async getParcelaById(id) {
-        console.log('getParcelaById xxx', id);
         try {
             let sql = `SELECT p.* FROM parcela p
                 WHERE p.id = '${id}'`;
@@ -161,7 +157,6 @@ export class AgentesSanitariosProvider {
     }
     // ***********************VIVIENDA
     createTableViviendas() {
-        console.log('createTableViviendas')
         try {
             let sql = `CREATE TABLE IF NOT EXISTS vivienda(
                 id INTEGER NOT NULL PRIMARY KEY,
@@ -198,13 +193,11 @@ export class AgentesSanitariosProvider {
                 )`;
             return this.db.executeSql(sql, []);
         } catch (err) {
-            console.log('err', err)
             return (err);
         }
     }
 
     async insertVivienda(vivienda: IVivienda) {
-        console.log('insertVivienda')
         try {
             let sql = `INSERT INTO vivienda(
                 parcelaId,
@@ -277,7 +270,6 @@ export class AgentesSanitariosProvider {
     }
 
     updateVivienda(vivienda: IVivienda) {
-        console.log('updateVivienda', vivienda)
         try {
             let sql = `UPDATE vivienda SET
                 parcelaId=?,
@@ -346,13 +338,11 @@ export class AgentesSanitariosProvider {
                 vivienda.id
             ]);
         } catch (err) {
-            console.log('err', err);
             return err;
         }
     }
 
     async getViviendasByparcelaId(parcelaId) {
-        console.log('getViviendasByparcelaId xxx', parcelaId);
         try {
             let sql = `SELECT * FROM vivienda
                 WHERE parcelaId = ${parcelaId} order by viviendaLetra asc`;
@@ -360,7 +350,6 @@ export class AgentesSanitariosProvider {
             let viviendas = []
             let rows = (await this.db.executeSql(sql, []) as any).rows;
             for (let i = 0; i < rows.length; i++) {
-                console.log('rows.item(i)', rows.item(i))
                 viviendas.push(rows.item(i) as IParcela);
             }
             return viviendas;
@@ -370,7 +359,6 @@ export class AgentesSanitariosProvider {
     }
 
     async getViviendaById(id) {
-        console.log('getViviendaById xxx', id);
         try {
             let sql = `SELECT v.* FROM vivienda v
                 WHERE v.id = '${id}'`;
@@ -381,7 +369,6 @@ export class AgentesSanitariosProvider {
     }
     // ***********************HOGAR
     createTableHogares() {
-        console.log('createTableHogares')
         try {
             let sql = `CREATE TABLE IF NOT EXISTS hogar(
                 id INTEGER NOT NULL PRIMARY KEY,
@@ -436,7 +423,6 @@ export class AgentesSanitariosProvider {
                 hogar.menor5ConEnfermedadGrave
             ])).insertId;
         } catch (err) {
-            console.log('insert hogar', err)
             return (err);
         }
     }
@@ -494,7 +480,6 @@ export class AgentesSanitariosProvider {
     }
 
     async getHogarById(id) {
-        console.log('getHogarById xxx', id);
         try {
             let sql = `SELECT h.* FROM hogar h
                 WHERE h.id = '${id}'`;
@@ -505,7 +490,6 @@ export class AgentesSanitariosProvider {
     }
     // ***********************INTEGRANTE
     createTableIntegrantes() {
-        console.log('createTableIntegrantes')
         try {
             let sql = `CREATE TABLE IF NOT EXISTS integrante(
                 id INTEGER NOT NULL PRIMARY KEY,
@@ -621,13 +605,11 @@ export class AgentesSanitariosProvider {
                 integrante.cudVigencia
             ])).insertId;
         } catch (err) {
-            console.log('err', err);
             return (err);
         }
     }
 
     updateIntegrante(integrante: IIntegrante) {
-        console.log('updateIntegrante', integrante);
         let sql = `UPDATE integrante SET
                 hogarId=?,
                 idUsuarioCreacion=?,
@@ -700,7 +682,6 @@ export class AgentesSanitariosProvider {
                 integrante.id
             ]);
         } catch (err) {
-            console.log(err)
             return (err);
         }
     }
@@ -799,7 +780,6 @@ export class AgentesSanitariosProvider {
                 integranteEnfermedadCronica.enfermedadCronicaEstado
             ])).insertId;
         } catch (err) {
-            console.log('err', err);
             return (err);
         }
     }
@@ -873,45 +853,27 @@ export class AgentesSanitariosProvider {
         try {
 
             let parcelaId = await this.insertParcela(new IParcela());
-            console.log('testInserts parcela', parcelaId);
             let vivienda = new IVivienda();
             vivienda.parcelaId = parcelaId;
             let viviendaId = await this.insertVivienda(vivienda);
-            console.log('testInserts vivi', viviendaId);
             let hogar = new IHogar();
             hogar.viviendaId = viviendaId;
             let hogarId = await this.insertHogar(hogar);
-            console.log('testInserts hogar', hogarId);
             let i = new IIntegrante();
             i.hogarId = hogarId;
             i.numeroDocumento = '123456789'
             let integranteId = await this.insertIntegrante(i);
-            console.log('testInserts Integrante', integranteId);
             let parcela: IParcela = await this.getParcelaByDni('123456789');
-            console.log('parcela', parcela);
             parcela.viviendas = (await this.getViviendasByparcelaId(parcela.id) as [IVivienda]);
-            console.log('parcela.viviendas', parcela.viviendas);
             parcela.viviendas.forEach(async v => {
                 v.hogares = await this.getHogaresByViviendaId(v.id);
-                console.log('v.hogares', v.hogares);
                 v.hogares.forEach(async h => {
                     // h.integrantes = await this.getIntegrantesByHogarId(h.id);
                     // console.log('h.integrantes', h.integrantes);
                 });
             })
-            console.log('await this.updateParcela(parcela)', await this.updateParcela(parcela));
-            parcela.viviendas.forEach( async (v: IVivienda) => {
-                console.log('await this.updateVivienda(v)', await this.updateVivienda(v));
-                v.hogares.forEach( async (h: IHogar) => {
-                    console.log('await this.updateHogar(h)', h.id, await this.updateHogar(h));
-                    // h.integrantes.forEach(async (i: IIntegrante) => {
-                    //     console.log('await this.updateIntegrante(i)', await this.updateIntegrante(i));
-                    // })
-                })
-            })
-            console.log('OK', parcela);
-        } catch (e) {
-            console.log('TEST FAILED!', e)
+        } catch (err) {
+            return (err);
         }
     }
 
@@ -956,12 +918,11 @@ export class AgentesSanitariosProvider {
 
             return await this.db.executeSql(sql, []);
         } catch (e) {
-            console.log('error', e)
+            return e;
         }
     }
 
     async sincronizarDatos() {
-        console.log('sincronizarDatos');
         this.syncAppToAndes();
         this.syncAndesToApp();
     }
