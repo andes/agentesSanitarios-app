@@ -2,7 +2,7 @@ import { HomePage } from './../../home/home';
 import { Storage } from '@ionic/storage';
 import { NavController, Navbar } from 'ionic-angular';
 import { Component, ViewChild } from '@angular/core';
-import { AgentesSanitariosProvider } from '../../../providers/agentes-sanitarios/agendes-sanitarios';
+import { AgentesSanitariosProvider } from '../../../providers/agentes-sanitarios/agentes-sanitarios';
 import { ParcelaEditPage } from './parcelaEdit';
 import { ViviendaListPage } from '../vivienda/viviendaList';
 

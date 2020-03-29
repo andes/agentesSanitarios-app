@@ -4,7 +4,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 // LIB
 // COMPONENTS
 // PROVIDERS
-import { AgentesSanitariosProvider } from '../../../providers/agentes-sanitarios/agendes-sanitarios';
+import { AgentesSanitariosProvider } from '../../../providers/agentes-sanitarios/agentes-sanitarios';
 // ASSETS
 import { Provincias } from '../../../assets/files/provincias';
 import { Municipios } from '../../../assets/files/municipios';
@@ -85,16 +85,16 @@ export class ParcelaEditPage {
 
     validarFormulario() {
         let rslt = '';
-        if (this.parcela.nroParcela === undefined) {
+        if (!this.parcela.nroParcela) {
             rslt += '- Número de Parcela es obligatorio!';
         }
-        if (this.parcela.municipio === undefined) {
+        if (!this.parcela.municipio) {
             rslt += '\n\n- Municipio es obligatorio!';
         }
-        if (this.parcela.direccion === undefined) {
+        if (!this.parcela.direccion) {
             rslt += '\n\n- Dirección es obligatorio!';
         }
-        if (this.parcela.tipoZona === undefined) {
+        if (!this.parcela.tipoZona) {
             rslt += '\n\n- Zona es obligatorio!';
         }
         return rslt;
